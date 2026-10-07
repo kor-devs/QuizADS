@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Estrutura de Dados | Jornada de Aprendizado</title>
+
+  <style>
+    :root {
+      --bg: #07111f;
+      --surface: #0d1b2a;
+      --surface-2: #13263a;
+      --border: #233a50;
+      --text: #eef6ff;
+      --muted: #9db0c3;
+      --accent: #39d0b3;
+      --accent-dark: #1e967f;
+      --danger: #ff7474;
+      --warning: #ffd166;
+      --success: #52d273;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+      background:
+        radial-gradient(circle at top right, #11314a 0, transparent 35%),
+        var(--bg);
+
+      color: var(--text);
+    }
+
+    .container {
+      width: min(1100px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 48px 0 80px;
+    }
+
+    header {
+      margin-bottom: 42px;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      text-transform: uppercase;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+    }
+
+    h1 {
+      margin: 10px 0 12px;
+      font-size: clamp(32px, 5vw, 58px);
+      line-height: 1;
+    }
+
+    .subtitle {
+      max-width: 750px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 17px;
+    }
+
+    .progress-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+
+    .progress-line {
+      width: 100%;
+      height: 10px;
+      overflow: hidden;
+      background: #08121d;
+      border-radius: 999px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .modules {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .module {
+      position: relative;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      background: var(--surface);
+    }
+
+    .module.locked {
+      opacity: 0.62;
+    }
+
+    .module-number {
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .module h2 {
+      margin: 10px 0;
+      font-size: 24px;
+    }
+
+    .module p {
+      color: var(--muted);
+      line-height: 1.55;
+      min-height: 72px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      margin: 8px 0 18px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .status.done {
+      color: var(--success);
+    }
+
+    .status.available {
+      color: var(--accent);
+    }
+
+    .status.locked {
+      color: var(--muted);
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      border: 0;
+      border-radius: 12px;
+      padding: 0 18px;
+      font: inherit;
+      font-weight: 750;
+      cursor: pointer;
+
+      background: var(--accent);
+      color: #03221d;
+    }
+
+    .button.disabled {
+      background: var(--surface-2);
+      color: var(--muted);
+      cursor: not-allowed;
+    }
+
+    footer {
+      margin-top: 45px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 720px) {
+      .modules {
+        grid-template-columns: 1fr;
+      }
+
+      .module p {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <header>
+      <div class="eyebrow">Estrutura de Dados</div>
+
+      <h1>Jornada de Aprendizado</h1>
+
+      <p class="subtitle">
+        Um estudo guiado para entender Estrutura de Dados sem depender
+        de conhecimento prévio de programação. Aprenda o conceito,
+        pratique com consulta e depois prove que entendeu no Boss.
+      </p>
+    </header>
+
+    <section class="progress-box">
+      <strong>Progresso geral</strong>
+
+      <p id="progressText" style="color: var(--muted)">
+        0 de 4 módulos concluídos
+      </p>
+
+      <div class="progress-line">
+        <div id="progressFill" class="progress-fill"></div>
+      </div>
+    </section>
+
+    <section id="modules" class="modules"></section>
+
+    <footer>
+      Conteúdo estruturado a partir do material didático
+      <strong>Estrutura de Dados — Felipe Cavalaro — USF</strong>.
+      <br />
+      O progresso fica salvo somente neste navegador.
+    </footer>
+  </main>
+
+  <script>
+    /*
+      ==============================================================
+      CONFIGURAÇÃO DOS MÓDULOS
+      ==============================================================
+
+      Quando eu entregar um novo módulo:
+
+      1. crie a pasta correspondente;
+      2. cole o index.html que eu enviar;
+      3. altere "ready: false" para "ready: true" aqui.
+
+      ==============================================================
+    */
+
+    const modules = [
+      {
+        id: 1,
+        title: "Listas e fundamentos",
+        description:
+          "TAD, lista sequencial, lista encadeada, ponteiros, lista circular e lista duplamente encadeada.",
+
+        path: "./modulo-1/",
+        storageKey: "ed_mod1_progress_v1",
+
+        ready: true
+      },
+
+      {
+        id: 2,
+        title: "Pilha e Fila",
+        description:
+          "LIFO, FIFO, push, pop, enqueue, dequeue e leitura das implementações apresentadas no livro.",
+
+        path: "./modulo-2/",
+        storageKey: "ed_mod2_progress_v1",
+
+        ready: false
+      },
+
+      {
+        id: 3,
+        title: "Árvores",
+        description:
+          "Árvore, árvore binária, TAD, altura, profundidade, percursos e árvore binária de busca.",
+
+        path: "./modulo-3/",
+        storageKey: "ed_mod3_progress_v1",
+
+        ready: false
+      },
+
+      {
+        id: 4,
+        title: "AVL, Árvore B e Hash",
+        description:
+          "Balanceamento, rotações, árvore B, funções hash, tabelas de dispersão e colisões.",
+
+        path: "./modulo-4/",
+        storageKey: "ed_mod4_progress_v1",
+
+        ready: false
+      }
+    ];
+
+    function getProgress(module) {
+      try {
+        const raw = localStorage.getItem(module.storageKey);
+
+        if (!raw) {
+          return {
+            completed: false
+          };
+        }
+
+        return JSON.parse(raw);
+      } catch {
+        return {
+          completed: false
+        };
+      }
+    }
+
+    function renderModules() {
+      const container = document.getElementById("modules");
+
+      let completed = 0;
+
+      container.innerHTML = "";
+
+      modules.forEach((module, index) => {
+        const progress = getProgress(module);
+
+        if (progress.completed) {
+          completed++;
+        }
+
+        const previousCompleted =
+          index === 0 ||
+          getProgress(modules[index - 1]).completed;
+
+        const unlocked =
+          module.ready &&
+          previousCompleted;
+
+        let statusText = "Em construção";
+        let statusClass = "locked";
+
+        if (progress.completed) {
+          statusText = "Concluído";
+          statusClass = "done";
+        } else if (unlocked) {
+          statusText = "Disponível";
+          statusClass = "available";
+        } else if (module.ready) {
+          statusText = "Bloqueado";
+        }
+
+        const card = document.createElement("article");
+
+        card.className =
+          "module" +
+          (unlocked || progress.completed ? "" : " locked");
+
+        card.innerHTML = `
+          <div class="module-number">
+            MÓDULO ${module.id}
+          </div>
+
+          <h2>${module.title}</h2>
+
+          <p>${module.description}</p>
+
+          <div class="status ${statusClass}">
+            ${statusText}
+          </div>
+
+          <br />
+
+          ${
+            unlocked || progress.completed
+              ? `
+                <a
+                  class="button"
+                  href="${module.path}"
+                >
+                  ${
+                    progress.completed
+                      ? "Revisar módulo"
+                      : "Começar módulo"
+                  }
+                </a>
+              `
+              : `
+                <span class="button disabled">
+                  ${
+                    module.ready
+                      ? "Conclua o módulo anterior"
+                      : "Em breve"
+                  }
+                </span>
+              `
+          }
+        `;
+
+        container.appendChild(card);
+      });
+
+      document.getElementById(
+        "progressText"
+      ).textContent =
+        `${completed} de ${modules.length} módulos concluídos`;
+
+      document.getElementById(
+        "progressFill"
+      ).style.width =
+        `${(completed / modules.length) * 100}%`;
+    }
+
+    renderModules();
+  </script>
+</body>
+</html>

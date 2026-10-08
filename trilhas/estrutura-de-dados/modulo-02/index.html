@@ -1,0 +1,4643 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="theme-color"
+    content="#123744"
+  />
+
+  <meta
+    name="description"
+    content="QuizADS — Módulo 02 da trilha Estrutura de Dados: Lista Sequencial."
+  />
+
+  <title>
+    Módulo 02 | Lista Sequencial | QuizADS
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="../../../assets/css/quizads.css"
+  />
+
+  <style>
+    /* =====================================================
+       COMPONENTES ESPECÍFICOS DO MÓDULO 02
+       ===================================================== */
+
+    .mental-model {
+      margin: 20px 0;
+    }
+
+    .array-visual {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(58px, 1fr));
+      gap: 7px;
+
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .array-box {
+      min-width: 58px;
+
+      text-align: center;
+    }
+
+    .array-value {
+      min-height: 58px;
+
+      display: grid;
+      place-items: center;
+
+      border: 2px solid var(--border);
+      border-radius: 10px;
+
+      background: var(--surface);
+
+      font-family: var(--font-code);
+      font-size: 19px;
+      font-weight: 600;
+    }
+
+    .array-index {
+      margin-top: 7px;
+
+      color: var(--muted);
+
+      font-family: var(--font-code);
+      font-size: 11px;
+    }
+
+    .array-box.last .array-value {
+      border-color: var(--kor-accent);
+    }
+
+    .array-box.last .array-index {
+      color: var(--kor-accent);
+      font-weight: 600;
+    }
+
+    .flow {
+      display: grid;
+      gap: 10px;
+
+      margin: 18px 0;
+    }
+
+    .flow-step {
+      position: relative;
+
+      padding: 15px 16px 15px 51px;
+
+      border: 1px solid var(--border);
+      border-radius: 10px;
+
+      background: var(--surface-soft);
+    }
+
+    .flow-number {
+      position: absolute;
+
+      top: 13px;
+      left: 13px;
+
+      width: 27px;
+      height: 27px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 7px;
+
+      color: #fff;
+      background: var(--kor-accent);
+
+      font-family: var(--font-code);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .comparison {
+      display: grid;
+      gap: 12px;
+
+      margin-top: 18px;
+    }
+
+    .comparison-card {
+      padding: 17px;
+
+      border: 1px solid var(--border);
+      border-radius: 10px;
+
+      background: var(--surface-soft);
+    }
+
+    .comparison-card strong {
+      display: block;
+
+      margin-bottom: 8px;
+
+      color: var(--kor-accent);
+    }
+
+    /* =====================================================
+       SIMULADOR
+       ===================================================== */
+
+    .simulator {
+      overflow: hidden;
+
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+
+      background: var(--surface);
+    }
+
+    .simulator-header {
+      padding: 19px 20px;
+
+      color: #fff;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--kor-primary-dark),
+          var(--kor-primary)
+        );
+    }
+
+    .simulator-header .kicker {
+      margin-bottom: 6px;
+    }
+
+    .simulator-header h3 {
+      margin: 0;
+
+      font-size: 24px;
+    }
+
+    .simulator-body {
+      padding: 20px;
+    }
+
+    .sim-status {
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 8px;
+
+      margin-bottom: 18px;
+    }
+
+    .sim-status-item {
+      padding: 6px 9px;
+
+      border-radius: 7px;
+
+      background: var(--surface-soft);
+
+      font-family: var(--font-code);
+      font-size: 11px;
+    }
+
+    .sim-array {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(55px, 1fr));
+      gap: 7px;
+
+      margin-bottom: 20px;
+
+      overflow-x: auto;
+    }
+
+    .sim-cell {
+      min-width: 55px;
+    }
+
+    .sim-cell-value {
+      min-height: 63px;
+
+      display: grid;
+      place-items: center;
+
+      border: 2px solid var(--border);
+      border-radius: 9px;
+
+      background: var(--surface-soft);
+
+      font-family: var(--font-code);
+      font-size: 20px;
+      font-weight: 600;
+
+      transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .sim-cell-index {
+      margin-top: 6px;
+
+      text-align: center;
+
+      color: var(--muted);
+
+      font-family: var(--font-code);
+      font-size: 10px;
+    }
+
+    .sim-cell.used .sim-cell-value {
+      border-color: var(--kor-primary);
+    }
+
+    .sim-cell.last .sim-cell-value {
+      border-color: var(--kor-accent);
+    }
+
+    .sim-controls {
+      display: grid;
+      gap: 12px;
+    }
+
+    .sim-control-group {
+      padding: 15px;
+
+      border: 1px solid var(--border);
+      border-radius: 9px;
+
+      background: var(--surface-soft);
+    }
+
+    .sim-control-group strong {
+      display: block;
+
+      margin-bottom: 9px;
+    }
+
+    .sim-control-line {
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 8px;
+    }
+
+    .sim-input {
+      min-height: 44px;
+
+      flex: 1 1 100px;
+
+      min-width: 80px;
+
+      padding: 0 12px;
+
+      border: 1px solid var(--border);
+      border-radius: 8px;
+
+      outline: 0;
+
+      color: var(--text);
+      background: var(--surface);
+    }
+
+    .sim-input:focus {
+      border-color: var(--kor-accent);
+    }
+
+    .sim-output {
+      min-height: 55px;
+
+      margin-top: 15px;
+      padding: 13px;
+
+      border-left: 3px solid var(--kor-accent);
+      border-radius: 0 8px 8px 0;
+
+      background: var(--surface-soft);
+
+      color: var(--muted);
+    }
+
+    /* =====================================================
+       MISSÕES
+       ===================================================== */
+
+    .missions {
+      display: grid;
+      gap: 10px;
+
+      margin-top: 20px;
+    }
+
+    .mission {
+      display: flex;
+      gap: 11px;
+
+      padding: 14px;
+
+      border: 1px solid var(--border);
+      border-radius: 9px;
+
+      background: var(--surface-soft);
+    }
+
+    .mission-status {
+      width: 27px;
+      height: 27px;
+
+      display: grid;
+      place-items: center;
+
+      flex: 0 0 auto;
+
+      border-radius: 50%;
+
+      color: var(--muted);
+      background: var(--surface);
+    }
+
+    .mission.done {
+      border-color:
+        color-mix(
+          in srgb,
+          var(--success) 45%,
+          var(--border)
+        );
+    }
+
+    .mission.done .mission-status {
+      color: #fff;
+      background: var(--success);
+    }
+
+    .mission strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .mission p {
+      margin: 0;
+
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* =====================================================
+       CODE CHALLENGE
+       ===================================================== */
+
+    .code-question {
+      margin-top: 17px;
+
+      padding: 17px;
+
+      border: 1px solid var(--border);
+      border-radius: 9px;
+
+      background: var(--surface-soft);
+    }
+
+    .prediction {
+      margin-top: 10px;
+
+      font-family: var(--font-code);
+      font-size: 13px;
+    }
+
+    @media (min-width: 700px) {
+      .comparison {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+
+      .sim-controls {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
+
+  <header class="site-header">
+
+    <div class="container header-inner">
+
+      <a
+        href="../../../"
+        class="brand"
+      >
+
+        <img
+          data-kordevs-logo
+          data-root="../../../"
+          class="brand-logo"
+          src="../../../assets/brand/KorDevs_White.png"
+          alt="KorDevs"
+        />
+
+        <div class="brand-info">
+
+          <span class="brand-name">
+            QuizADS
+          </span>
+
+          <span class="brand-product">
+            estrutura de dados
+          </span>
+
+        </div>
+
+      </a>
+
+
+      <div class="header-actions">
+
+        <button
+          data-theme-toggle
+          data-theme-icon
+          class="icon-button"
+          type="button"
+          aria-label="Alternar tema"
+        >
+          🌙
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =====================================================
+       CONTEÚDO
+       ===================================================== -->
+
+  <main class="module-main">
+
+    <div
+      id="moduleContent"
+      class="container"
+    >
+
+      <header class="module-top">
+
+        <div class="breadcrumb">
+
+          <a href="../../../">
+            QuizADS
+          </a>
+
+          &nbsp;›&nbsp;
+
+          Estrutura de Dados
+
+          &nbsp;›&nbsp;
+
+          Módulo 02
+
+        </div>
+
+
+        <div class="kicker">
+          MÓDULO 02 · LISTA SEQUENCIAL
+        </div>
+
+
+        <h1 class="module-title">
+          Agora os dados ganham
+          <span class="accent">
+            posição.
+          </span>
+        </h1>
+
+
+        <p class="module-summary">
+          Vamos entender como uma lista pode ser
+          armazenada dentro de um vetor e aprender
+          a ler as operações de criação, inserção,
+          busca, remoção e impressão apresentadas
+          no material da disciplina.
+        </p>
+
+
+        <div class="progress-card">
+
+          <div class="progress-head">
+
+            <span id="progressLabel">
+              Aula 1 de 5
+            </span>
+
+            <span id="progressPercent">
+              10%
+            </span>
+
+          </div>
+
+          <div class="progress-bar">
+
+            <div
+              id="progressFill"
+              class="progress-fill"
+            ></div>
+
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <!-- =================================================
+           PAINEL 0 — AULA 1
+           ================================================= -->
+
+      <section
+        id="panel-0"
+        class="lesson-panel active"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              AULA 01 · MODELO MENTAL
+            </div>
+
+            <h2>
+              O que torna uma lista
+              “sequencial”?
+            </h2>
+
+
+            <p>
+              No módulo anterior vimos que uma
+              estrutura de dados organiza
+              informações e define operações sobre
+              elas.
+            </p>
+
+            <p>
+              Agora vamos conhecer uma maneira
+              específica de organizar uma lista.
+            </p>
+
+
+            <div class="callout">
+
+              <strong>
+                Lista sequencial
+              </strong>
+
+              Os elementos são armazenados em
+              posições de um
+              <strong>vetor</strong>.
+            </div>
+
+
+            <p>
+              Imagine uma estante com cinco espaços
+              numerados:
+            </p>
+
+
+            <div class="mental-model">
+
+              <div class="array-visual">
+
+                <div class="array-box">
+                  <div class="array-value">
+                    A
+                  </div>
+                  <div class="array-index">
+                    índice 0
+                  </div>
+                </div>
+
+                <div class="array-box">
+                  <div class="array-value">
+                    B
+                  </div>
+                  <div class="array-index">
+                    índice 1
+                  </div>
+                </div>
+
+                <div class="array-box">
+                  <div class="array-value">
+                    C
+                  </div>
+                  <div class="array-index">
+                    índice 2
+                  </div>
+                </div>
+
+                <div class="array-box">
+                  <div class="array-value">
+                    D
+                  </div>
+                  <div class="array-index">
+                    índice 3
+                  </div>
+                </div>
+
+                <div class="array-box last">
+                  <div class="array-value">
+                    E
+                  </div>
+                  <div class="array-index">
+                    índice 4
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <p>
+              Existem cinco elementos, mas os
+              índices vão de
+              <strong>0 até 4</strong>.
+            </p>
+
+
+            <div class="callout">
+
+              Se um vetor possui tamanho 5,
+              sua última posição é
+              <strong>5 - 1 = 4</strong>.
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              Posição não é quantidade.
+            </h2>
+
+
+            <p>
+              Esse detalhe é simples, mas aparece
+              o tempo inteiro em programação.
+            </p>
+
+
+            <div class="comparison">
+
+              <div class="comparison-card">
+
+                <strong>
+                  Quantidade
+                </strong>
+
+                Existem 5 elementos.
+
+              </div>
+
+
+              <div class="comparison-card">
+
+                <strong>
+                  Último índice
+                </strong>
+
+                O último está na posição 4.
+
+              </div>
+
+            </div>
+
+
+            <div class="diagram">Quantidade: 5
+
+Índices:
+
+0   1   2   3   4
+↓   ↓   ↓   ↓   ↓
+A   B   C   D   E</div>
+
+
+            <p>
+              Quando o código usar
+              <code>posição</code>,
+              <code>índice</code>
+              ou
+              <code>ultimo</code>,
+              lembre-se dessa diferença.
+            </p>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              MICROEXERCÍCIO
+            </div>
+
+            <h2>
+              Pense antes de continuar.
+            </h2>
+
+            <p>
+              Um vetor possui
+              <strong>8 posições</strong>.
+              Qual é o índice da última posição?
+            </p>
+
+            <button
+              class="small-button"
+              type="button"
+              onclick="showMicroAnswer('micro1')"
+            >
+              Ver resposta
+            </button>
+
+            <div
+              id="micro1"
+              class="hint"
+            >
+              <strong>7.</strong>
+              Os índices seriam:
+              0, 1, 2, 3, 4, 5, 6 e 7.
+            </div>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <a
+              class="btn btn-secondary"
+              href="../modulo-01/"
+            >
+              ← Módulo 01
+            </a>
+
+            <button
+              class="btn btn-primary"
+              onclick="goToPanel(1)"
+            >
+              Continuar →
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           PAINEL 1 — AULA 2
+           ================================================= -->
+
+      <section
+        id="panel-1"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              AULA 02 · ESTRUTURA
+            </div>
+
+            <h2>
+              Conheça
+              <code>lista_seq</code>.
+            </h2>
+
+
+            <p>
+              O material utiliza uma estrutura
+              semelhante a esta:
+            </p>
+
+
+            <pre class="code">#define TAM 5
+
+typedef struct lista_seq {
+    char info[TAM];
+    int ultimo;
+} lista_seq;</pre>
+
+
+            <p>
+              Antes de olhar para isso como
+              programação, traduza:
+            </p>
+
+
+            <div class="translation">
+
+              <div class="translation-row">
+
+                <code>
+                  TAM = 5
+                </code>
+
+                A capacidade máxima do vetor será
+                cinco posições.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  info[TAM]
+                </code>
+
+                É o vetor onde os elementos serão
+                armazenados.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  ultimo
+                </code>
+
+                Guarda qual é a última posição
+                atualmente ocupada.
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              O campo mais importante agora:
+              <code>ultimo</code>.
+            </h2>
+
+
+            <p>
+              Imagine uma lista com:
+            </p>
+
+
+            <div class="diagram">[ A ][ B ][ C ][   ][   ]
+  0    1    2    3    4
+
+ultimo = 2</div>
+
+
+            <p>
+              Isso significa que a última posição
+              ocupada é a posição
+              <strong>2</strong>.
+            </p>
+
+
+            <p>
+              Não significa que existam dois
+              elementos.
+            </p>
+
+
+            <div class="callout">
+
+              Existem
+              <strong>3 elementos</strong>:
+              A, B e C.
+
+              <br /><br />
+
+              Mas o índice do último é
+              <strong>2</strong>.
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              Como representar uma lista vazia?
+            </h2>
+
+
+            <pre class="code">void cria(lista_seq *lista) {
+    lista->ultimo = -1;
+}</pre>
+
+
+            <p>
+              Se nenhuma posição do vetor está
+              ocupada, não existe um índice válido
+              para apontar como último.
+            </p>
+
+            <p>
+              O material usa:
+            </p>
+
+
+            <div class="diagram">ultimo = -1
+
+[   ][   ][   ][   ][   ]
+  0    1    2    3    4</div>
+
+
+            <div class="callout">
+
+              <strong>
+                Regra mental
+              </strong>
+
+              <code>ultimo == -1</code>
+
+              → lista vazia.
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              E quando ela está cheia?
+            </h2>
+
+
+            <pre class="code">int cheia(lista_seq *lista) {
+
+    if (lista->ultimo == TAM - 1)
+        return 1;
+
+    else
+        return 0;
+}</pre>
+
+
+            <p>
+              Como
+              <code>TAM = 5</code>,
+              temos:
+            </p>
+
+
+            <div class="diagram">TAM - 1
+5 - 1
+= 4
+
+ultimo == 4
+
+[ A ][ B ][ C ][ D ][ E ]
+  0    1    2    3    4</div>
+
+
+            <p>
+              Nesse caso todas as posições estão
+              ocupadas.
+            </p>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              LEITURA DE CÓDIGO
+            </div>
+
+            <h2>
+              Tente ler sem decorar.
+            </h2>
+
+
+            <pre class="code">int vazia(lista_seq *lista) {
+
+    if (lista->ultimo == -1)
+        return 1;
+
+    else
+        return 0;
+}</pre>
+
+
+            <div class="callout">
+
+              Leia em português:
+
+              <br /><br />
+
+              “Se a última posição for -1,
+              retorne verdadeiro. Caso contrário,
+              retorne falso.”
+
+            </div>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <button
+              class="btn btn-secondary"
+              onclick="goToPanel(0)"
+            >
+              ← Voltar
+            </button>
+
+            <button
+              class="btn btn-primary"
+              onclick="goToPanel(2)"
+            >
+              Inserção e busca →
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           PAINEL 2 — AULA 3
+           ================================================= -->
+
+      <section
+        id="panel-2"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              AULA 03 · INSERÇÃO
+            </div>
+
+            <h2>
+              Como inserir um novo elemento?
+            </h2>
+
+
+            <p>
+              Vamos começar com:
+            </p>
+
+
+            <div class="diagram">[ A ][ B ][ C ][   ][   ]
+  0    1    2    3    4
+
+ultimo = 2</div>
+
+
+            <p>
+              Queremos inserir
+              <strong>D</strong>.
+            </p>
+
+
+            <div class="flow">
+
+              <div class="flow-step">
+
+                <span class="flow-number">
+                  01
+                </span>
+
+                Verificar se a lista já está cheia.
+
+              </div>
+
+
+              <div class="flow-step">
+
+                <span class="flow-number">
+                  02
+                </span>
+
+                Incrementar
+                <code>ultimo</code>:
+                de 2 para 3.
+
+              </div>
+
+
+              <div class="flow-step">
+
+                <span class="flow-number">
+                  03
+                </span>
+
+                Armazenar D na nova posição 3.
+
+              </div>
+
+            </div>
+
+
+            <div class="diagram">ANTES
+
+ultimo = 2
+
+[ A ][ B ][ C ][   ][   ]
+
+
+DEPOIS
+
+ultimo = 3
+
+[ A ][ B ][ C ][ D ][   ]</div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              Agora veja o código.
+            </h2>
+
+
+            <pre class="code">void insere(
+    lista_seq *lista,
+    char info
+) {
+
+    if (cheia(lista)) {
+
+        printf("Lista cheia!");
+
+    } else {
+
+        lista->ultimo++;
+
+        lista->info[
+            lista->ultimo
+        ] = info;
+    }
+}</pre>
+
+
+            <div class="translation">
+
+              <div class="translation-row">
+
+                <code>
+                  if (cheia(lista))
+                </code>
+
+                Primeiro confirme se existe espaço.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  lista->ultimo++
+                </code>
+
+                Avance a posição do último elemento.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  lista->info[lista->ultimo] = info
+                </code>
+
+                Coloque o novo valor nessa posição.
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              AULA 03 · BUSCA
+            </div>
+
+            <h2>
+              Buscar é acessar uma posição válida.
+            </h2>
+
+
+            <pre class="code">char busca(
+    lista_seq *lista,
+    int posicao
+) {
+
+    if (
+        posicao > -1 &&
+        posicao <= lista->ultimo
+    )
+
+        return lista->info[posicao];
+}</pre>
+
+
+            <p>
+              Observe a condição:
+            </p>
+
+
+            <div class="diagram">posicao > -1
+
+E
+
+posicao <= ultimo</div>
+
+
+            <p>
+              Se:
+            </p>
+
+
+            <div class="diagram">[ A ][ B ][ C ][ D ][   ]
+  0    1    2    3    4
+
+ultimo = 3</div>
+
+
+            <p>
+              são válidas:
+            </p>
+
+
+            <div class="diagram">0
+1
+2
+3</div>
+
+
+            <p>
+              Mas a posição
+              <strong>4</strong>
+              ainda não contém um elemento da lista,
+              mesmo existindo fisicamente no vetor.
+            </p>
+
+
+            <div class="callout">
+
+              Essa diferença é importante:
+
+              <br /><br />
+
+              <strong>
+                capacidade do vetor
+              </strong>
+
+              não é a mesma coisa que
+
+              <strong>
+                quantidade de elementos usados.
+              </strong>
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              PREVEJA
+            </div>
+
+            <h2>
+              Sem executar o código.
+            </h2>
+
+
+            <div class="code-question">
+
+              <div class="diagram">[ A ][ B ][ C ][ D ][   ]
+
+ultimo = 3
+
+busca(lista, 2)</div>
+
+              <p>
+                Qual valor será retornado?
+              </p>
+
+              <button
+                type="button"
+                class="small-button"
+                onclick="showMicroAnswer('micro2')"
+              >
+                Conferir
+              </button>
+
+              <div
+                id="micro2"
+                class="hint"
+              >
+                <strong>C.</strong>
+
+                A posição 2 contém C.
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <button
+              class="btn btn-secondary"
+              onclick="goToPanel(1)"
+            >
+              ← Voltar
+            </button>
+
+            <button
+              class="btn btn-primary"
+              onclick="goToPanel(3)"
+            >
+              Remoção →
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           PAINEL 3 — AULA 4
+           ================================================= -->
+
+      <section
+        id="panel-3"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              AULA 04 · REMOÇÃO
+            </div>
+
+            <h2>
+              Aqui existe uma pegadinha importante.
+            </h2>
+
+
+            <p>
+              Começamos com:
+            </p>
+
+
+            <div class="diagram">[ A ][ B ][ C ][ D ][ E ]
+  0    1    2    3    4
+
+ultimo = 4</div>
+
+
+            <p>
+              Agora executamos:
+            </p>
+
+
+            <pre class="code">retira(lista, 1);</pre>
+
+
+            <p>
+              A posição 1 contém
+              <strong>B</strong>.
+            </p>
+
+            <p>
+              Uma ideia intuitiva seria imaginar:
+            </p>
+
+
+            <div class="diagram">A B C D E
+
+remove B
+
+A C D E</div>
+
+
+            <p>
+              Porém,
+              <strong>
+                não é isso que a função do material
+                faz.
+              </strong>
+            </p>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              O último elemento ocupa a vaga.
+            </h2>
+
+
+            <div class="flow">
+
+              <div class="flow-step">
+
+                <span class="flow-number">
+                  01
+                </span>
+
+                Salve B em uma variável auxiliar.
+
+              </div>
+
+
+              <div class="flow-step">
+
+                <span class="flow-number">
+                  02
+                </span>
+
+                Copie o último elemento E para a
+                posição 1.
+
+              </div>
+
+
+              <div class="flow-step">
+
+                <span class="flow-number">
+                  03
+                </span>
+
+                Diminua
+                <code>ultimo</code>
+                de 4 para 3.
+
+              </div>
+
+
+              <div class="flow-step">
+
+                <span class="flow-number">
+                  04
+                </span>
+
+                Retorne o valor removido B.
+
+              </div>
+
+            </div>
+
+
+            <div class="diagram">ANTES
+
+[ A ][ B ][ C ][ D ][ E ]
+  0    1    2    3    4
+
+
+REMOVE POSIÇÃO 1
+
+
+E ocupa a vaga de B
+
+
+DEPOIS
+
+[ A ][ E ][ C ][ D ][   ]
+  0    1    2    3    4
+
+ultimo = 3</div>
+
+
+            <div class="callout">
+
+              <strong>
+                Consequência
+              </strong>
+
+              A remoção apresentada no livro
+              <strong>
+                não conserva a ordem.
+              </strong>
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              Por que fazer isso?
+            </h2>
+
+            <p>
+              Para preservar:
+            </p>
+
+
+            <div class="diagram">A C D E</div>
+
+
+            <p>
+              seria necessário deslocar elementos:
+            </p>
+
+
+            <div class="diagram">C → posição 1
+D → posição 2
+E → posição 3</div>
+
+
+            <p>
+              O material destaca justamente que esse
+              deslocamento teria custo computacional
+              maior.
+            </p>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              Leia o código em etapas.
+            </h2>
+
+
+            <pre class="code">char retira(
+    lista_seq *lista,
+    int posicao
+) {
+
+    if (
+        posicao > -1 &&
+        posicao <= lista->ultimo
+    ) {
+
+        char aux =
+            lista->info[posicao];
+
+        if (lista->ultimo > 0)
+
+            lista->info[posicao] =
+                lista->info[
+                    lista->ultimo
+                ];
+
+        lista->ultimo--;
+
+        return aux;
+    }
+}</pre>
+
+
+            <div class="translation">
+
+              <div class="translation-row">
+
+                <code>
+                  aux = info[posicao]
+                </code>
+
+                Guarde o valor que será removido.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  info[posicao] = info[ultimo]
+                </code>
+
+                Coloque o último elemento na posição
+                removida.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  ultimo--
+                </code>
+
+                A lista passa a considerar uma
+                posição a menos.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  return aux
+                </code>
+
+                Retorne o valor que foi removido.
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              E o
+              <code>imprime</code>?
+            </h2>
+
+
+            <pre class="code">for (
+    i = 0;
+    i <= lista->ultimo;
+    i++
+) {
+
+    printf(
+        "%c",
+        lista->info[i]
+    );
+}</pre>
+
+
+            <p>
+              Tradução:
+            </p>
+
+
+            <div class="callout">
+
+              Comece na posição 0 e avance uma
+              posição por vez até chegar em
+              <code>ultimo</code>.
+
+            </div>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <button
+              class="btn btn-secondary"
+              onclick="goToPanel(2)"
+            >
+              ← Voltar
+            </button>
+
+            <button
+              class="btn btn-primary"
+              onclick="goToPanel(4)"
+            >
+              Laboratório →
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           PAINEL 4 — LABORATÓRIO
+           ================================================= -->
+
+      <section
+        id="panel-4"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              AULA 05 · LABORATÓRIO
+            </div>
+
+            <h2>
+              Agora você controla a lista.
+            </h2>
+
+
+            <p>
+              Este simulador utiliza capacidade
+              máxima de
+              <strong>5 elementos</strong>
+              e reproduz a lógica estudada:
+            </p>
+
+
+            <div class="diagram">TAM = 5
+
+ultimo começa em -1
+
+inserção:
+ultimo++
+
+remoção:
+último elemento ocupa
+a posição removida</div>
+
+          </article>
+
+
+          <section class="simulator">
+
+            <header class="simulator-header">
+
+              <div class="kicker">
+                SIMULADOR
+              </div>
+
+              <h3>
+                lista_seq
+              </h3>
+
+            </header>
+
+
+            <div class="simulator-body">
+
+              <div class="sim-status">
+
+                <span
+                  id="simUltimo"
+                  class="sim-status-item"
+                >
+                  ultimo = -1
+                </span>
+
+                <span
+                  id="simQuantidade"
+                  class="sim-status-item"
+                >
+                  elementos = 0
+                </span>
+
+                <span
+                  id="simState"
+                  class="sim-status-item"
+                >
+                  vazia
+                </span>
+
+              </div>
+
+
+              <div
+                id="simArray"
+                class="sim-array"
+              ></div>
+
+
+              <div class="sim-controls">
+
+                <div class="sim-control-group">
+
+                  <strong>
+                    Inserir
+                  </strong>
+
+                  <div class="sim-control-line">
+
+                    <input
+                      id="simValue"
+                      class="sim-input"
+                      type="text"
+                      maxlength="1"
+                      placeholder="A"
+                      aria-label="Valor para inserir"
+                    />
+
+                    <button
+                      class="small-button"
+                      type="button"
+                      onclick="simInsert()"
+                    >
+                      Inserir
+                    </button>
+
+                  </div>
+
+                </div>
+
+
+                <div class="sim-control-group">
+
+                  <strong>
+                    Buscar posição
+                  </strong>
+
+                  <div class="sim-control-line">
+
+                    <input
+                      id="simSearchPos"
+                      class="sim-input"
+                      type="number"
+                      min="0"
+                      max="4"
+                      placeholder="0"
+                      aria-label="Posição para buscar"
+                    />
+
+                    <button
+                      class="small-button"
+                      type="button"
+                      onclick="simSearch()"
+                    >
+                      Buscar
+                    </button>
+
+                  </div>
+
+                </div>
+
+
+                <div class="sim-control-group">
+
+                  <strong>
+                    Remover posição
+                  </strong>
+
+                  <div class="sim-control-line">
+
+                    <input
+                      id="simRemovePos"
+                      class="sim-input"
+                      type="number"
+                      min="0"
+                      max="4"
+                      placeholder="0"
+                      aria-label="Posição para remover"
+                    />
+
+                    <button
+                      class="small-button"
+                      type="button"
+                      onclick="simRemove()"
+                    >
+                      Remover
+                    </button>
+
+                  </div>
+
+                </div>
+
+
+                <div class="sim-control-group">
+
+                  <strong>
+                    Reiniciar
+                  </strong>
+
+                  <div class="sim-control-line">
+
+                    <button
+                      class="small-button"
+                      type="button"
+                      onclick="resetSimulator()"
+                    >
+                      Limpar lista
+                    </button>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div
+                id="simOutput"
+                class="sim-output"
+              >
+                A lista está vazia.
+                Comece inserindo um elemento.
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <article
+            class="lesson-block"
+            style="margin-top:22px;"
+          >
+
+            <div class="kicker">
+              MISSÕES PRÁTICAS
+            </div>
+
+            <h2>
+              Faça você mesma.
+            </h2>
+
+            <p>
+              Complete as três missões para liberar
+              o Checkpoint.
+            </p>
+
+
+            <div class="missions">
+
+              <div
+                id="mission1"
+                class="mission"
+              >
+
+                <div class="mission-status">
+                  1
+                </div>
+
+                <div>
+
+                  <strong>
+                    Monte A, B, C
+                  </strong>
+
+                  <p>
+                    Reinicie a lista e insira,
+                    nessa ordem, A, B e C.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div
+                id="mission2"
+                class="mission"
+              >
+
+                <div class="mission-status">
+                  2
+                </div>
+
+                <div>
+
+                  <strong>
+                    Busque a posição 1
+                  </strong>
+
+                  <p>
+                    Com A, B e C na lista,
+                    consulte a posição 1 e encontre B.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div
+                id="mission3"
+                class="mission"
+              >
+
+                <div class="mission-status">
+                  3
+                </div>
+
+                <div>
+
+                  <strong>
+                    Remova a posição 0
+                  </strong>
+
+                  <p>
+                    Observe atentamente o resultado.
+                    O último elemento deverá ocupar
+                    a posição removida.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div
+              id="missionResult"
+              class="result-box"
+              style="display:none;"
+            ></div>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <button
+              class="btn btn-secondary"
+              onclick="goToPanel(3)"
+            >
+              ← Rever remoção
+            </button>
+
+            <button
+              id="checkpointButton"
+              class="btn btn-primary"
+              onclick="startCheckpoint()"
+              disabled
+            >
+              Complete as missões
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           PAINEL 5 — CHECKPOINT
+           ================================================= -->
+
+      <section
+        id="panel-5"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              CHECKPOINT
+            </div>
+
+            <h2>
+              Hora de consolidar.
+            </h2>
+
+
+            <p>
+              Aqui a consulta ainda é permitida.
+            </p>
+
+            <p>
+              Você precisa de pelo menos
+              <strong>7 acertos em 8</strong>
+              para liberar o Boss.
+            </p>
+
+          </article>
+
+
+          <form
+            id="checkpointForm"
+          ></form>
+
+
+          <div
+            id="checkpointResult"
+            class="result-box"
+            style="display:none;"
+          ></div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           PAINEL 6 — BOSS INTRO
+           ================================================= -->
+
+      <section
+        id="panel-6"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="boss-intro">
+
+            <div class="boss-lock">
+              🔒 BOSS · LISTA SEQUENCIAL
+            </div>
+
+            <h2>
+              Agora sem consulta.
+            </h2>
+
+
+            <p>
+              Serão
+              <strong>12 questões</strong>.
+            </p>
+
+            <p>
+              Algumas cobram conceito.
+              Outras exigem leitura de código e
+              previsão do estado da lista.
+            </p>
+
+            <p>
+              Para avançar:
+              <strong>10/12</strong>.
+            </p>
+
+
+            <button
+              class="btn btn-primary"
+              onclick="startBoss()"
+            >
+              Começar Boss →
+            </button>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           PAINEL 7 — BOSS
+           ================================================= -->
+
+      <section
+        id="panel-7"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <div class="boss-intro">
+
+            <div class="boss-lock">
+              🔒 BOSS EM ANDAMENTO
+            </div>
+
+            <h2>
+              Sem dicas.
+              Sem aula.
+            </h2>
+
+            <p>
+              Leia com calma.
+              Principalmente as questões envolvendo
+              <code>ultimo</code>
+              e
+              <code>retira</code>.
+            </p>
+
+          </div>
+
+
+          <form
+            id="bossForm"
+            style="margin-top:20px;"
+          ></form>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           PAINEL 8 — DISSERTATIVA
+           ================================================= -->
+
+      <section
+        id="panel-8"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              PERGUNTA-CHAVE
+            </div>
+
+            <h2>
+              Agora explique o funcionamento.
+            </h2>
+
+
+            <p>
+              Responda com suas próprias palavras:
+            </p>
+
+
+            <div class="callout">
+
+              Explique como uma lista sequencial
+              baseada no material sabe quando está
+              vazia e quando está cheia.
+
+              <br /><br />
+
+              Depois explique o que acontece com
+              <code>ultimo</code>
+              durante uma inserção e durante uma
+              remoção, incluindo o que ocorre com
+              a ordem dos elementos na função
+              <code>retira</code> estudada.
+
+            </div>
+
+
+            <textarea
+              id="essayAnswer"
+              class="essay"
+              placeholder="Explique como se estivesse ensinando o assunto para outra pessoa..."
+            ></textarea>
+
+
+            <p
+              id="essayCounter"
+              style="
+                color:var(--muted);
+                font-size:12px;
+              "
+            >
+              0 caracteres
+            </p>
+
+
+            <button
+              class="btn btn-primary btn-full"
+              type="button"
+              onclick="evaluateEssay()"
+            >
+              Avaliar minha explicação
+            </button>
+
+
+            <div
+              id="essayResult"
+              class="result-box"
+              style="display:none;"
+            ></div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           PAINEL 9 — CONCLUÍDO
+           ================================================= -->
+
+      <section
+        id="panel-9"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              MÓDULO 02 CONCLUÍDO
+            </div>
+
+            <h2>
+              Você já consegue ler
+              uma lista sequencial.
+            </h2>
+
+
+            <p>
+              A meta não era decorar uma função.
+            </p>
+
+            <p>
+              Era conseguir olhar para:
+            </p>
+
+
+            <div class="diagram">info[TAM]
+
+ultimo
+
+ultimo == -1
+
+ultimo == TAM - 1
+
+ultimo++
+
+ultimo--
+
+info[posicao]
+
+retira(lista, posicao)</div>
+
+
+            <p>
+              e compreender o papel de cada parte.
+            </p>
+
+
+            <div class="callout">
+
+              <strong>
+                Próximo módulo
+              </strong>
+
+              Lista Encadeada:
+              nós, memória dinâmica,
+              <code>malloc</code>,
+              <code>inicio</code>,
+              <code>prox</code>,
+              inserção, busca e remoção.
+
+            </div>
+
+
+            <div
+              id="finalResult"
+              class="result-box"
+            ></div>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <a
+              class="btn btn-secondary"
+              href="../modulo-01/"
+            >
+              ← Revisar Módulo 01
+            </a>
+
+            <button
+              class="btn btn-primary"
+              disabled
+            >
+              Módulo 03 em breve
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+
+    <!-- ===================================================
+         BLOQUEIO DO MÓDULO
+         =================================================== -->
+
+    <div
+      id="lockedContent"
+      class="container"
+      style="display:none;"
+    >
+
+      <div class="lesson">
+
+        <article class="boss-intro">
+
+          <div class="boss-lock">
+            🔒 MÓDULO BLOQUEADO
+          </div>
+
+          <h1 class="module-title">
+            Antes da Lista Sequencial,
+            precisamos concluir os fundamentos.
+          </h1>
+
+          <p>
+            O Módulo 02 depende dos conceitos
+            trabalhados no Módulo 01:
+            TAD, memória, ponteiros,
+            <code>NULL</code>
+            e leitura básica de estruturas.
+          </p>
+
+          <a
+            class="btn btn-primary"
+            href="../modulo-01/"
+          >
+            Ir para o Módulo 01 →
+          </a>
+
+        </article>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+
+  <footer class="site-footer">
+
+    <div class="container footer-grid">
+
+      <div>
+
+        <div class="footer-title">
+          QuizADS · KorDevs
+        </div>
+
+        <div>
+          ©
+          <span data-current-year></span>
+          KorDevs Tecnologia e Automação.
+        </div>
+
+        <div>
+          Conteúdo autoral com direitos reservados.
+          Código-fonte disponibilizado sob
+          licença MIT.
+        </div>
+
+      </div>
+
+
+      <div class="footer-links">
+
+        <a href="../../../">
+          QuizADS
+        </a>
+
+        <a
+          data-support-link
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ☕ Apoiar
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <script
+    src="../../../assets/js/quizads.js"
+  ></script>
+
+
+  <script>
+
+    /* =====================================================
+       CONFIGURAÇÃO
+       ===================================================== */
+
+    const MODULE_KEY =
+      "quizads_ed_m02_v1";
+
+    const PREVIOUS_MODULE_KEY =
+      "quizads_ed_m01_v1";
+
+
+    const previousModule =
+      JSON.parse(
+        localStorage.getItem(
+          PREVIOUS_MODULE_KEY
+        ) || "{}"
+      );
+
+
+    const state =
+      JSON.parse(
+        localStorage.getItem(
+          MODULE_KEY
+        ) || "{}"
+      );
+
+
+    /* =====================================================
+       BLOQUEIO POR PROGRESSÃO
+       ===================================================== */
+
+    if (
+      !previousModule.completed
+    ) {
+
+      document.getElementById(
+        "moduleContent"
+      ).style.display =
+        "none";
+
+
+      document.getElementById(
+        "lockedContent"
+      ).style.display =
+        "block";
+
+    } else {
+
+      startModule();
+
+    }
+
+
+    /* =====================================================
+       INICIALIZAÇÃO
+       ===================================================== */
+
+    function startModule() {
+
+      state.started = true;
+
+
+      let initialPanel =
+        Number.isInteger(
+          state.currentPanel
+        )
+          ? state.currentPanel
+          : 0;
+
+
+      if (
+        state.completed
+      ) {
+        initialPanel = 9;
+      }
+
+
+      saveState();
+
+      renderCheckpoint();
+
+      initializeSimulator();
+
+      goToPanel(
+        initialPanel,
+        false
+      );
+
+    }
+
+
+    function saveState() {
+
+      localStorage.setItem(
+        MODULE_KEY,
+        JSON.stringify(state)
+      );
+
+    }
+
+
+    /* =====================================================
+       NAVEGAÇÃO
+       ===================================================== */
+
+    const panelProgress = [
+      10,
+      22,
+      36,
+      50,
+      63,
+      72,
+      78,
+      88,
+      96,
+      100
+    ];
+
+
+    const panelLabels = [
+      "Aula 1 de 5",
+      "Aula 2 de 5",
+      "Aula 3 de 5",
+      "Aula 4 de 5",
+      "Aula 5 de 5 · Laboratório",
+      "Checkpoint",
+      "Boss",
+      "Boss",
+      "Pergunta-chave",
+      "Concluído"
+    ];
+
+
+    function goToPanel(
+      index,
+      scroll = true
+    ) {
+
+      document
+        .querySelectorAll(
+          ".lesson-panel"
+        )
+        .forEach(
+          panel => {
+            panel.classList.remove(
+              "active"
+            );
+          }
+        );
+
+
+      const target =
+        document.getElementById(
+          `panel-${index}`
+        );
+
+
+      if (!target) {
+        return;
+      }
+
+
+      target.classList.add(
+        "active"
+      );
+
+
+      state.currentPanel =
+        index;
+
+      saveState();
+
+      updateProgress();
+
+
+      if (scroll) {
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
+      }
+
+    }
+
+
+    function updateProgress() {
+
+      const panel =
+        state.currentPanel || 0;
+
+
+      const percent =
+        panelProgress[panel] || 0;
+
+
+      document.getElementById(
+        "progressFill"
+      ).style.width =
+        `${percent}%`;
+
+
+      document.getElementById(
+        "progressPercent"
+      ).textContent =
+        `${percent}%`;
+
+
+      document.getElementById(
+        "progressLabel"
+      ).textContent =
+        panelLabels[panel] || "";
+
+    }
+
+
+    function showMicroAnswer(id) {
+
+      document
+        .getElementById(id)
+        .classList
+        .add("visible");
+
+    }
+
+
+    /* =====================================================
+       SIMULADOR
+       ===================================================== */
+
+    let simList = [];
+
+    const SIM_CAPACITY = 5;
+
+
+    const missions =
+      state.missions || {
+        one: false,
+        two: false,
+        three: false
+      };
+
+
+    state.missions =
+      missions;
+
+
+    function initializeSimulator() {
+
+      simList = [];
+
+      renderSimulator();
+
+      updateMissionUI();
+
+    }
+
+
+    function resetSimulator() {
+
+      simList = [];
+
+      renderSimulator();
+
+      simulatorMessage(
+        "Lista reiniciada. ultimo = -1."
+      );
+
+    }
+
+
+    function simInsert() {
+
+      const input =
+        document.getElementById(
+          "simValue"
+        );
+
+
+      const value =
+        input.value
+          .trim()
+          .toUpperCase();
+
+
+      if (!value) {
+
+        simulatorMessage(
+          "Digite um caractere antes de inserir."
+        );
+
+        return;
+      }
+
+
+      if (
+        simList.length >=
+        SIM_CAPACITY
+      ) {
+
+        simulatorMessage(
+          "Lista cheia! Não existe posição disponível."
+        );
+
+        return;
+      }
+
+
+      simList.push(
+        value[0]
+      );
+
+
+      input.value = "";
+
+
+      simulatorMessage(
+        `${value[0]} inserido. ultimo passou para ${simList.length - 1}.`
+      );
+
+
+      renderSimulator();
+
+      verifyMissions();
+
+    }
+
+
+    function simSearch() {
+
+      const raw =
+        document.getElementById(
+          "simSearchPos"
+        ).value;
+
+
+      const position =
+        Number(raw);
+
+
+      if (
+        raw === "" ||
+        !Number.isInteger(position)
+      ) {
+
+        simulatorMessage(
+          "Informe uma posição inteira."
+        );
+
+        return;
+      }
+
+
+      if (
+        position < 0 ||
+        position >= simList.length
+      ) {
+
+        simulatorMessage(
+          `Posição inválida. Neste momento, as posições válidas vão de 0 até ${simList.length - 1}.`
+        );
+
+        return;
+      }
+
+
+      const value =
+        simList[position];
+
+
+      simulatorMessage(
+        `busca(lista, ${position}) → ${value}`
+      );
+
+
+      if (
+        simList.join("") === "ABC" &&
+        position === 1 &&
+        value === "B"
+      ) {
+
+        missions.two = true;
+
+        saveState();
+
+        updateMissionUI();
+
+      }
+
+    }
+
+
+    function simRemove() {
+
+      const raw =
+        document.getElementById(
+          "simRemovePos"
+        ).value;
+
+
+      const position =
+        Number(raw);
+
+
+      if (
+        raw === "" ||
+        !Number.isInteger(position)
+      ) {
+
+        simulatorMessage(
+          "Informe uma posição inteira."
+        );
+
+        return;
+      }
+
+
+      if (
+        position < 0 ||
+        position >= simList.length
+      ) {
+
+        simulatorMessage(
+          "Essa posição não contém um elemento válido da lista."
+        );
+
+        return;
+      }
+
+
+      const before =
+        [...simList];
+
+
+      const removed =
+        simList[position];
+
+
+      const lastValue =
+        simList[
+          simList.length - 1
+        ];
+
+
+      if (
+        simList.length > 1
+      ) {
+
+        simList[position] =
+          lastValue;
+
+      }
+
+
+      simList.pop();
+
+
+      simulatorMessage(
+        `Valor removido: ${removed}. O último elemento ocupou a posição ${position}. ultimo agora é ${simList.length - 1}.`
+      );
+
+
+      renderSimulator();
+
+
+      if (
+        before.join("") === "ABC" &&
+        position === 0 &&
+        simList.join("") === "CB"
+      ) {
+
+        missions.three = true;
+
+        saveState();
+
+        updateMissionUI();
+
+      }
+
+    }
+
+
+    function renderSimulator() {
+
+      const container =
+        document.getElementById(
+          "simArray"
+        );
+
+
+      container.innerHTML = "";
+
+
+      for (
+        let index = 0;
+        index < SIM_CAPACITY;
+        index++
+      ) {
+
+        const cell =
+          document.createElement(
+            "div"
+          );
+
+
+        cell.className =
+          "sim-cell";
+
+
+        if (
+          index <
+          simList.length
+        ) {
+          cell.classList.add(
+            "used"
+          );
+        }
+
+
+        if (
+          index ===
+            simList.length - 1 &&
+          simList.length > 0
+        ) {
+          cell.classList.add(
+            "last"
+          );
+        }
+
+
+        cell.innerHTML = `
+          <div class="sim-cell-value">
+            ${
+              simList[index] ??
+              "·"
+            }
+          </div>
+
+          <div class="sim-cell-index">
+            ${index}
+          </div>
+        `;
+
+
+        container.appendChild(
+          cell
+        );
+
+      }
+
+
+      const ultimo =
+        simList.length - 1;
+
+
+      document.getElementById(
+        "simUltimo"
+      ).textContent =
+        `ultimo = ${ultimo}`;
+
+
+      document.getElementById(
+        "simQuantidade"
+      ).textContent =
+        `elementos = ${simList.length}`;
+
+
+      let status =
+        "em uso";
+
+
+      if (
+        simList.length === 0
+      ) {
+        status = "vazia";
+      }
+
+
+      if (
+        simList.length ===
+        SIM_CAPACITY
+      ) {
+        status = "cheia";
+      }
+
+
+      document.getElementById(
+        "simState"
+      ).textContent =
+        status;
+
+    }
+
+
+    function simulatorMessage(message) {
+
+      document.getElementById(
+        "simOutput"
+      ).textContent =
+        message;
+
+    }
+
+
+    function verifyMissions() {
+
+      if (
+        simList.join("") ===
+        "ABC"
+      ) {
+
+        missions.one = true;
+
+        saveState();
+
+        updateMissionUI();
+
+      }
+
+    }
+
+
+    function updateMissionUI() {
+
+      updateMission(
+        "mission1",
+        missions.one
+      );
+
+      updateMission(
+        "mission2",
+        missions.two
+      );
+
+      updateMission(
+        "mission3",
+        missions.three
+      );
+
+
+      const allDone =
+        missions.one &&
+        missions.two &&
+        missions.three;
+
+
+      const button =
+        document.getElementById(
+          "checkpointButton"
+        );
+
+
+      if (allDone) {
+
+        button.disabled =
+          false;
+
+        button.textContent =
+          "Ir para o Checkpoint →";
+
+
+        const result =
+          document.getElementById(
+            "missionResult"
+          );
+
+
+        result.style.display =
+          "block";
+
+
+        result.innerHTML = `
+          <strong>
+            Laboratório concluído.
+          </strong>
+
+          <p>
+            Você inseriu elementos,
+            realizou uma busca e observou
+            na prática como a remoção
+            altera a ordem da lista.
+          </p>
+        `;
+
+      }
+
+    }
+
+
+    function updateMission(
+      id,
+      done
+    ) {
+
+      const element =
+        document.getElementById(id);
+
+
+      if (!element) {
+        return;
+      }
+
+
+      const status =
+        element.querySelector(
+          ".mission-status"
+        );
+
+
+      if (done) {
+
+        element.classList.add(
+          "done"
+        );
+
+        status.textContent =
+          "✓";
+
+      }
+
+    }
+
+
+    /* =====================================================
+       CHECKPOINT
+       ===================================================== */
+
+    const checkpointQuestions = [
+
+      {
+        question:
+          "Uma lista sequencial é implementada, no material, principalmente por meio de:",
+
+        options: [
+          "Vetores (arrays).",
+          "Árvores.",
+          "Arquivos de texto.",
+          "Filas encadeadas."
+        ],
+
+        answer: 0,
+
+        hint:
+          "Pense nos elementos ocupando posições numeradas.",
+
+        explanation:
+          "Na lista sequencial, cada elemento ocupa uma posição de um vetor."
+      },
+
+      {
+        question:
+          "Se TAM vale 5, qual é o maior índice válido do vetor?",
+
+        options: [
+          "5",
+          "4",
+          "6",
+          "-1"
+        ],
+
+        answer: 1,
+
+        hint:
+          "Os índices começam em zero.",
+
+        explanation:
+          "Um vetor de tamanho 5 possui índices de 0 até 4."
+      },
+
+      {
+        question:
+          "O que significa ultimo = -1?",
+
+        options: [
+          "A lista está cheia.",
+          "A lista está vazia.",
+          "Há um elemento na posição -1.",
+          "O programa terminou."
+        ],
+
+        answer: 1,
+
+        hint:
+          "Nenhuma posição válida está ocupada.",
+
+        explanation:
+          "-1 funciona como marcador de lista vazia."
+      },
+
+      {
+        question:
+          "Com TAM = 5, quando a lista está cheia?",
+
+        options: [
+          "ultimo == 5",
+          "ultimo == 0",
+          "ultimo == TAM - 1",
+          "ultimo == -1"
+        ],
+
+        answer: 2,
+
+        hint:
+          "Qual é a última posição do vetor?",
+
+        explanation:
+          "A lista está cheia quando ultimo chega à última posição válida: TAM - 1."
+      },
+
+      {
+        question:
+          "Antes de inserir um novo elemento, ultimo vale 2. Após uma inserção válida ele passa a valer:",
+
+        options: [
+          "1",
+          "2",
+          "3",
+          "-1"
+        ],
+
+        answer: 2,
+
+        hint:
+          "A função incrementa ultimo antes de gravar o elemento.",
+
+        explanation:
+          "A instrução ultimo++ faz o campo passar de 2 para 3."
+      },
+
+      {
+        question:
+          "A lista contém A, B, C, D e ultimo = 3. O que busca(lista, 2) retorna?",
+
+        options: [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+
+        answer: 2,
+
+        hint:
+          "Leia os índices: A=0, B=1, C=2, D=3.",
+
+        explanation:
+          "A posição 2 contém C."
+      },
+
+      {
+        question:
+          "A lista é [A, B, C, D, E]. Aplicando a função estudada para remover a posição 1, qual sequência passa a ser considerada pela lista?",
+
+        options: [
+          "A, C, D, E",
+          "A, E, C, D",
+          "B, C, D, E",
+          "A, B, C, D"
+        ],
+
+        answer: 1,
+
+        hint:
+          "O último elemento ocupa a posição removida.",
+
+        explanation:
+          "B é removido, E ocupa a posição 1 e ultimo passa de 4 para 3."
+      },
+
+      {
+        question:
+          "Por que a remoção estudada não preserva a ordem?",
+
+        options: [
+          "Porque todos os elementos são apagados.",
+          "Porque o último elemento é copiado para a posição removida.",
+          "Porque ultimo passa a -1.",
+          "Porque o vetor muda de tamanho."
+        ],
+
+        answer: 1,
+
+        hint:
+          "Observe quem ocupa a vaga deixada pelo elemento removido.",
+
+        explanation:
+          "A estratégia evita deslocar vários elementos, mas altera sua ordem."
+      }
+
+    ];
+
+
+    function renderCheckpoint() {
+
+      const form =
+        document.getElementById(
+          "checkpointForm"
+        );
+
+
+      form.innerHTML = "";
+
+
+      checkpointQuestions.forEach(
+        (
+          item,
+          index
+        ) => {
+
+          const block =
+            document.createElement(
+              "div"
+            );
+
+
+          block.className =
+            "quiz-question";
+
+
+          block.innerHTML = `
+            <div class="question-number">
+              CHECKPOINT ${String(
+                index + 1
+              ).padStart(2, "0")}
+            </div>
+
+            <div class="question-title">
+              ${item.question}
+            </div>
+
+            <div class="options">
+
+              ${item.options
+                .map(
+                  (
+                    option,
+                    optionIndex
+                  ) => `
+                    <label class="option">
+
+                      <input
+                        type="radio"
+                        name="checkpoint-${index}"
+                        value="${optionIndex}"
+                      />
+
+                      ${option}
+
+                    </label>
+                  `
+                )
+                .join("")}
+
+            </div>
+
+            <div class="quiz-tools">
+
+              <button
+                type="button"
+                class="small-button"
+                onclick="toggleCheckpointHint(${index})"
+              >
+                💡 Dica
+              </button>
+
+              <button
+                type="button"
+                class="small-button"
+                onclick="goToPanel(${checkpointLessonFor(index)})"
+              >
+                📖 Consultar aula
+              </button>
+
+            </div>
+
+            <div
+              id="checkpointHint-${index}"
+              class="hint"
+            >
+              ${item.hint}
+            </div>
+          `;
+
+
+          form.appendChild(
+            block
+          );
+
+        }
+      );
+
+
+      const button =
+        document.createElement(
+          "button"
+        );
+
+
+      button.type =
+        "submit";
+
+      button.className =
+        "btn btn-primary btn-full";
+
+      button.textContent =
+        "Corrigir Checkpoint";
+
+
+      form.appendChild(
+        button
+      );
+
+
+      form.onsubmit =
+        submitCheckpoint;
+
+    }
+
+
+    function checkpointLessonFor(
+      index
+    ) {
+
+      if (
+        index <= 1
+      ) return 0;
+
+      if (
+        index <= 3
+      ) return 1;
+
+      if (
+        index <= 5
+      ) return 2;
+
+      return 3;
+
+    }
+
+
+    function toggleCheckpointHint(
+      index
+    ) {
+
+      document
+        .getElementById(
+          `checkpointHint-${index}`
+        )
+        .classList
+        .toggle("visible");
+
+    }
+
+
+    function startCheckpoint() {
+
+      const allDone =
+        missions.one &&
+        missions.two &&
+        missions.three;
+
+
+      if (!allDone) {
+
+        alert(
+          "Complete primeiro as três missões do laboratório."
+        );
+
+        return;
+
+      }
+
+
+      goToPanel(5);
+
+    }
+
+
+    function submitCheckpoint(
+      event
+    ) {
+
+      event.preventDefault();
+
+
+      let score = 0;
+      let answered = 0;
+
+      const mistakes = [];
+
+
+      checkpointQuestions.forEach(
+        (
+          item,
+          index
+        ) => {
+
+          const selected =
+            document.querySelector(
+              `input[name="checkpoint-${index}"]:checked`
+            );
+
+
+          if (!selected) {
+            return;
+          }
+
+
+          answered++;
+
+
+          if (
+            Number(
+              selected.value
+            ) === item.answer
+          ) {
+
+            score++;
+
+          } else {
+
+            mistakes.push({
+              number:
+                index + 1,
+
+              explanation:
+                item.explanation
+            });
+
+          }
+
+        }
+      );
+
+
+      if (
+        answered <
+        checkpointQuestions.length
+      ) {
+
+        alert(
+          `Você respondeu ${answered} de ${checkpointQuestions.length} questões. Responda todas antes de corrigir.`
+        );
+
+        return;
+
+      }
+
+
+      const result =
+        document.getElementById(
+          "checkpointResult"
+        );
+
+
+      result.style.display =
+        "block";
+
+
+      if (
+        score >= 7
+      ) {
+
+        state.checkpointPassed =
+          true;
+
+        state.checkpointScore =
+          score;
+
+        saveState();
+
+
+        result.innerHTML = `
+          <div class="result-score">
+            ${score}/8
+          </div>
+
+          <h3>
+            Checkpoint aprovado.
+          </h3>
+
+          ${
+            mistakes.length
+              ? `
+                <p>
+                  Antes do Boss, revise este ponto:
+                </p>
+
+                ${mistakes
+                  .map(
+                    mistake => `
+                      <div class="rubric-item missing">
+                        Questão ${mistake.number}:
+                        ${mistake.explanation}
+                      </div>
+                    `
+                  )
+                  .join("")}
+              `
+              : `
+                <p>
+                  Excelente.
+                  Você acertou todas.
+                </p>
+              `
+          }
+
+          <br />
+
+          <button
+            type="button"
+            class="btn btn-primary"
+            onclick="goToPanel(6)"
+          >
+            Liberar Boss →
+          </button>
+        `;
+
+      } else {
+
+        result.innerHTML = `
+          <div class="result-score">
+            ${score}/8
+          </div>
+
+          <h3>
+            Ainda precisamos consolidar.
+          </h3>
+
+          <p>
+            O mínimo é 7/8.
+            Veja os pontos que merecem revisão:
+          </p>
+
+          <div class="rubric">
+
+            ${mistakes
+              .map(
+                mistake => `
+                  <div class="rubric-item missing">
+                    Questão ${mistake.number}:
+                    ${mistake.explanation}
+                  </div>
+                `
+              )
+              .join("")}
+
+          </div>
+
+          <br />
+
+          <button
+            type="button"
+            class="btn btn-secondary"
+            onclick="goToPanel(0)"
+          >
+            Revisar aulas
+          </button>
+        `;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       BOSS
+       ===================================================== */
+
+    const bossQuestions = [
+
+      {
+        topic:
+          "índices",
+
+        question:
+          "Um vetor possui TAM = 6. Qual é sua última posição válida?",
+
+        options: [
+          "6",
+          "5",
+          "4",
+          "-1"
+        ],
+
+        answer: 1
+      },
+
+      {
+        topic:
+          "ultimo",
+
+        question:
+          "Uma lista possui A, B e C nas posições 0, 1 e 2. Qual deve ser o valor de ultimo?",
+
+        options: [
+          "3",
+          "2",
+          "1",
+          "-1"
+        ],
+
+        answer: 1
+      },
+
+      {
+        topic:
+          "lista vazia",
+
+        question:
+          "Qual estado representa corretamente uma lista sequencial vazia no código estudado?",
+
+        options: [
+          "ultimo = 0",
+          "ultimo = TAM",
+          "ultimo = -1",
+          "ultimo = 1"
+        ],
+
+        answer: 2
+      },
+
+      {
+        topic:
+          "lista cheia",
+
+        question:
+          "Com TAM = 5 e ultimo = 4, qual afirmação é correta?",
+
+        options: [
+          "A lista está vazia.",
+          "A lista está cheia.",
+          "Existe espaço para mais dois elementos.",
+          "ultimo deveria valer 5."
+        ],
+
+        answer: 1
+      },
+
+      {
+        topic:
+          "inserção",
+
+        question:
+          "Antes da inserção ultimo = 1. A função insere adiciona C corretamente. Qual será o novo valor de ultimo?",
+
+        options: [
+          "-1",
+          "1",
+          "2",
+          "3"
+        ],
+
+        answer: 2
+      },
+
+      {
+        topic:
+          "busca",
+
+        question:
+          "Lista: [M, N, P, Q], ultimo = 3. O que busca(lista, 3) retorna?",
+
+        options: [
+          "M",
+          "N",
+          "P",
+          "Q"
+        ],
+
+        answer: 3
+      },
+
+      {
+        topic:
+          "busca",
+
+        question:
+          "Lista: [M, N, P], ultimo = 2. Qual posição NÃO é válida para a busca apresentada?",
+
+        options: [
+          "0",
+          "1",
+          "2",
+          "3"
+        ],
+
+        answer: 3
+      },
+
+      {
+        topic:
+          "remoção",
+
+        question:
+          "Lista: [A, B, C, D], ultimo = 3. Após retira(lista, 1), qual será a sequência considerada?",
+
+        options: [
+          "A, C, D",
+          "A, D, C",
+          "B, C, D",
+          "A, B, C"
+        ],
+
+        answer: 1
+      },
+
+      {
+        topic:
+          "remoção",
+
+        question:
+          "Na questão anterior, qual valor é retornado pela função retira?",
+
+        options: [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+
+        answer: 1
+      },
+
+      {
+        topic:
+          "remoção",
+
+        question:
+          "Lista: [A, B, C, D, E], ultimo = 4. Após remover a posição 2, qual valor ocupará a posição 2?",
+
+        options: [
+          "B",
+          "C",
+          "D",
+          "E"
+        ],
+
+        answer: 3
+      },
+
+      {
+        topic:
+          "leitura de código",
+
+        question:
+          "O que lista->ultimo++ faz durante a inserção?",
+
+        options: [
+          "Apaga o último elemento.",
+          "Avança o índice da última posição ocupada.",
+          "Diminui a capacidade do vetor.",
+          "Marca a lista como vazia."
+        ],
+
+        answer: 1
+      },
+
+      {
+        topic:
+          "custo e ordem",
+
+        question:
+          "Qual afirmação descreve melhor a estratégia de remoção estudada?",
+
+        options: [
+          "Preserva a ordem deslocando todos os elementos.",
+          "Mantém todos os índices inalterados.",
+          "Evita deslocar vários elementos ao colocar o último na posição removida, mas pode alterar a ordem.",
+          "Cria automaticamente um vetor maior."
+        ],
+
+        answer: 2
+      }
+
+    ];
+
+
+    function startBoss() {
+
+      if (
+        !state.checkpointPassed
+      ) {
+        return;
+      }
+
+
+      renderBoss();
+
+      goToPanel(7);
+
+    }
+
+
+    function renderBoss() {
+
+      const form =
+        document.getElementById(
+          "bossForm"
+        );
+
+
+      form.innerHTML = "";
+
+
+      bossQuestions.forEach(
+        (
+          item,
+          index
+        ) => {
+
+          const block =
+            document.createElement(
+              "div"
+            );
+
+
+          block.className =
+            "quiz-question";
+
+
+          block.innerHTML = `
+            <div class="question-number">
+              BOSS ${String(
+                index + 1
+              ).padStart(2, "0")}
+            </div>
+
+            <div class="question-title">
+              ${item.question}
+            </div>
+
+            <div class="options">
+
+              ${item.options
+                .map(
+                  (
+                    option,
+                    optionIndex
+                  ) => `
+                    <label class="option">
+
+                      <input
+                        type="radio"
+                        name="boss-${index}"
+                        value="${optionIndex}"
+                      />
+
+                      ${option}
+
+                    </label>
+                  `
+                )
+                .join("")}
+
+            </div>
+          `;
+
+
+          form.appendChild(
+            block
+          );
+
+        }
+      );
+
+
+      const submit =
+        document.createElement(
+          "button"
+        );
+
+
+      submit.type =
+        "submit";
+
+      submit.className =
+        "btn btn-primary btn-full";
+
+      submit.textContent =
+        "Finalizar Boss";
+
+
+      form.appendChild(
+        submit
+      );
+
+
+      form.onsubmit =
+        submitBoss;
+
+    }
+
+
+    function submitBoss(
+      event
+    ) {
+
+      event.preventDefault();
+
+
+      let score = 0;
+      let answered = 0;
+
+      const missedTopics =
+        new Set();
+
+
+      bossQuestions.forEach(
+        (
+          item,
+          index
+        ) => {
+
+          const selected =
+            document.querySelector(
+              `input[name="boss-${index}"]:checked`
+            );
+
+
+          if (!selected) {
+            return;
+          }
+
+
+          answered++;
+
+
+          if (
+            Number(
+              selected.value
+            ) === item.answer
+          ) {
+
+            score++;
+
+          } else {
+
+            missedTopics.add(
+              item.topic
+            );
+
+          }
+
+        }
+      );
+
+
+      if (
+        answered <
+        bossQuestions.length
+      ) {
+
+        alert(
+          `Você respondeu ${answered} de ${bossQuestions.length}. Responda todas antes de finalizar.`
+        );
+
+        return;
+
+      }
+
+
+      state.bossScore =
+        score;
+
+
+      if (
+        score >= 10
+      ) {
+
+        state.bossPassed =
+          true;
+
+        saveState();
+
+        goToPanel(8);
+
+      } else {
+
+        state.bossPassed =
+          false;
+
+        saveState();
+
+
+        const form =
+          document.getElementById(
+            "bossForm"
+          );
+
+
+        form.innerHTML = `
+          <div class="result-box">
+
+            <div class="result-score">
+              ${score}/12
+            </div>
+
+            <h2>
+              Boss ainda não derrotado.
+            </h2>
+
+            <p>
+              O mínimo é 10/12.
+            </p>
+
+            <p>
+              Seus pontos de revisão são:
+            </p>
+
+            <div class="chips">
+
+              ${Array
+                .from(
+                  missedTopics
+                )
+                .map(
+                  topic => `
+                    <span class="chip">
+                      ${topic}
+                    </span>
+                  `
+                )
+                .join("")}
+
+            </div>
+
+            <p>
+              O Boss não mostra as respostas corretas.
+              Volte às aulas correspondentes,
+              revise o raciocínio e tente novamente.
+            </p>
+
+            <button
+              type="button"
+              class="btn btn-secondary"
+              onclick="restartAfterBossFailure()"
+            >
+              Revisar módulo
+            </button>
+
+          </div>
+        `;
+
+      }
+
+    }
+
+
+    function restartAfterBossFailure() {
+
+      renderBoss();
+
+      goToPanel(0);
+
+    }
+
+
+    /* =====================================================
+       DISSERTATIVA
+       ===================================================== */
+
+    const essay =
+      document.getElementById(
+        "essayAnswer"
+      );
+
+
+    essay.addEventListener(
+      "input",
+      () => {
+
+        document.getElementById(
+          "essayCounter"
+        ).textContent =
+          `${essay.value.length} caracteres`;
+
+      }
+    );
+
+
+    function normalizeText(text) {
+
+      return text
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(
+          /[\u0300-\u036f]/g,
+          ""
+        );
+
+    }
+
+
+    function hasAny(
+      text,
+      terms
+    ) {
+
+      return terms.some(
+        term =>
+          text.includes(term)
+      );
+
+    }
+
+
+    function evaluateEssay() {
+
+      const raw =
+        essay.value.trim();
+
+
+      const text =
+        normalizeText(raw);
+
+
+      const criteria = [
+
+        {
+          title:
+            "Reconhece ultimo = -1 como lista vazia",
+
+          ok:
+            text.includes("-1") &&
+            hasAny(
+              text,
+              [
+                "vazia",
+                "sem elemento",
+                "nenhum elemento"
+              ]
+            )
+        },
+
+        {
+          title:
+            "Reconhece TAM - 1 / última posição como condição de lista cheia",
+
+          ok:
+            hasAny(
+              text,
+              [
+                "tam - 1",
+                "tam-1",
+                "ultima posicao",
+                "ultimo indice"
+              ]
+            ) &&
+            hasAny(
+              text,
+              [
+                "cheia",
+                "lotada",
+                "sem espaco"
+              ]
+            )
+        },
+
+        {
+          title:
+            "Explica que ultimo aumenta na inserção",
+
+          ok:
+            hasAny(
+              text,
+              [
+                "ultimo++",
+                "incrementa",
+                "aumenta",
+                "soma 1",
+                "mais 1"
+              ]
+            ) &&
+            hasAny(
+              text,
+              [
+                "insere",
+                "insercao",
+                "inserir"
+              ]
+            )
+        },
+
+        {
+          title:
+            "Explica que ultimo diminui na remoção",
+
+          ok:
+            hasAny(
+              text,
+              [
+                "ultimo--",
+                "decrementa",
+                "diminui",
+                "menos 1"
+              ]
+            ) &&
+            hasAny(
+              text,
+              [
+                "retira",
+                "remove",
+                "remocao"
+              ]
+            )
+        },
+
+        {
+          title:
+            "Explica que a remoção pode alterar a ordem porque o último elemento ocupa a posição removida",
+
+          ok:
+            hasAny(
+              text,
+              [
+                "ultimo elemento",
+                "ultimo valor"
+              ]
+            ) &&
+            hasAny(
+              text,
+              [
+                "posicao removida",
+                "lugar removido",
+                "vaga",
+                "ocupa"
+              ]
+            ) &&
+            hasAny(
+              text,
+              [
+                "ordem",
+                "nao conserva",
+                "nao preserva",
+                "muda"
+              ]
+            )
+        }
+
+      ];
+
+
+      const covered =
+        criteria.filter(
+          criterion =>
+            criterion.ok
+        ).length;
+
+
+      const enoughText =
+        raw.length >= 180;
+
+
+      const result =
+        document.getElementById(
+          "essayResult"
+        );
+
+
+      result.style.display =
+        "block";
+
+
+      result.innerHTML = `
+        <h3>
+          Rubrica de aprendizagem
+        </h3>
+
+        <p>
+          O QuizADS não usa IA para fingir uma
+          correção semântica. Esta etapa verifica
+          pontos-chave e deixa a explicação visível
+          para revisão humana.
+        </p>
+
+        <div class="rubric">
+
+          ${criteria
+            .map(
+              criterion => `
+                <div
+                  class="rubric-item ${
+                    criterion.ok
+                      ? "ok"
+                      : "missing"
+                  }"
+                >
+                  ${
+                    criterion.ok
+                      ? "✓"
+                      : "○"
+                  }
+
+                  ${criterion.title}
+                </div>
+              `
+            )
+            .join("")}
+
+        </div>
+
+        ${
+          !enoughText
+            ? `
+              <p>
+                Sua resposta ainda está curta.
+                Desenvolva um pouco mais o
+                raciocínio. O objetivo é explicar,
+                não apenas citar palavras-chave.
+              </p>
+            `
+            : ""
+        }
+
+        ${
+          covered >= 4 &&
+          enoughText
+
+            ? `
+              <p>
+                <strong>
+                  Critério atingido.
+                </strong>
+
+                Você cobriu
+                ${covered}/5
+                pontos fundamentais.
+              </p>
+
+              <button
+                type="button"
+                class="btn btn-success"
+                onclick="completeModule()"
+              >
+                Concluir Módulo 02 →
+              </button>
+            `
+
+            : `
+              <p>
+                Você cobriu
+                <strong>
+                  ${covered}/5
+                </strong>
+                pontos essenciais.
+
+                Para concluir, precisamos de pelo
+                menos 4/5 e uma explicação um
+                pouco mais desenvolvida.
+              </p>
+            `
+        }
+      `;
+
+    }
+
+
+    /* =====================================================
+       CONCLUSÃO
+       ===================================================== */
+
+    function completeModule() {
+
+      state.completed =
+        true;
+
+      state.completedAt =
+        new Date().toISOString();
+
+      saveState();
+
+
+      document.getElementById(
+        "finalResult"
+      ).innerHTML = `
+        <div class="result-score">
+          ${state.bossScore}/12
+        </div>
+
+        <strong>
+          Boss concluído.
+        </strong>
+
+        <p>
+          Lista Sequencial registrada como
+          concluída neste navegador.
+        </p>
+      `;
+
+
+      goToPanel(9);
+
+    }
+
+  </script>
+
+</body>
+</html>

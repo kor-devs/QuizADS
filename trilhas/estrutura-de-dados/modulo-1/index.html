@@ -1,0 +1,2721 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="theme-color"
+    content="#123744"
+  />
+
+  <title>
+    Módulo 01 | Fundamentos | QuizADS
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="../../../assets/css/quizads.css"
+  />
+
+</head>
+
+
+<body>
+
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
+
+  <header class="site-header">
+
+    <div class="container header-inner">
+
+      <a
+        href="../../../"
+        class="brand"
+      >
+
+        <img
+          data-kordevs-logo
+          data-root="../../../"
+          class="brand-logo"
+          src="../../../assets/brand/KorDevs_White.png"
+          alt="KorDevs"
+        />
+
+        <div class="brand-info">
+
+          <span class="brand-name">
+            QuizADS
+          </span>
+
+          <span class="brand-product">
+            estrutura de dados
+          </span>
+
+        </div>
+
+      </a>
+
+
+      <div class="header-actions">
+
+        <button
+          data-theme-toggle
+          data-theme-icon
+          class="icon-button"
+          type="button"
+          aria-label="Alternar tema"
+        >
+          🌙
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =====================================================
+       MAIN
+       ===================================================== -->
+
+  <main class="module-main">
+
+    <div class="container">
+
+      <header class="module-top">
+
+        <div class="breadcrumb">
+
+          <a href="../../../">
+            QuizADS
+          </a>
+
+          &nbsp;›&nbsp;
+
+          Estrutura de Dados
+
+          &nbsp;›&nbsp;
+
+          Módulo 01
+
+        </div>
+
+
+        <div class="kicker">
+          MÓDULO 01 · FUNDAMENTOS
+        </div>
+
+
+        <h1 class="module-title">
+          Antes das estruturas,
+          precisamos entender
+          <span class="accent">
+            o que o código está dizendo.
+          </span>
+        </h1>
+
+
+        <p class="module-summary">
+          Neste módulo você vai construir a base
+          necessária para compreender listas,
+          pilhas, filas e árvores sem precisar
+          decorar comandos.
+        </p>
+
+
+        <div class="progress-card">
+
+          <div class="progress-head">
+
+            <span id="progressLabel">
+              Aula 1 de 5
+            </span>
+
+            <span id="progressPercent">
+              20%
+            </span>
+
+          </div>
+
+          <div class="progress-bar">
+
+            <div
+              id="progressFill"
+              class="progress-fill"
+            ></div>
+
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <!-- =================================================
+           AULA 1
+           ================================================= -->
+
+      <section
+        id="panel-0"
+        class="lesson-panel active"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              AULA 01
+            </div>
+
+            <h2>
+              O que é uma estrutura de dados?
+            </h2>
+
+
+            <p>
+              Antes de pensar em código, pense no
+              problema que o computador precisa
+              resolver.
+            </p>
+
+            <p>
+              Dados podem existir de muitas formas:
+              nomes de clientes, produtos,
+              compromissos, notas de alunos,
+              transações ou milhares de registros.
+            </p>
+
+            <p>
+              Se simplesmente jogássemos todas essas
+              informações na memória sem nenhuma
+              organização, trabalhar com elas seria
+              difícil e ineficiente.
+            </p>
+
+
+            <div class="callout">
+
+              <strong>
+                Estrutura de dados
+              </strong>
+
+              É uma forma organizada de
+              armazenar dados e definir como
+              podemos trabalhar com eles.
+
+            </div>
+
+
+            <div class="concept-grid">
+
+              <div class="concept-card">
+
+                <strong>
+                  Dados
+                </strong>
+
+                São as informações que queremos
+                guardar.
+
+              </div>
+
+
+              <div class="concept-card">
+
+                <strong>
+                  Organização
+                </strong>
+
+                Define como esses dados ficam
+                relacionados.
+
+              </div>
+
+
+              <div class="concept-card">
+
+                <strong>
+                  Operações
+                </strong>
+
+                Definem o que conseguimos fazer:
+                inserir, buscar, remover etc.
+
+              </div>
+
+
+              <div class="concept-card">
+
+                <strong>
+                  Objetivo
+                </strong>
+
+                Resolver um problema de forma
+                organizada e eficiente.
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              Um exemplo sem programação
+            </h2>
+
+            <p>
+              Imagine uma agenda de contatos.
+            </p>
+
+            <p>
+              Cada contato possui dados:
+            </p>
+
+            <div class="diagram">Nome: Ana
+Telefone: 11 99999-9999
+Email: ana@email.com</div>
+
+            <p>
+              Mas apenas guardar esses dados não
+              basta. Também precisamos realizar
+              operações:
+            </p>
+
+            <div class="diagram">Adicionar contato
+Buscar contato
+Alterar contato
+Remover contato
+Listar contatos</div>
+
+            <p>
+              Essa combinação entre
+              <strong>dados organizados</strong>
+              e
+              <strong>operações</strong>
+              será muito importante daqui para
+              frente.
+            </p>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <a
+              class="btn btn-secondary"
+              href="../../../"
+            >
+              ← Sair
+            </a>
+
+            <button
+              class="btn btn-primary"
+              onclick="goToPanel(1)"
+            >
+              Continuar →
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           AULA 2
+           ================================================= -->
+
+      <section
+        id="panel-1"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              AULA 02
+            </div>
+
+            <h2>
+              Entendendo TAD
+            </h2>
+
+
+            <p>
+              TAD significa
+              <strong>
+                Tipo Abstrato de Dados
+              </strong>.
+            </p>
+
+            <p>
+              O nome parece complicado, mas a
+              ideia é simples.
+            </p>
+
+
+            <div class="callout">
+
+              <strong>
+                TAD = dados + operações
+              </strong>
+
+              Primeiro definimos o que a estrutura
+              guarda. Depois definimos quais
+              ações podem ser realizadas sobre
+              esses dados.
+
+            </div>
+
+
+            <p>
+              Pense em uma conta bancária.
+            </p>
+
+
+            <div class="concept-grid">
+
+              <div class="concept-card">
+
+                <strong>
+                  Dados
+                </strong>
+
+                Saldo, titular, número da conta.
+
+              </div>
+
+
+              <div class="concept-card">
+
+                <strong>
+                  Operações
+                </strong>
+
+                Depositar, sacar, consultar saldo.
+
+              </div>
+
+            </div>
+
+
+            <p>
+              Você não precisa saber como o banco
+              grava fisicamente cada informação para
+              utilizar uma conta.
+            </p>
+
+            <p>
+              Essa separação é a ideia de
+              <strong>abstração</strong>:
+              conseguimos trabalhar com algo
+              sem precisar conhecer todos os detalhes
+              internos ao mesmo tempo.
+            </p>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              TAD no nosso livro
+            </h2>
+
+            <p>
+              Ao estudar listas, pilhas, filas e
+              árvores, veremos sempre a mesma lógica:
+            </p>
+
+            <div class="diagram">ESTRUTURA
+    ↓
+DADOS
+    +
+OPERAÇÕES</div>
+
+            <p>
+              Por exemplo, uma lista pode possuir
+              operações como:
+            </p>
+
+            <div class="diagram">cria()
+insere()
+busca()
+retira()
+imprime()
+libera()</div>
+
+            <p>
+              Não tente decorar esses nomes agora.
+              Entenda apenas o padrão:
+            </p>
+
+            <div class="callout">
+
+              <strong>
+                Pergunta importante
+              </strong>
+
+              “O que essa estrutura guarda e o que
+              podemos fazer com ela?”
+
+            </div>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <button
+              class="btn btn-secondary"
+              onclick="goToPanel(0)"
+            >
+              ← Voltar
+            </button>
+
+            <button
+              class="btn btn-primary"
+              onclick="goToPanel(2)"
+            >
+              Continuar →
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           AULA 3
+           ================================================= -->
+
+      <section
+        id="panel-2"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              AULA 03
+            </div>
+
+            <h2>
+              Nó, memória e endereço
+            </h2>
+
+
+            <p>
+              Agora chegamos em um dos pontos que
+              costuma causar confusão:
+              <strong>ponteiros</strong>.
+            </p>
+
+            <p>
+              Antes de falar de ponteiro, precisamos
+              falar de memória.
+            </p>
+
+
+            <div class="callout">
+
+              <strong>
+                Pense na memória como vários locais
+                numerados.
+              </strong>
+
+              Cada informação armazenada ocupa
+              algum local, e esse local possui um
+              endereço.
+
+            </div>
+
+
+            <div class="diagram">MEMÓRIA
+
+Endereço 1000 → "Ana"
+Endereço 1001 → 27
+Endereço 1002 → 9.5
+Endereço 1003 → ...</div>
+
+
+            <p>
+              Na prática os endereços são muito mais
+              complexos, mas para aprender estrutura
+              de dados podemos pensar dessa forma.
+            </p>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              O que é um nó?
+            </h2>
+
+            <p>
+              Em estruturas encadeadas, os dados
+              normalmente são organizados em
+              pequenas estruturas chamadas
+              <strong>nós</strong>.
+            </p>
+
+
+            <div class="diagram">┌──────────────────────┐
+│          NÓ          │
+├──────────┬───────────┤
+│   info   │   prox    │
+├──────────┼───────────┤
+│    A     │ endereço  │
+└──────────┴───────────┘</div>
+
+
+            <p>
+              Observe que esse nó guarda duas coisas.
+            </p>
+
+
+            <div class="concept-grid">
+
+              <div class="concept-card">
+
+                <strong>
+                  info
+                </strong>
+
+                É o dado armazenado.
+
+              </div>
+
+
+              <div class="concept-card">
+
+                <strong>
+                  prox
+                </strong>
+
+                Guarda o endereço do próximo nó.
+
+              </div>
+
+            </div>
+
+
+            <p>
+              Isso permite ligar vários nós:
+            </p>
+
+
+            <div class="diagram">┌─────┬──────┐
+│  A  │  ─────────┐
+└─────┴──────┘     │
+                  ↓
+             ┌─────┬──────┐
+             │  B  │  ─────────┐
+             └─────┴──────┘     │
+                               ↓
+                          ┌─────┬──────┐
+                          │  C  │ NULL │
+                          └─────┴──────┘</div>
+
+
+            <p>
+              O nó A sabe onde B está.
+              B sabe onde C está.
+            </p>
+
+            <p>
+              C possui
+              <strong>NULL</strong>
+              porque não existe próximo nó.
+            </p>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              Então o que é um ponteiro?
+            </h2>
+
+            <div class="callout">
+
+              <strong>
+                Ponteiro é uma variável que guarda
+                um endereço de memória.
+              </strong>
+
+            </div>
+
+            <p>
+              Ele não precisa guardar o dado
+              diretamente.
+            </p>
+
+            <p>
+              Ele pode guardar
+              <strong>onde o dado está</strong>.
+            </p>
+
+
+            <div class="diagram">ponteiro inicio
+      │
+      │ endereço 1000
+      ↓
+┌────────────┐
+│ Nó A       │
+│ endereço   │
+│ 1000       │
+└────────────┘</div>
+
+
+            <p>
+              Essa é uma ideia fundamental.
+            </p>
+
+            <p>
+              Quando encontrar a palavra
+              <strong>ponteiro</strong>, pense:
+            </p>
+
+
+            <div class="callout">
+
+              “Uma variável que sabe o endereço
+              de outra coisa.”
+
+            </div>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <button
+              class="btn btn-secondary"
+              onclick="goToPanel(1)"
+            >
+              ← Voltar
+            </button>
+
+            <button
+              class="btn btn-primary"
+              onclick="goToPanel(3)"
+            >
+              Ver o código →
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           AULA 4
+           ================================================= -->
+
+      <section
+        id="panel-3"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              AULA 04
+            </div>
+
+            <h2>
+              Agora o código começa a fazer sentido.
+            </h2>
+
+
+            <p>
+              Observe esta estrutura usada no
+              material:
+            </p>
+
+
+            <pre class="code">typedef struct no {
+    char info;
+    struct no *prox;
+} no;</pre>
+
+
+            <p>
+              Não leia isso como um bloco misterioso.
+              Vamos traduzir.
+            </p>
+
+
+            <div class="translation">
+
+              <div class="translation-row">
+
+                <code>
+                  struct no
+                </code>
+
+                = estamos descrevendo um tipo
+                de estrutura chamado nó.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  char info;
+                </code>
+
+                = dentro do nó existe um campo
+                chamado info.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  struct no *prox;
+                </code>
+
+                = dentro do nó existe um ponteiro
+                chamado prox que pode guardar o
+                endereço de outro nó.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  typedef ... no;
+                </code>
+
+                = estamos criando uma forma mais
+                curta de chamar essa estrutura.
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              O que significa o asterisco?
+            </h2>
+
+
+            <pre class="code">struct no <span class="orange">*</span>prox;</pre>
+
+
+            <p>
+              Nesse contexto, o
+              <strong>*</strong>
+              indica que
+              <code>prox</code>
+              é um ponteiro.
+            </p>
+
+            <p>
+              Ou seja:
+            </p>
+
+
+            <div class="callout">
+
+              prox não guarda outro nó inteiro.
+              Ele guarda o
+              <strong>endereço</strong>
+              de outro nó.
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              E essa seta?
+            </h2>
+
+
+            <pre class="code">novo->info = 'A';
+
+novo->prox = lista;</pre>
+
+
+            <p>
+              O operador
+              <strong>-></strong>
+              é usado quando temos um ponteiro
+              apontando para uma estrutura e queremos
+              acessar um campo dela.
+            </p>
+
+
+            <div class="translation">
+
+              <div class="translation-row">
+
+                <code>
+                  novo->info
+                </code>
+
+                = acesse o campo
+                <strong>info</strong>
+                do nó apontado por
+                <strong>novo</strong>.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  novo->prox
+                </code>
+
+                = acesse o campo
+                <strong>prox</strong>
+                do nó apontado por
+                <strong>novo</strong>.
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              NULL
+            </h2>
+
+
+            <pre class="code">novo->prox = NULL;</pre>
+
+
+            <p>
+              <strong>NULL</strong>
+              significa que aquele ponteiro não
+              está apontando para um endereço válido
+              de outro nó.
+            </p>
+
+
+            <div class="diagram">A → B → C → NULL</div>
+
+
+            <p>
+              Nesse desenho, NULL indica:
+            </p>
+
+
+            <div class="callout">
+
+              “C não possui próximo elemento.”
+
+            </div>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <button
+              class="btn btn-secondary"
+              onclick="goToPanel(2)"
+            >
+              ← Voltar
+            </button>
+
+            <button
+              class="btn btn-primary"
+              onclick="startCheckpoint()"
+            >
+              Ir para o Checkpoint →
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           CHECKPOINT
+           ================================================= -->
+
+      <section
+        id="panel-4"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              CHECKPOINT
+            </div>
+
+            <h2>
+              Agora vamos praticar.
+            </h2>
+
+            <p>
+              Aqui você ainda está aprendendo.
+              Pode consultar dicas e rever conceitos.
+            </p>
+
+            <p>
+              Para liberar o Boss:
+              <strong>
+                acerte pelo menos 5 das 6 questões.
+              </strong>
+            </p>
+
+          </article>
+
+
+          <form id="checkpointForm">
+
+            <div
+              class="quiz-question"
+              data-question="c1"
+            >
+
+              <div class="question-number">
+                QUESTÃO 01
+              </div>
+
+              <div class="question-title">
+                Qual frase descreve melhor um TAD?
+              </div>
+
+              <div class="options">
+
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="c1"
+                    value="a"
+                  />
+                  Um tipo de variável usado apenas
+                  para números.
+                </label>
+
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="c1"
+                    value="b"
+                  />
+                  Uma estrutura definida por dados
+                  e operações sobre esses dados.
+                </label>
+
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="c1"
+                    value="c"
+                  />
+                  Um endereço de memória.
+                </label>
+
+              </div>
+
+
+              <div class="quiz-tools">
+
+                <button
+                  type="button"
+                  class="small-button"
+                  onclick="toggleHint(this)"
+                >
+                  💡 Dica
+                </button>
+
+                <button
+                  type="button"
+                  class="small-button"
+                  onclick="goToPanel(1)"
+                >
+                  📖 Consultar aula
+                </button>
+
+              </div>
+
+              <div class="hint">
+                Pense nas duas partes que usamos
+                desde o início: o que guardamos e
+                o que fazemos.
+              </div>
+
+            </div>
+
+
+            <div
+              class="quiz-question"
+              data-question="c2"
+            >
+
+              <div class="question-number">
+                QUESTÃO 02
+              </div>
+
+              <div class="question-title">
+                Em um nó, o campo
+                <code>info</code>
+                representa normalmente:
+              </div>
+
+              <div class="options">
+
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="c2"
+                    value="a"
+                  />
+                  O dado armazenado no nó.
+                </label>
+
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="c2"
+                    value="b"
+                  />
+                  O endereço do computador.
+                </label>
+
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="c2"
+                    value="c"
+                  />
+                  O fim obrigatório do programa.
+                </label>
+
+              </div>
+
+
+              <div class="quiz-tools">
+
+                <button
+                  type="button"
+                  class="small-button"
+                  onclick="toggleHint(this)"
+                >
+                  💡 Dica
+                </button>
+
+                <button
+                  type="button"
+                  class="small-button"
+                  onclick="goToPanel(2)"
+                >
+                  📖 Consultar aula
+                </button>
+
+              </div>
+
+              <div class="hint">
+                Um nó precisa guardar a informação
+                e também saber como chegar ao
+                próximo.
+              </div>
+
+            </div>
+
+
+            <div
+              class="quiz-question"
+              data-question="c3"
+            >
+
+              <div class="question-number">
+                QUESTÃO 03
+              </div>
+
+              <div class="question-title">
+                O que um ponteiro armazena?
+              </div>
+
+              <div class="options">
+
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="c3"
+                    value="a"
+                  />
+                  Somente textos.
+                </label>
+
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="c3"
+                    value="b"
+                  />
+                  Um endereço de memória.
+                </label>
+
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="c3"
+                    value="c"
+                  />
+                  Uma função inteira.
+                </label>
+
+              </div>
+
+
+              <div class="quiz-tools">
+
+                <button
+                  type="button"
+                  class="small-button"
+                  onclick="toggleHint(this)"
+                >
+                  💡 Dica
+                </button>
+
+              </div>
+
+              <div class="hint">
+                Ele não precisa guardar o objeto.
+                Basta saber onde ele está.
+              </div>
+
+            </div>
+
+
+            <div
+              class="quiz-question"
+              data-question="c4"
+            >
+
+              <div class="question-number">
+                QUESTÃO 04
+              </div>
+
+              <div class="question-title">
+                Em uma lista encadeada simples,
+                <code>prox</code>
+                serve para:
+              </div>
+
+              <div class="options">
+
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="c4"
+                    value="a"
+                  />
+                  Guardar o endereço do próximo nó.
+                </label>
+
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="c4"
+                    value="b"
+                  />
+                  Guardar o tamanho da tela.
+                </label>
+
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="c4"
+                    value="c"
+                  />
+                  Somar todos os valores.
+                </label>
+
+              </div>
+
+
+              <div class="quiz-tools">
+
+                <button
+                  type="button"
+                  class="small-button"
+                  onclick="toggleHint(this)"
+                >
+                  💡 Dica
+                </button>
+
+              </div>
+
+              <div class="hint">
+                O nome já ajuda:
+                prox = próximo.
+              </div>
+
+            </div>
+
+
+            <div
+              class="quiz-question"
+              data-question="c5"
+            >
+
+              <div class="question-number">
+                QUESTÃO 05
+              </div>
+
+              <div class="question-title">
+                O que significa
+                <code>NULL</code>
+                no campo
+                <code>prox</code>
+                do último nó?
+              </div>
+
+              <div class="options">
+
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="c5"
+                    value="a"
+                  />
+                  O valor do nó é zero.
+                </label>
+
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="c5"
+                    value="b"
+                  />
+                  Não existe próximo nó.
+                </label>
+
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="c5"
+                    value="c"
+                  />
+                  A lista está obrigatoriamente
+                  cheia.
+                </label>
+
+              </div>
+
+
+              <div class="quiz-tools">
+
+                <button
+                  type="button"
+                  class="small-button"
+                  onclick="toggleHint(this)"
+                >
+                  💡 Dica
+                </button>
+
+              </div>
+
+              <div class="hint">
+                Pense no desenho:
+                A → B → C → ?
+              </div>
+
+            </div>
+
+
+            <div
+              class="quiz-question"
+              data-question="c6"
+            >
+
+              <div class="question-number">
+                QUESTÃO 06
+              </div>
+
+              <div class="question-title">
+                Em
+                <code>novo->info</code>,
+                a seta
+                <code>-></code>
+                indica:
+              </div>
+
+              <div class="options">
+
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="c6"
+                    value="a"
+                  />
+                  Acesso ao campo
+                  <code>info</code>
+                  da estrutura apontada por
+                  <code>novo</code>.
+                </label>
+
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="c6"
+                    value="b"
+                  />
+                  Comparação matemática.
+                </label>
+
+                <label class="option">
+                  <input
+                    type="radio"
+                    name="c6"
+                    value="c"
+                  />
+                  Exclusão automática do nó.
+                </label>
+
+              </div>
+
+
+              <div class="quiz-tools">
+
+                <button
+                  type="button"
+                  class="small-button"
+                  onclick="toggleHint(this)"
+                >
+                  💡 Dica
+                </button>
+
+              </div>
+
+              <div class="hint">
+                Temos um ponteiro e queremos
+                acessar um dos campos da estrutura
+                para a qual ele aponta.
+              </div>
+
+            </div>
+
+
+            <button
+              class="btn btn-primary btn-full"
+              type="submit"
+            >
+              Corrigir Checkpoint
+            </button>
+
+          </form>
+
+
+          <div
+            id="checkpointResult"
+            class="result-box"
+            style="display:none;"
+          ></div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           BOSS INTRO
+           ================================================= -->
+
+      <section
+        id="panel-5"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="boss-intro">
+
+            <div class="boss-lock">
+              🔒 BOSS · SEM CONSULTA
+            </div>
+
+            <h2>
+              Fundamentos
+            </h2>
+
+            <p>
+              A partir daqui as aulas e dicas ficam
+              indisponíveis durante a tentativa.
+            </p>
+
+            <p>
+              São
+              <strong>10 questões</strong>.
+              Você precisa acertar pelo menos
+              <strong>8</strong>.
+            </p>
+
+            <p>
+              As respostas só serão corrigidas
+              quando você terminar.
+            </p>
+
+            <button
+              class="btn btn-primary"
+              onclick="startBoss()"
+            >
+              Começar Boss →
+            </button>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           BOSS QUESTIONS
+           ================================================= -->
+
+      <section
+        id="panel-6"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <div class="boss-intro">
+
+            <div class="boss-lock">
+              🔒 BOSS EM ANDAMENTO
+            </div>
+
+            <h2>
+              Sem consulta.
+            </h2>
+
+            <p>
+              Responda com o que você conseguiu
+              entender até aqui.
+            </p>
+
+          </div>
+
+
+          <form
+            id="bossForm"
+            style="margin-top:20px;"
+          ></form>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           ESSAY
+           ================================================= -->
+
+      <section
+        id="panel-7"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              PERGUNTA-CHAVE
+            </div>
+
+            <h2>
+              Agora explique sem alternativas.
+            </h2>
+
+            <p>
+              Escreva com suas próprias palavras:
+            </p>
+
+
+            <div class="callout">
+
+              O que é um TAD e qual é a função de
+              <code>info</code>,
+              <code>prox</code>
+              e
+              <code>NULL</code>
+              em um nó de uma lista encadeada?
+
+            </div>
+
+
+            <textarea
+              id="essayAnswer"
+              class="essay"
+              placeholder="Escreva como se estivesse explicando o conteúdo para outra pessoa..."
+            ></textarea>
+
+
+            <p
+              id="essayCounter"
+              style="color:var(--muted);font-size:12px;"
+            >
+              0 caracteres
+            </p>
+
+
+            <button
+              class="btn btn-primary btn-full"
+              onclick="evaluateEssay()"
+            >
+              Avaliar minha explicação
+            </button>
+
+
+            <div
+              id="essayResult"
+              class="result-box"
+              style="display:none;"
+            ></div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           COMPLETED
+           ================================================= -->
+
+      <section
+        id="panel-8"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              MÓDULO CONCLUÍDO
+            </div>
+
+            <h2>
+              Base construída.
+            </h2>
+
+            <p>
+              Você não precisava sair daqui sabendo
+              programar uma lista inteira.
+            </p>
+
+            <p>
+              O objetivo era conseguir olhar para
+              palavras como
+              <code>struct</code>,
+              <code>ponteiro</code>,
+              <code>prox</code>,
+              <code>NULL</code>
+              e
+              <code>-></code>
+              sem que o código parecesse uma língua
+              desconhecida.
+            </p>
+
+
+            <div class="callout">
+
+              <strong>
+                Próximo passo
+              </strong>
+
+              Lista sequencial: vetor, posições,
+              campo
+              <code>ultimo</code>,
+              lista vazia, lista cheia, inserção
+              e busca.
+
+            </div>
+
+
+            <div
+              id="finalScore"
+              class="result-box"
+            ></div>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <a
+              class="btn btn-secondary"
+              href="../../../"
+            >
+              ← Voltar ao QuizADS
+            </a>
+
+            <button
+              class="btn btn-primary"
+              disabled
+            >
+              Módulo 02 em breve
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+
+  <footer class="site-footer">
+
+    <div class="container">
+
+      <div class="footer-title">
+        QuizADS · KorDevs
+      </div>
+
+      <div>
+        ©
+        <span data-current-year></span>
+        KorDevs Tecnologia e Automação.
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <script
+    src="../../../assets/js/quizads.js"
+  ></script>
+
+
+  <script>
+
+    /* =====================================================
+       ESTADO
+       ===================================================== */
+
+    const STORAGE_KEY =
+      "quizads_ed_m01_v1";
+
+
+    const state =
+      JSON.parse(
+        localStorage.getItem(
+          STORAGE_KEY
+        ) || "{}"
+      );
+
+
+    state.started = true;
+
+
+    let currentPanel =
+      Number.isInteger(
+        state.currentPanel
+      )
+        ? state.currentPanel
+        : 0;
+
+
+    if (
+      state.completed
+    ) {
+      currentPanel = 8;
+    }
+
+
+    saveState();
+
+
+    /* =====================================================
+       PAINÉIS
+       ===================================================== */
+
+    const panelProgress = [
+      20,
+      30,
+      45,
+      60,
+      70,
+      75,
+      85,
+      95,
+      100
+    ];
+
+
+    const panelLabels = [
+      "Aula 1 de 4",
+      "Aula 2 de 4",
+      "Aula 3 de 4",
+      "Aula 4 de 4",
+      "Checkpoint",
+      "Boss",
+      "Boss",
+      "Pergunta-chave",
+      "Concluído"
+    ];
+
+
+    function saveState() {
+
+      state.currentPanel =
+        currentPanel;
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(state)
+      );
+
+    }
+
+
+    function goToPanel(index) {
+
+      document
+        .querySelectorAll(
+          ".lesson-panel"
+        )
+        .forEach((panel) => {
+          panel.classList.remove(
+            "active"
+          );
+        });
+
+
+      const next =
+        document.getElementById(
+          `panel-${index}`
+        );
+
+
+      if (!next) {
+        return;
+      }
+
+
+      next.classList.add(
+        "active"
+      );
+
+
+      currentPanel = index;
+
+      saveState();
+
+      updateProgress();
+
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    function updateProgress() {
+
+      const percent =
+        panelProgress[
+          currentPanel
+        ] || 0;
+
+
+      document.getElementById(
+        "progressFill"
+      ).style.width =
+        `${percent}%`;
+
+
+      document.getElementById(
+        "progressPercent"
+      ).textContent =
+        `${percent}%`;
+
+
+      document.getElementById(
+        "progressLabel"
+      ).textContent =
+        panelLabels[
+          currentPanel
+        ] || "";
+
+    }
+
+
+    /* =====================================================
+       CHECKPOINT
+       ===================================================== */
+
+    const checkpointAnswers = {
+      c1: "b",
+      c2: "a",
+      c3: "b",
+      c4: "a",
+      c5: "b",
+      c6: "a"
+    };
+
+
+    function startCheckpoint() {
+      goToPanel(4);
+    }
+
+
+    function toggleHint(button) {
+
+      const question =
+        button.closest(
+          ".quiz-question"
+        );
+
+
+      const hint =
+        question.querySelector(
+          ".hint"
+        );
+
+
+      hint.classList.toggle(
+        "visible"
+      );
+
+    }
+
+
+    document
+      .getElementById(
+        "checkpointForm"
+      )
+      .addEventListener(
+        "submit",
+        function(event) {
+
+          event.preventDefault();
+
+
+          let score = 0;
+
+
+          Object.entries(
+            checkpointAnswers
+          )
+          .forEach(
+            ([question, answer]) => {
+
+              const selected =
+                document.querySelector(
+                  `input[name="${question}"]:checked`
+                );
+
+
+              if (
+                selected &&
+                selected.value === answer
+              ) {
+                score++;
+              }
+
+            }
+          );
+
+
+          const result =
+            document.getElementById(
+              "checkpointResult"
+            );
+
+
+          result.style.display =
+            "block";
+
+
+          if (score >= 5) {
+
+            state.checkpointPassed =
+              true;
+
+            state.checkpointScore =
+              score;
+
+            saveState();
+
+
+            result.innerHTML = `
+              <div class="result-score">
+                ${score}/6
+              </div>
+
+              <h3>
+                Checkpoint concluído.
+              </h3>
+
+              <p>
+                Você atingiu o mínimo necessário
+                para enfrentar o Boss.
+              </p>
+
+              <button
+                class="btn btn-primary"
+                onclick="goToPanel(5)"
+              >
+                Liberar Boss →
+              </button>
+            `;
+
+          } else {
+
+            result.innerHTML = `
+              <div class="result-score">
+                ${score}/6
+              </div>
+
+              <h3>
+                Ainda não.
+              </h3>
+
+              <p>
+                Precisamos de pelo menos 5 acertos.
+                Revise as aulas, use as dicas e
+                tente novamente.
+              </p>
+
+              <button
+                class="btn btn-secondary"
+                onclick="goToPanel(0)"
+              >
+                Revisar aulas
+              </button>
+            `;
+
+          }
+
+        }
+      );
+
+
+    /* =====================================================
+       BOSS
+       ===================================================== */
+
+    const bossQuestions = [
+
+      {
+        q:
+          "Qual definição representa melhor uma estrutura de dados?",
+
+        options: [
+          "Um conjunto organizado de dados e formas de manipulá-los.",
+          "Somente uma variável numérica.",
+          "Uma tela do programa.",
+          "Um arquivo obrigatoriamente salvo no disco."
+        ],
+
+        answer: 0
+      },
+
+      {
+        q:
+          "Um TAD é normalmente pensado a partir de quais duas partes?",
+
+        options: [
+          "Tela e teclado.",
+          "Dados e operações.",
+          "Internet e banco de dados.",
+          "CPU e monitor."
+        ],
+
+        answer: 1
+      },
+
+      {
+        q:
+          "Qual é a principal ideia de abstração?",
+
+        options: [
+          "Eliminar todos os dados.",
+          "Trabalhar com algo sem precisar lidar simultaneamente com todos os detalhes internos.",
+          "Transformar tudo em números.",
+          "Evitar o uso de funções."
+        ],
+
+        answer: 1
+      },
+
+      {
+        q:
+          "O que um ponteiro guarda?",
+
+        options: [
+          "Um endereço de memória.",
+          "Somente números negativos.",
+          "O código-fonte inteiro.",
+          "Uma tela."
+        ],
+
+        answer: 0
+      },
+
+      {
+        q:
+          "No nó de uma lista encadeada, qual costuma ser o papel de info?",
+
+        options: [
+          "Guardar a informação do nó.",
+          "Desligar o computador.",
+          "Guardar obrigatoriamente um endereço.",
+          "Finalizar a função."
+        ],
+
+        answer: 0
+      },
+
+      {
+        q:
+          "No nó de uma lista encadeada simples, prox normalmente:",
+
+        options: [
+          "Guarda o endereço do próximo nó.",
+          "Conta quantos usuários existem.",
+          "Ordena automaticamente a lista.",
+          "Apaga o nó."
+        ],
+
+        answer: 0
+      },
+
+      {
+        q:
+          "Se o campo prox do último nó contém NULL, isso indica:",
+
+        options: [
+          "O dado vale zero.",
+          "Não existe próximo nó.",
+          "O primeiro nó foi apagado.",
+          "A lista obrigatoriamente possui erro."
+        ],
+
+        answer: 1
+      },
+
+      {
+        q:
+          "Em struct no *prox, o asterisco indica que prox:",
+
+        options: [
+          "É um ponteiro.",
+          "É uma soma.",
+          "É uma função.",
+          "É obrigatoriamente um caractere."
+        ],
+
+        answer: 0
+      },
+
+      {
+        q:
+          "O que novo->info representa?",
+
+        options: [
+          "Acesso ao campo info da estrutura apontada por novo.",
+          "Uma comparação entre novo e info.",
+          "A exclusão do campo info.",
+          "Um endereço inválido."
+        ],
+
+        answer: 0
+      },
+
+      {
+        q:
+          "Observe A → B → C → NULL. Qual interpretação é correta?",
+
+        options: [
+          "A aponta para B, B aponta para C e C não possui próximo nó.",
+          "C aponta para A.",
+          "NULL é outro nó contendo zero.",
+          "Todos os nós ocupam obrigatoriamente o mesmo endereço."
+        ],
+
+        answer: 0
+      }
+
+    ];
+
+
+    function startBoss() {
+
+      if (
+        !state.checkpointPassed
+      ) {
+        return;
+      }
+
+
+      renderBoss();
+
+      goToPanel(6);
+
+    }
+
+
+    function renderBoss() {
+
+      const form =
+        document.getElementById(
+          "bossForm"
+        );
+
+
+      form.innerHTML = "";
+
+
+      bossQuestions.forEach(
+        (question, index) => {
+
+          const wrapper =
+            document.createElement(
+              "div"
+            );
+
+
+          wrapper.className =
+            "quiz-question";
+
+
+          wrapper.innerHTML = `
+            <div class="question-number">
+              BOSS ${String(
+                index + 1
+              ).padStart(2, "0")}
+            </div>
+
+            <div class="question-title">
+              ${question.q}
+            </div>
+
+            <div class="options">
+
+              ${question.options
+                .map(
+                  (option, optionIndex) => `
+                    <label class="option">
+
+                      <input
+                        type="radio"
+                        name="boss-${index}"
+                        value="${optionIndex}"
+                      />
+
+                      ${option}
+
+                    </label>
+                  `
+                )
+                .join("")}
+
+            </div>
+          `;
+
+
+          form.appendChild(
+            wrapper
+          );
+
+        }
+      );
+
+
+      const button =
+        document.createElement(
+          "button"
+        );
+
+
+      button.type = "submit";
+
+      button.className =
+        "btn btn-primary btn-full";
+
+      button.textContent =
+        "Finalizar Boss";
+
+
+      form.appendChild(
+        button
+      );
+
+
+      form.onsubmit =
+        submitBoss;
+
+    }
+
+
+    function submitBoss(event) {
+
+      event.preventDefault();
+
+
+      let answered = 0;
+      let score = 0;
+
+
+      bossQuestions.forEach(
+        (question, index) => {
+
+          const selected =
+            document.querySelector(
+              `input[name="boss-${index}"]:checked`
+            );
+
+
+          if (selected) {
+
+            answered++;
+
+
+            if (
+              Number(
+                selected.value
+              ) ===
+              question.answer
+            ) {
+              score++;
+            }
+
+          }
+
+        }
+      );
+
+
+      if (
+        answered <
+        bossQuestions.length
+      ) {
+
+        alert(
+          `Você respondeu ${answered} de ${bossQuestions.length} questões. Responda todas antes de finalizar.`
+        );
+
+        return;
+      }
+
+
+      state.bossScore =
+        score;
+
+
+      if (score >= 8) {
+
+        state.bossPassed =
+          true;
+
+        saveState();
+
+        goToPanel(7);
+
+      } else {
+
+        state.bossPassed =
+          false;
+
+        saveState();
+
+
+        document.getElementById(
+          "bossForm"
+        ).innerHTML = `
+          <div class="result-box">
+
+            <div class="result-score">
+              ${score}/10
+            </div>
+
+            <h2>
+              Ainda não liberou.
+            </h2>
+
+            <p>
+              O mínimo é 8/10.
+            </p>
+
+            <p>
+              Isso não significa voltar ao zero.
+              Agora você já sabe exatamente quais
+              conceitos precisam de mais atenção.
+            </p>
+
+            <button
+              class="btn btn-secondary"
+              onclick="goToPanel(0)"
+            >
+              Revisar conteúdo
+            </button>
+
+          </div>
+        `;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       QUESTÃO DISSERTATIVA
+       ===================================================== */
+
+    const essay =
+      document.getElementById(
+        "essayAnswer"
+      );
+
+
+    essay.addEventListener(
+      "input",
+      () => {
+
+        document.getElementById(
+          "essayCounter"
+        ).textContent =
+          `${essay.value.length} caracteres`;
+
+      }
+    );
+
+
+    function hasAny(
+      text,
+      terms
+    ) {
+
+      return terms.some(
+        (term) =>
+          text.includes(term)
+      );
+
+    }
+
+
+    function evaluateEssay() {
+
+      const raw =
+        essay.value.trim();
+
+
+      const text =
+        raw
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(
+            /[\u0300-\u036f]/g,
+            ""
+          );
+
+
+      const criteria = [
+
+        {
+          title:
+            "TAD como dados + operações",
+
+          ok:
+            hasAny(
+              text,
+              [
+                "dados",
+                "informacao"
+              ]
+            ) &&
+            hasAny(
+              text,
+              [
+                "operacao",
+                "operacoes",
+                "funcao",
+                "funcoes"
+              ]
+            )
+        },
+
+        {
+          title:
+            "info como dado armazenado",
+
+          ok:
+            text.includes(
+              "info"
+            ) &&
+            hasAny(
+              text,
+              [
+                "dado",
+                "informacao",
+                "valor"
+              ]
+            )
+        },
+
+        {
+          title:
+            "prox como ligação/endereço do próximo nó",
+
+          ok:
+            text.includes(
+              "prox"
+            ) &&
+            hasAny(
+              text,
+              [
+                "endereco",
+                "proximo",
+                "ponteiro",
+                "aponta"
+              ]
+            )
+        },
+
+        {
+          title:
+            "NULL como ausência de próximo nó",
+
+          ok:
+            text.includes(
+              "null"
+            ) &&
+            hasAny(
+              text,
+              [
+                "nao existe",
+                "sem proximo",
+                "fim",
+                "nao aponta",
+                "nenhum"
+              ]
+            )
+        }
+
+      ];
+
+
+      const covered =
+        criteria.filter(
+          (item) => item.ok
+        ).length;
+
+
+      const enoughText =
+        raw.length >= 120;
+
+
+      const result =
+        document.getElementById(
+          "essayResult"
+        );
+
+
+      result.style.display =
+        "block";
+
+
+      result.innerHTML = `
+        <h3>
+          Rubrica da sua explicação
+        </h3>
+
+        <p>
+          Esta avaliação é local e procura
+          conceitos-chave. Ela não substitui
+          uma correção humana da resposta.
+        </p>
+
+        <div class="rubric">
+
+          ${criteria
+            .map(
+              (item) => `
+                <div
+                  class="rubric-item ${
+                    item.ok
+                      ? "ok"
+                      : "missing"
+                  }"
+                >
+                  ${
+                    item.ok
+                      ? "✓"
+                      : "○"
+                  }
+
+                  ${item.title}
+                </div>
+              `
+            )
+            .join("")}
+
+        </div>
+
+        ${
+          !enoughText
+            ? `
+              <p>
+                Sua explicação ainda está curta.
+                Tente desenvolver um pouco mais
+                com suas próprias palavras.
+              </p>
+            `
+            : ""
+        }
+
+        ${
+          covered >= 3 &&
+          enoughText
+
+            ? `
+              <p>
+                <strong>
+                  Boa explicação.
+                </strong>
+
+                Você demonstrou domínio de
+                ${covered}/4 pontos essenciais.
+              </p>
+
+              <button
+                class="btn btn-success"
+                onclick="completeModule()"
+              >
+                Concluir Módulo 01 →
+              </button>
+            `
+
+            : `
+              <p>
+                Você cobriu
+                <strong>
+                  ${covered}/4
+                </strong>
+                pontos essenciais.
+
+                Releia a pergunta e complemente
+                a explicação antes de concluir.
+              </p>
+            `
+        }
+      `;
+
+    }
+
+
+    /* =====================================================
+       CONCLUSÃO
+       ===================================================== */
+
+    function completeModule() {
+
+      state.completed =
+        true;
+
+      state.completedAt =
+        new Date().toISOString();
+
+      saveState();
+
+
+      const finalScore =
+        document.getElementById(
+          "finalScore"
+        );
+
+
+      finalScore.innerHTML = `
+        <div class="result-score">
+          ${state.bossScore}/10
+        </div>
+
+        <strong>
+          Boss concluído.
+        </strong>
+
+        <p>
+          Módulo 01 registrado como concluído
+          neste navegador.
+        </p>
+      `;
+
+
+      goToPanel(8);
+
+    }
+
+
+    /* =====================================================
+       START
+       ===================================================== */
+
+    goToPanel(
+      currentPanel
+    );
+
+  </script>
+
+</body>
+
+</html>

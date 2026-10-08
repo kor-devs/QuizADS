@@ -12,11 +12,16 @@
 
   <meta
     name="theme-color"
-    content="#123744"
+    content="#F0EEE8"
+  />
+
+  <meta
+    name="description"
+    content="QuizADS — Módulo 01 da trilha Estrutura de Dados: fundamentos, TAD, memória, nós e ponteiros."
   />
 
   <title>
-    Módulo 01 | Fundamentos | QuizADS
+    Módulo 01 · Fundamentos | QuizADS
   </title>
 
   <link
@@ -40,6 +45,7 @@
       <a
         href="../../../"
         class="brand"
+        aria-label="Voltar para o QuizADS"
       >
 
         <img
@@ -49,6 +55,7 @@
           src="../../../assets/brand/KorDevs_White.png"
           alt="KorDevs"
         />
+
 
         <div class="brand-info">
 
@@ -67,15 +74,15 @@
 
       <div class="header-actions">
 
-        <button
-          data-theme-toggle
-          data-theme-icon
-          class="icon-button"
-          type="button"
-          aria-label="Alternar tema"
+        <a
+          data-support-link
+          class="header-support"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          🌙
-        </button>
+          Apoiar o projeto
+        </a>
 
       </div>
 
@@ -85,75 +92,175 @@
 
 
   <!-- =====================================================
-       MAIN
+       COURSE SHELL
        ===================================================== -->
 
-  <main class="module-main">
+  <main class="course-shell">
 
-    <div class="container">
 
-      <header class="module-top">
+    <!-- ===================================================
+         SIDEBAR · TRILHA
+         =================================================== -->
 
-        <div class="breadcrumb">
+    <aside
+      class="course-sidebar"
+      aria-label="Módulos da trilha"
+    >
 
-          <a href="../../../">
-            QuizADS
-          </a>
+      <div class="course-sidebar-inner">
 
-          &nbsp;›&nbsp;
+        <div class="course-sidebar-head">
 
-          Estrutura de Dados
+          <div class="course-sidebar-label">
+            Trilha 01
+          </div>
 
-          &nbsp;›&nbsp;
-
-          Módulo 01
+          <div class="course-sidebar-title">
+            Estrutura de Dados
+          </div>
 
         </div>
 
 
-        <div class="kicker">
-          MÓDULO 01 · FUNDAMENTOS
-        </div>
+        <nav
+          id="courseModules"
+          class="course-modules"
+          aria-label="Módulos"
+        >
+        </nav>
+
+      </div>
+
+    </aside>
 
 
-        <h1 class="module-title">
-          Antes das estruturas,
-          precisamos entender
-          <span class="accent">
-            o que o código está dizendo.
+    <!-- ===================================================
+         CONTEÚDO
+         =================================================== -->
+
+    <section class="course-content">
+
+
+      <!-- MOBILE -->
+
+      <div class="mobile-course-bar">
+
+        <div class="mobile-course-bar-row">
+
+          <span class="mobile-course-bar-title">
+            Módulo 01 · Fundamentos
           </span>
+
+          <span
+            id="mobileProgressLabel"
+            class="mobile-course-bar-progress"
+          >
+            20%
+          </span>
+
+        </div>
+
+
+        <div class="mobile-course-line">
+
+          <div
+            id="mobileProgressFill"
+            style="width:20%;"
+          ></div>
+
+        </div>
+
+      </div>
+
+
+      <!-- BREADCRUMB -->
+
+      <nav
+        class="course-breadcrumb"
+        aria-label="Breadcrumb"
+      >
+
+        <a href="../../../">
+          QuizADS
+        </a>
+
+        <span class="course-breadcrumb-separator">
+          /
+        </span>
+
+        <span>
+          Estrutura de Dados
+        </span>
+
+        <span class="course-breadcrumb-separator">
+          /
+        </span>
+
+        <span>
+          Módulo 01
+        </span>
+
+      </nav>
+
+
+      <!-- HERO DO MÓDULO -->
+
+      <header class="module-hero">
+
+        <div class="module-overline">
+          Módulo 01 · Fundamentos
+        </div>
+
+
+        <h1>
+          Antes das estruturas,
+          entenda o que o código
+          está dizendo.
         </h1>
 
 
-        <p class="module-summary">
-          Neste módulo você vai construir a base
-          necessária para compreender listas,
-          pilhas, filas e árvores sem precisar
-          decorar comandos.
+        <p class="module-hero-description">
+          Construa a base para compreender listas,
+          pilhas, filas e árvores sem depender de
+          decorar comandos em C.
         </p>
 
 
-        <div class="progress-card">
+        <div class="module-progress-row">
 
-          <div class="progress-head">
+          <div>
 
-            <span id="progressLabel">
-              Aula 1 de 5
-            </span>
+            <div class="module-progress-copy">
 
-            <span id="progressPercent">
-              20%
-            </span>
+              <span id="progressLabel">
+                Aula 1 de 4
+              </span>
+
+              <span>
+                Progresso do módulo
+              </span>
+
+            </div>
+
+
+            <div class="module-progress-track">
+
+              <div
+                id="progressFill"
+                class="module-progress-value"
+                style="width:20%;"
+              ></div>
+
+            </div>
 
           </div>
 
-          <div class="progress-bar">
 
-            <div
-              id="progressFill"
-              class="progress-fill"
-            ></div>
-
+          <div
+            id="progressPercent"
+            class="module-progress-percent"
+          >
+            20%
           </div>
 
         </div>
@@ -161,8 +268,26 @@
       </header>
 
 
+      <!-- RETORNO AO CHECKPOINT -->
+
+      <div
+        id="resumeAssessment"
+        class="resume-assessment"
+      >
+
+        <button
+          type="button"
+          class="resume-assessment-button"
+          onclick="returnToAssessment()"
+        >
+          Voltar ao Checkpoint
+        </button>
+
+      </div>
+
+
       <!-- =================================================
-           AULA 1
+           AULA 01
            ================================================= -->
 
       <section
@@ -170,174 +295,210 @@
         class="lesson-panel active"
       >
 
-        <div class="lesson">
+        <article class="course-lesson">
 
-          <article class="lesson-block">
 
-            <div class="kicker">
-              AULA 01
+          <header class="lesson-heading">
+
+            <div class="lesson-sequence">
+              Aula 1 de 4
             </div>
 
             <h2>
               O que é uma estrutura de dados?
             </h2>
 
-
             <p>
-              Antes de pensar em código, pense no
-              problema que o computador precisa
-              resolver.
+              Antes do código, precisamos entender
+              qual problema estamos tentando resolver.
             </p>
 
+          </header>
+
+
+          <section class="course-section">
+
+            <h3>
+              Dados precisam de organização.
+            </h3>
+
+
             <p>
-              Dados podem existir de muitas formas:
-              nomes de clientes, produtos,
-              compromissos, notas de alunos,
-              transações ou milhares de registros.
+              Um sistema pode precisar guardar nomes
+              de clientes, produtos, notas, pedidos,
+              compromissos ou milhares de outros
+              registros.
             </p>
 
+
             <p>
-              Se simplesmente jogássemos todas essas
-              informações na memória sem nenhuma
-              organização, trabalhar com elas seria
-              difícil e ineficiente.
+              Guardar essas informações sem uma forma
+              clara de organização tornaria difícil
+              inserir, procurar, alterar e remover
+              dados.
             </p>
 
 
-            <div class="callout">
+            <div class="course-definition">
 
-              <strong>
+              <div class="course-definition-term">
                 Estrutura de dados
-              </strong>
+              </div>
 
-              É uma forma organizada de
-              armazenar dados e definir como
-              podemos trabalhar com eles.
+              <p>
+                Uma forma organizada de armazenar
+                dados e definir como podemos
+                trabalhar com eles.
+              </p>
 
             </div>
 
 
-            <div class="concept-grid">
+            <div class="course-concepts">
 
-              <div class="concept-card">
+              <div class="course-concept">
 
                 <strong>
                   Dados
                 </strong>
 
-                São as informações que queremos
-                guardar.
+                <span>
+                  As informações que queremos
+                  armazenar.
+                </span>
 
               </div>
 
 
-              <div class="concept-card">
+              <div class="course-concept">
 
                 <strong>
                   Organização
                 </strong>
 
-                Define como esses dados ficam
-                relacionados.
+                <span>
+                  A forma como os dados ficam
+                  relacionados.
+                </span>
 
               </div>
 
 
-              <div class="concept-card">
+              <div class="course-concept">
 
                 <strong>
                   Operações
                 </strong>
 
-                Definem o que conseguimos fazer:
-                inserir, buscar, remover etc.
+                <span>
+                  Inserir, buscar, remover,
+                  consultar e outras ações.
+                </span>
 
               </div>
 
 
-              <div class="concept-card">
+              <div class="course-concept">
 
                 <strong>
                   Objetivo
                 </strong>
 
-                Resolver um problema de forma
-                organizada e eficiente.
+                <span>
+                  Resolver um problema de forma
+                  organizada e eficiente.
+                </span>
 
               </div>
 
             </div>
 
-          </article>
+          </section>
 
 
-          <article class="lesson-block">
+          <section class="course-section">
 
-            <h2>
-              Um exemplo sem programação
-            </h2>
+            <h3>
+              Um exemplo sem programação.
+            </h3>
+
 
             <p>
               Imagine uma agenda de contatos.
+              Um contato pode guardar:
             </p>
 
-            <p>
-              Cada contato possui dados:
-            </p>
 
-            <div class="diagram">Nome: Ana
+            <div class="course-example">
+
+              <div class="course-example-label">
+                Dados
+              </div>
+
+              <pre>Nome: Ana
 Telefone: 11 99999-9999
-Email: ana@email.com</div>
+Email: ana@email.com</pre>
+
+            </div>
+
 
             <p>
-              Mas apenas guardar esses dados não
-              basta. Também precisamos realizar
-              operações:
+              Mas apenas guardar informações não
+              resolve o problema. Também precisamos
+              definir o que pode ser feito com elas.
             </p>
 
-            <div class="diagram">Adicionar contato
+
+            <div class="course-example">
+
+              <div class="course-example-label">
+                Operações
+              </div>
+
+              <pre>Adicionar contato
 Buscar contato
 Alterar contato
 Remover contato
-Listar contatos</div>
+Listar contatos</pre>
+
+            </div>
+
 
             <p>
-              Essa combinação entre
-              <strong>dados organizados</strong>
-              e
-              <strong>operações</strong>
-              será muito importante daqui para
-              frente.
+              Essa relação entre aquilo que guardamos
+              e aquilo que fazemos será importante
+              durante toda a trilha.
             </p>
 
-          </article>
+          </section>
 
 
-          <div class="module-nav">
+          <div class="course-actions">
 
             <a
               class="btn btn-secondary"
               href="../../../"
             >
-              ← Sair
+              Sair da trilha
             </a>
 
             <button
               class="btn btn-primary"
+              type="button"
               onclick="goToPanel(1)"
             >
-              Continuar →
+              Continuar
             </button>
 
           </div>
 
-        </div>
+        </article>
 
       </section>
 
 
       <!-- =================================================
-           AULA 2
+           AULA 02
            ================================================= -->
 
       <section
@@ -345,42 +506,50 @@ Listar contatos</div>
         class="lesson-panel"
       >
 
-        <div class="lesson">
+        <article class="course-lesson">
 
-          <article class="lesson-block">
 
-            <div class="kicker">
-              AULA 02
+          <header class="lesson-heading">
+
+            <div class="lesson-sequence">
+              Aula 2 de 4
             </div>
 
             <h2>
-              Entendendo TAD
+              Entendendo TAD.
             </h2>
+
+            <p>
+              O nome parece mais complicado que
+              a ideia.
+            </p>
+
+          </header>
+
+
+          <section class="course-section">
+
+            <h3>
+              Tipo Abstrato de Dados.
+            </h3>
 
 
             <p>
               TAD significa
-              <strong>
-                Tipo Abstrato de Dados
-              </strong>.
-            </p>
-
-            <p>
-              O nome parece complicado, mas a
-              ideia é simples.
+              <strong>Tipo Abstrato de Dados</strong>.
             </p>
 
 
-            <div class="callout">
+            <div class="course-definition">
 
-              <strong>
-                TAD = dados + operações
-              </strong>
+              <div class="course-definition-term">
+                TAD
+              </div>
 
-              Primeiro definimos o que a estrutura
-              guarda. Depois definimos quais
-              ações podem ser realizadas sobre
-              esses dados.
+              <p>
+                Dados + operações que podem ser
+                realizadas sobre esses dados.
+              </p>
 
             </div>
 
@@ -390,26 +559,30 @@ Listar contatos</div>
             </p>
 
 
-            <div class="concept-grid">
+            <div class="course-concepts">
 
-              <div class="concept-card">
+              <div class="course-concept">
 
                 <strong>
                   Dados
                 </strong>
 
-                Saldo, titular, número da conta.
+                <span>
+                  Saldo, titular e número da conta.
+                </span>
 
               </div>
 
 
-              <div class="concept-card">
+              <div class="course-concept">
 
                 <strong>
                   Operações
                 </strong>
 
-                Depositar, sacar, consultar saldo.
+                <span>
+                  Depositar, sacar e consultar saldo.
+                </span>
 
               </div>
 
@@ -417,95 +590,108 @@ Listar contatos</div>
 
 
             <p>
-              Você não precisa saber como o banco
-              grava fisicamente cada informação para
-              utilizar uma conta.
+              Você consegue utilizar uma conta sem
+              conhecer todos os detalhes internos
+              usados pelo banco para armazenar cada
+              informação.
             </p>
 
+
             <p>
-              Essa separação é a ideia de
+              Esse é o papel da
               <strong>abstração</strong>:
-              conseguimos trabalhar com algo
-              sem precisar conhecer todos os detalhes
-              internos ao mesmo tempo.
+              trabalhar com algo sem precisar lidar
+              simultaneamente com todos os detalhes
+              de sua implementação.
             </p>
 
-          </article>
+          </section>
 
 
-          <article class="lesson-block">
+          <section class="course-section">
 
-            <h2>
-              TAD no nosso livro
-            </h2>
+            <h3>
+              Esse padrão aparecerá várias vezes.
+            </h3>
+
+
+            <div class="course-example">
+
+              <div class="course-example-label">
+                Modelo mental
+              </div>
+
+              <pre>ESTRUTURA
+    |
+    +-- DADOS
+    |
+    +-- OPERAÇÕES</pre>
+
+            </div>
+
 
             <p>
-              Ao estudar listas, pilhas, filas e
-              árvores, veremos sempre a mesma lógica:
+              Em uma lista, por exemplo, podemos
+              encontrar operações como:
             </p>
 
-            <div class="diagram">ESTRUTURA
-    ↓
-DADOS
-    +
-OPERAÇÕES</div>
 
-            <p>
-              Por exemplo, uma lista pode possuir
-              operações como:
-            </p>
-
-            <div class="diagram">cria()
+            <div class="course-code">cria()
 insere()
 busca()
 retira()
 imprime()
 libera()</div>
 
+
             <p>
               Não tente decorar esses nomes agora.
-              Entenda apenas o padrão:
             </p>
 
-            <div class="callout">
 
-              <strong>
-                Pergunta importante
-              </strong>
+            <div class="course-definition">
 
-              “O que essa estrutura guarda e o que
-              podemos fazer com ela?”
+              <div class="course-definition-term">
+                Pergunta que importa
+              </div>
+
+              <p>
+                O que essa estrutura guarda e
+                o que conseguimos fazer com ela?
+              </p>
 
             </div>
 
-          </article>
+          </section>
 
 
-          <div class="module-nav">
+          <div class="course-actions">
 
             <button
               class="btn btn-secondary"
+              type="button"
               onclick="goToPanel(0)"
             >
-              ← Voltar
+              Anterior
             </button>
 
             <button
               class="btn btn-primary"
+              type="button"
               onclick="goToPanel(2)"
             >
-              Continuar →
+              Continuar
             </button>
 
           </div>
 
-        </div>
+        </article>
 
       </section>
 
 
       <!-- =================================================
-           AULA 3
+           AULA 03
            ================================================= -->
 
       <section
@@ -513,230 +699,234 @@ libera()</div>
         class="lesson-panel"
       >
 
-        <div class="lesson">
+        <article class="course-lesson">
 
-          <article class="lesson-block">
 
-            <div class="kicker">
-              AULA 03
+          <header class="lesson-heading">
+
+            <div class="lesson-sequence">
+              Aula 3 de 4
             </div>
 
             <h2>
-              Nó, memória e endereço
+              Nó, memória e endereço.
             </h2>
 
-
             <p>
-              Agora chegamos em um dos pontos que
-              costuma causar confusão:
-              <strong>ponteiros</strong>.
+              Para entender ponteiros, primeiro
+              precisamos saber o que eles apontam.
             </p>
 
+          </header>
+
+
+          <section class="course-section">
+
+            <h3>
+              Pense na memória como locais numerados.
+            </h3>
+
+
             <p>
-              Antes de falar de ponteiro, precisamos
-              falar de memória.
+              Quando um dado é armazenado na memória,
+              ele ocupa algum local. Esse local possui
+              um endereço.
             </p>
 
 
-            <div class="callout">
+            <div class="course-example">
 
-              <strong>
-                Pense na memória como vários locais
-                numerados.
-              </strong>
+              <div class="course-example-label">
+                Memória simplificada
+              </div>
 
-              Cada informação armazenada ocupa
-              algum local, e esse local possui um
-              endereço.
+              <pre>Endereço 1000  ->  "Ana"
+Endereço 1001  ->  27
+Endereço 1002  ->  9.5
+Endereço 1003  ->  ...</pre>
 
             </div>
 
 
-            <div class="diagram">MEMÓRIA
-
-Endereço 1000 → "Ana"
-Endereço 1001 → 27
-Endereço 1002 → 9.5
-Endereço 1003 → ...</div>
-
-
             <p>
-              Na prática os endereços são muito mais
-              complexos, mas para aprender estrutura
-              de dados podemos pensar dessa forma.
+              Endereços reais são mais complexos,
+              mas esse modelo é suficiente para
+              compreender o funcionamento das
+              estruturas que estudaremos.
             </p>
 
-          </article>
+          </section>
 
 
-          <article class="lesson-block">
+          <section class="course-section">
 
-            <h2>
+            <h3>
               O que é um nó?
-            </h2>
+            </h3>
+
 
             <p>
               Em estruturas encadeadas, os dados
-              normalmente são organizados em
-              pequenas estruturas chamadas
+              costumam ser organizados em pequenas
+              estruturas chamadas
               <strong>nós</strong>.
             </p>
 
 
-            <div class="diagram">┌──────────────────────┐
-│          NÓ          │
-├──────────┬───────────┤
-│   info   │   prox    │
-├──────────┼───────────┤
-│    A     │ endereço  │
-└──────────┴───────────┘</div>
+            <div class="course-example">
+
+              <div class="course-example-label">
+                Um nó
+              </div>
+
+              <pre>+-----------------------+
+|          NÓ           |
++-----------+-----------+
+|   info    |   prox    |
++-----------+-----------+
+|     A     | endereço  |
++-----------+-----------+</pre>
+
+            </div>
 
 
-            <p>
-              Observe que esse nó guarda duas coisas.
-            </p>
+            <div class="course-concepts">
 
-
-            <div class="concept-grid">
-
-              <div class="concept-card">
+              <div class="course-concept">
 
                 <strong>
                   info
                 </strong>
 
-                É o dado armazenado.
+                <span>
+                  O dado armazenado no nó.
+                </span>
 
               </div>
 
 
-              <div class="concept-card">
+              <div class="course-concept">
 
                 <strong>
                   prox
                 </strong>
 
-                Guarda o endereço do próximo nó.
+                <span>
+                  O endereço do próximo nó.
+                </span>
 
               </div>
 
             </div>
 
 
-            <p>
-              Isso permite ligar vários nós:
-            </p>
+            <div class="course-example">
 
+              <div class="course-example-label">
+                Ligação entre nós
+              </div>
 
-            <div class="diagram">┌─────┬──────┐
-│  A  │  ─────────┐
-└─────┴──────┘     │
-                  ↓
-             ┌─────┬──────┐
-             │  B  │  ─────────┐
-             └─────┴──────┘     │
-                               ↓
-                          ┌─────┬──────┐
-                          │  C  │ NULL │
-                          └─────┴──────┘</div>
+              <pre>A  ->  B  ->  C  ->  NULL</pre>
+
+            </div>
 
 
             <p>
               O nó A sabe onde B está.
               B sabe onde C está.
+              C termina em
+              <code>NULL</code>
+              porque não existe um próximo nó.
             </p>
 
-            <p>
-              C possui
-              <strong>NULL</strong>
-              porque não existe próximo nó.
-            </p>
-
-          </article>
+          </section>
 
 
-          <article class="lesson-block">
+          <section class="course-section">
 
-            <h2>
-              Então o que é um ponteiro?
-            </h2>
+            <h3>
+              Então, o que é um ponteiro?
+            </h3>
 
-            <div class="callout">
 
-              <strong>
-                Ponteiro é uma variável que guarda
-                um endereço de memória.
-              </strong>
+            <div class="course-definition">
+
+              <div class="course-definition-term">
+                Ponteiro
+              </div>
+
+              <p>
+                Uma variável que guarda um endereço
+                de memória.
+              </p>
 
             </div>
 
-            <p>
-              Ele não precisa guardar o dado
-              diretamente.
-            </p>
 
             <p>
-              Ele pode guardar
-              <strong>onde o dado está</strong>.
+              Ele não precisa armazenar o dado
+              diretamente. Ele pode guardar
+              <strong>onde esse dado está</strong>.
             </p>
 
 
-            <div class="diagram">ponteiro inicio
-      │
-      │ endereço 1000
-      ↓
-┌────────────┐
-│ Nó A       │
-│ endereço   │
-│ 1000       │
-└────────────┘</div>
+            <div class="course-example">
 
+              <div class="course-example-label">
+                Ponteiro para um nó
+              </div>
 
-            <p>
-              Essa é uma ideia fundamental.
-            </p>
+              <pre>ponteiro inicio
+      |
+      | endereço 1000
+      v
++-------------+
+| Nó A        |
+| endereço    |
+| 1000        |
++-------------+</pre>
+
+            </div>
+
 
             <p>
               Quando encontrar a palavra
-              <strong>ponteiro</strong>, pense:
+              <strong>ponteiro</strong>,
+              pense:
+              “uma variável que sabe o endereço
+              de outra coisa”.
             </p>
 
-
-            <div class="callout">
-
-              “Uma variável que sabe o endereço
-              de outra coisa.”
-
-            </div>
-
-          </article>
+          </section>
 
 
-          <div class="module-nav">
+          <div class="course-actions">
 
             <button
               class="btn btn-secondary"
+              type="button"
               onclick="goToPanel(1)"
             >
-              ← Voltar
+              Anterior
             </button>
 
             <button
               class="btn btn-primary"
+              type="button"
               onclick="goToPanel(3)"
             >
-              Ver o código →
+              Continuar
             </button>
 
           </div>
 
-        </div>
+        </article>
 
       </section>
 
 
       <!-- =================================================
-           AULA 4
+           AULA 04
            ================================================= -->
 
       <section
@@ -744,236 +934,251 @@ Endereço 1003 → ...</div>
         class="lesson-panel"
       >
 
-        <div class="lesson">
+        <article class="course-lesson">
 
-          <article class="lesson-block">
 
-            <div class="kicker">
-              AULA 04
+          <header class="lesson-heading">
+
+            <div class="lesson-sequence">
+              Aula 4 de 4
             </div>
 
             <h2>
-              Agora o código começa a fazer sentido.
+              Agora o código começa
+              a fazer sentido.
             </h2>
 
-
             <p>
-              Observe esta estrutura usada no
-              material:
+              Em vez de memorizar a sintaxe,
+              vamos traduzi-la.
             </p>
 
+          </header>
 
-            <pre class="code">typedef struct no {
+
+          <section class="course-section">
+
+            <h3>
+              A estrutura de um nó.
+            </h3>
+
+
+            <pre class="course-code">typedef struct no {
     char info;
     struct no *prox;
 } no;</pre>
 
 
-            <p>
-              Não leia isso como um bloco misterioso.
-              Vamos traduzir.
-            </p>
+            <div class="code-translation">
 
-
-            <div class="translation">
-
-              <div class="translation-row">
+              <div class="code-translation-item">
 
                 <code>
                   struct no
                 </code>
 
-                = estamos descrevendo um tipo
-                de estrutura chamado nó.
+                <span>
+                  Estamos descrevendo um tipo de
+                  estrutura chamado nó.
+                </span>
 
               </div>
 
 
-              <div class="translation-row">
+              <div class="code-translation-item">
 
                 <code>
                   char info;
                 </code>
 
-                = dentro do nó existe um campo
-                chamado info.
+                <span>
+                  Dentro do nó existe um campo
+                  chamado info.
+                </span>
 
               </div>
 
 
-              <div class="translation-row">
+              <div class="code-translation-item">
 
                 <code>
                   struct no *prox;
                 </code>
 
-                = dentro do nó existe um ponteiro
-                chamado prox que pode guardar o
-                endereço de outro nó.
+                <span>
+                  prox é um ponteiro capaz de guardar
+                  o endereço de outro nó.
+                </span>
 
               </div>
 
 
-              <div class="translation-row">
+              <div class="code-translation-item">
 
                 <code>
                   typedef ... no;
                 </code>
 
-                = estamos criando uma forma mais
-                curta de chamar essa estrutura.
+                <span>
+                  Criamos uma maneira mais curta de
+                  chamar esse tipo de estrutura.
+                </span>
 
               </div>
 
             </div>
 
-          </article>
+          </section>
 
 
-          <article class="lesson-block">
+          <section class="course-section">
 
-            <h2>
+            <h3>
               O que significa o asterisco?
-            </h2>
+            </h3>
 
 
-            <pre class="code">struct no <span class="orange">*</span>prox;</pre>
+            <pre class="course-code">struct no <span class="course-code-accent">*</span>prox;</pre>
 
 
             <p>
               Nesse contexto, o
-              <strong>*</strong>
+              <code>*</code>
               indica que
               <code>prox</code>
               é um ponteiro.
             </p>
 
-            <p>
-              Ou seja:
-            </p>
 
+            <div class="course-definition">
 
-            <div class="callout">
+              <div class="course-definition-term">
+                Tradução
+              </div>
 
-              prox não guarda outro nó inteiro.
-              Ele guarda o
-              <strong>endereço</strong>
-              de outro nó.
+              <p>
+                prox não guarda outro nó inteiro.
+                Guarda o endereço de outro nó.
+              </p>
 
             </div>
 
-          </article>
+          </section>
 
 
-          <article class="lesson-block">
+          <section class="course-section">
 
-            <h2>
-              E essa seta?
-            </h2>
+            <h3>
+              E o operador
+              <code>-></code>?
+            </h3>
 
 
-            <pre class="code">novo->info = 'A';
+            <pre class="course-code">novo->info = 'A';
 
 novo->prox = lista;</pre>
 
 
             <p>
-              O operador
-              <strong>-></strong>
-              é usado quando temos um ponteiro
-              apontando para uma estrutura e queremos
-              acessar um campo dela.
+              Quando temos um ponteiro para uma
+              estrutura, o operador
+              <code>-></code>
+              permite acessar um campo dela.
             </p>
 
 
-            <div class="translation">
+            <div class="code-translation">
 
-              <div class="translation-row">
+              <div class="code-translation-item">
 
                 <code>
                   novo->info
                 </code>
 
-                = acesse o campo
-                <strong>info</strong>
-                do nó apontado por
-                <strong>novo</strong>.
+                <span>
+                  Acesse o campo info do nó apontado
+                  por novo.
+                </span>
 
               </div>
 
 
-              <div class="translation-row">
+              <div class="code-translation-item">
 
                 <code>
                   novo->prox
                 </code>
 
-                = acesse o campo
-                <strong>prox</strong>
-                do nó apontado por
-                <strong>novo</strong>.
+                <span>
+                  Acesse o campo prox do nó apontado
+                  por novo.
+                </span>
 
               </div>
 
             </div>
 
-          </article>
+          </section>
 
 
-          <article class="lesson-block">
+          <section class="course-section">
 
-            <h2>
-              NULL
-            </h2>
-
-
-            <pre class="code">novo->prox = NULL;</pre>
+            <h3>
+              NULL.
+            </h3>
 
 
-            <p>
-              <strong>NULL</strong>
-              significa que aquele ponteiro não
-              está apontando para um endereço válido
-              de outro nó.
-            </p>
-
-
-            <div class="diagram">A → B → C → NULL</div>
+            <pre class="course-code">novo->prox = NULL;</pre>
 
 
             <p>
-              Nesse desenho, NULL indica:
+              <code>NULL</code>
+              significa que o ponteiro não está
+              apontando para um endereço válido de
+              outro nó.
             </p>
 
 
-            <div class="callout">
+            <div class="course-example">
 
-              “C não possui próximo elemento.”
+              <div class="course-example-label">
+                Fim da corrente
+              </div>
+
+              <pre>A  ->  B  ->  C  ->  NULL</pre>
 
             </div>
 
-          </article>
+
+            <p>
+              Nesse exemplo, C não possui um próximo
+              elemento.
+            </p>
+
+          </section>
 
 
-          <div class="module-nav">
+          <div class="course-actions">
 
             <button
               class="btn btn-secondary"
+              type="button"
               onclick="goToPanel(2)"
             >
-              ← Voltar
+              Anterior
             </button>
 
             <button
               class="btn btn-primary"
-              onclick="startCheckpoint()"
+              type="button"
+              onclick="goToPanel(4)"
             >
-              Ir para o Checkpoint →
+              Ir para o Checkpoint
             </button>
 
           </div>
 
-        </div>
+        </article>
 
       </section>
 
@@ -987,47 +1192,60 @@ novo->prox = lista;</pre>
         class="lesson-panel"
       >
 
-        <div class="lesson">
+        <article class="course-lesson">
 
-          <article class="lesson-block">
 
-            <div class="kicker">
-              CHECKPOINT
+          <header class="assessment-head">
+
+            <div class="assessment-type">
+              Checkpoint
             </div>
 
             <h2>
-              Agora vamos praticar.
+              Pratique com consulta.
             </h2>
 
             <p>
               Aqui você ainda está aprendendo.
-              Pode consultar dicas e rever conceitos.
+              Pode consultar as aulas e utilizar
+              dicas sempre que precisar.
             </p>
 
-            <p>
-              Para liberar o Boss:
-              <strong>
-                acerte pelo menos 5 das 6 questões.
-              </strong>
-            </p>
 
-          </article>
+            <div class="assessment-rules">
+
+              <span>
+                6 questões
+              </span>
+
+              <span>
+                mínimo 5 acertos
+              </span>
+
+              <span>
+                consulta permitida
+              </span>
+
+            </div>
+
+          </header>
 
 
           <form id="checkpointForm">
 
-            <div
-              class="quiz-question"
-              data-question="c1"
-            >
+
+            <!-- 01 -->
+
+            <div class="quiz-question">
 
               <div class="question-number">
-                QUESTÃO 01
+                Questão 01
               </div>
 
               <div class="question-title">
                 Qual frase descreve melhor um TAD?
               </div>
+
 
               <div class="options">
 
@@ -1037,9 +1255,11 @@ novo->prox = lista;</pre>
                     name="c1"
                     value="a"
                   />
+
                   Um tipo de variável usado apenas
                   para números.
                 </label>
+
 
                 <label class="option">
                   <input
@@ -1047,9 +1267,11 @@ novo->prox = lista;</pre>
                     name="c1"
                     value="b"
                   />
+
                   Uma estrutura definida por dados
                   e operações sobre esses dados.
                 </label>
+
 
                 <label class="option">
                   <input
@@ -1057,6 +1279,7 @@ novo->prox = lista;</pre>
                     name="c1"
                     value="c"
                   />
+
                   Um endereço de memória.
                 </label>
 
@@ -1070,42 +1293,43 @@ novo->prox = lista;</pre>
                   class="small-button"
                   onclick="toggleHint(this)"
                 >
-                  💡 Dica
+                  Ver dica
                 </button>
 
                 <button
                   type="button"
                   class="small-button"
-                  onclick="goToPanel(1)"
+                  onclick="consultLesson(1)"
                 >
-                  📖 Consultar aula
+                  Consultar aula
                 </button>
 
               </div>
 
+
               <div class="hint">
                 Pense nas duas partes que usamos
-                desde o início: o que guardamos e
-                o que fazemos.
+                desde o início: o que guardamos
+                e o que fazemos.
               </div>
 
             </div>
 
 
-            <div
-              class="quiz-question"
-              data-question="c2"
-            >
+            <!-- 02 -->
+
+            <div class="quiz-question">
 
               <div class="question-number">
-                QUESTÃO 02
+                Questão 02
               </div>
 
               <div class="question-title">
                 Em um nó, o campo
                 <code>info</code>
-                representa normalmente:
+                normalmente representa:
               </div>
+
 
               <div class="options">
 
@@ -1115,8 +1339,10 @@ novo->prox = lista;</pre>
                     name="c2"
                     value="a"
                   />
+
                   O dado armazenado no nó.
                 </label>
+
 
                 <label class="option">
                   <input
@@ -1124,8 +1350,10 @@ novo->prox = lista;</pre>
                     name="c2"
                     value="b"
                   />
+
                   O endereço do computador.
                 </label>
+
 
                 <label class="option">
                   <input
@@ -1133,6 +1361,7 @@ novo->prox = lista;</pre>
                     name="c2"
                     value="c"
                   />
+
                   O fim obrigatório do programa.
                 </label>
 
@@ -1146,40 +1375,40 @@ novo->prox = lista;</pre>
                   class="small-button"
                   onclick="toggleHint(this)"
                 >
-                  💡 Dica
+                  Ver dica
                 </button>
 
                 <button
                   type="button"
                   class="small-button"
-                  onclick="goToPanel(2)"
+                  onclick="consultLesson(2)"
                 >
-                  📖 Consultar aula
+                  Consultar aula
                 </button>
 
               </div>
 
+
               <div class="hint">
                 Um nó precisa guardar a informação
-                e também saber como chegar ao
-                próximo.
+                e também saber como chegar ao próximo.
               </div>
 
             </div>
 
 
-            <div
-              class="quiz-question"
-              data-question="c3"
-            >
+            <!-- 03 -->
+
+            <div class="quiz-question">
 
               <div class="question-number">
-                QUESTÃO 03
+                Questão 03
               </div>
 
               <div class="question-title">
                 O que um ponteiro armazena?
               </div>
+
 
               <div class="options">
 
@@ -1189,8 +1418,10 @@ novo->prox = lista;</pre>
                     name="c3"
                     value="a"
                   />
+
                   Somente textos.
                 </label>
+
 
                 <label class="option">
                   <input
@@ -1198,8 +1429,10 @@ novo->prox = lista;</pre>
                     name="c3"
                     value="b"
                   />
+
                   Um endereço de memória.
                 </label>
+
 
                 <label class="option">
                   <input
@@ -1207,6 +1440,7 @@ novo->prox = lista;</pre>
                     name="c3"
                     value="c"
                   />
+
                   Uma função inteira.
                 </label>
 
@@ -1220,10 +1454,19 @@ novo->prox = lista;</pre>
                   class="small-button"
                   onclick="toggleHint(this)"
                 >
-                  💡 Dica
+                  Ver dica
+                </button>
+
+                <button
+                  type="button"
+                  class="small-button"
+                  onclick="consultLesson(2)"
+                >
+                  Consultar aula
                 </button>
 
               </div>
+
 
               <div class="hint">
                 Ele não precisa guardar o objeto.
@@ -1233,13 +1476,12 @@ novo->prox = lista;</pre>
             </div>
 
 
-            <div
-              class="quiz-question"
-              data-question="c4"
-            >
+            <!-- 04 -->
+
+            <div class="quiz-question">
 
               <div class="question-number">
-                QUESTÃO 04
+                Questão 04
               </div>
 
               <div class="question-title">
@@ -1247,6 +1489,7 @@ novo->prox = lista;</pre>
                 <code>prox</code>
                 serve para:
               </div>
+
 
               <div class="options">
 
@@ -1256,8 +1499,10 @@ novo->prox = lista;</pre>
                     name="c4"
                     value="a"
                   />
+
                   Guardar o endereço do próximo nó.
                 </label>
+
 
                 <label class="option">
                   <input
@@ -1265,8 +1510,10 @@ novo->prox = lista;</pre>
                     name="c4"
                     value="b"
                   />
+
                   Guardar o tamanho da tela.
                 </label>
+
 
                 <label class="option">
                   <input
@@ -1274,6 +1521,7 @@ novo->prox = lista;</pre>
                     name="c4"
                     value="c"
                   />
+
                   Somar todos os valores.
                 </label>
 
@@ -1287,26 +1535,34 @@ novo->prox = lista;</pre>
                   class="small-button"
                   onclick="toggleHint(this)"
                 >
-                  💡 Dica
+                  Ver dica
+                </button>
+
+                <button
+                  type="button"
+                  class="small-button"
+                  onclick="consultLesson(2)"
+                >
+                  Consultar aula
                 </button>
 
               </div>
 
+
               <div class="hint">
-                O nome já ajuda:
-                prox = próximo.
+                O próprio nome ajuda:
+                prox significa próximo.
               </div>
 
             </div>
 
 
-            <div
-              class="quiz-question"
-              data-question="c5"
-            >
+            <!-- 05 -->
+
+            <div class="quiz-question">
 
               <div class="question-number">
-                QUESTÃO 05
+                Questão 05
               </div>
 
               <div class="question-title">
@@ -1317,6 +1573,7 @@ novo->prox = lista;</pre>
                 do último nó?
               </div>
 
+
               <div class="options">
 
                 <label class="option">
@@ -1325,8 +1582,10 @@ novo->prox = lista;</pre>
                     name="c5"
                     value="a"
                   />
+
                   O valor do nó é zero.
                 </label>
+
 
                 <label class="option">
                   <input
@@ -1334,8 +1593,10 @@ novo->prox = lista;</pre>
                     name="c5"
                     value="b"
                   />
+
                   Não existe próximo nó.
                 </label>
+
 
                 <label class="option">
                   <input
@@ -1343,8 +1604,8 @@ novo->prox = lista;</pre>
                     name="c5"
                     value="c"
                   />
-                  A lista está obrigatoriamente
-                  cheia.
+
+                  A lista está obrigatoriamente cheia.
                 </label>
 
               </div>
@@ -1357,35 +1618,44 @@ novo->prox = lista;</pre>
                   class="small-button"
                   onclick="toggleHint(this)"
                 >
-                  💡 Dica
+                  Ver dica
+                </button>
+
+                <button
+                  type="button"
+                  class="small-button"
+                  onclick="consultLesson(3)"
+                >
+                  Consultar aula
                 </button>
 
               </div>
 
+
               <div class="hint">
-                Pense no desenho:
+                Pense em:
                 A → B → C → ?
               </div>
 
             </div>
 
 
-            <div
-              class="quiz-question"
-              data-question="c6"
-            >
+            <!-- 06 -->
+
+            <div class="quiz-question">
 
               <div class="question-number">
-                QUESTÃO 06
+                Questão 06
               </div>
 
               <div class="question-title">
                 Em
                 <code>novo->info</code>,
-                a seta
+                o operador
                 <code>-></code>
                 indica:
               </div>
+
 
               <div class="options">
 
@@ -1395,11 +1665,11 @@ novo->prox = lista;</pre>
                     name="c6"
                     value="a"
                   />
-                  Acesso ao campo
-                  <code>info</code>
-                  da estrutura apontada por
-                  <code>novo</code>.
+
+                  Acesso ao campo info da estrutura
+                  apontada por novo.
                 </label>
+
 
                 <label class="option">
                   <input
@@ -1407,8 +1677,10 @@ novo->prox = lista;</pre>
                     name="c6"
                     value="b"
                   />
-                  Comparação matemática.
+
+                  Uma comparação matemática.
                 </label>
+
 
                 <label class="option">
                   <input
@@ -1416,6 +1688,7 @@ novo->prox = lista;</pre>
                     name="c6"
                     value="c"
                   />
+
                   Exclusão automática do nó.
                 </label>
 
@@ -1429,26 +1702,39 @@ novo->prox = lista;</pre>
                   class="small-button"
                   onclick="toggleHint(this)"
                 >
-                  💡 Dica
+                  Ver dica
+                </button>
+
+                <button
+                  type="button"
+                  class="small-button"
+                  onclick="consultLesson(3)"
+                >
+                  Consultar aula
                 </button>
 
               </div>
 
+
               <div class="hint">
-                Temos um ponteiro e queremos
-                acessar um dos campos da estrutura
-                para a qual ele aponta.
+                Temos um ponteiro e queremos acessar
+                um campo da estrutura para a qual
+                ele aponta.
               </div>
 
             </div>
 
 
-            <button
-              class="btn btn-primary btn-full"
-              type="submit"
-            >
-              Corrigir Checkpoint
-            </button>
+            <div class="assessment-submit">
+
+              <button
+                class="btn btn-primary"
+                type="submit"
+              >
+                Corrigir Checkpoint
+              </button>
+
+            </div>
 
           </form>
 
@@ -1459,7 +1745,7 @@ novo->prox = lista;</pre>
             style="display:none;"
           ></div>
 
-        </div>
+        </article>
 
       </section>
 
@@ -1473,51 +1759,65 @@ novo->prox = lista;</pre>
         class="lesson-panel"
       >
 
-        <div class="lesson">
+        <article class="course-lesson">
 
-          <article class="boss-intro">
 
-            <div class="boss-lock">
-              🔒 BOSS · SEM CONSULTA
+          <header class="assessment-head">
+
+            <div class="assessment-type">
+              Boss
             </div>
 
             <h2>
-              Fundamentos
+              Agora sem consulta.
             </h2>
 
             <p>
-              A partir daqui as aulas e dicas ficam
-              indisponíveis durante a tentativa.
+              Este é o momento de testar o que ficou
+              sem ajuda das aulas ou das dicas.
             </p>
 
-            <p>
-              São
-              <strong>10 questões</strong>.
-              Você precisa acertar pelo menos
-              <strong>8</strong>.
-            </p>
 
-            <p>
-              As respostas só serão corrigidas
-              quando você terminar.
-            </p>
+            <div class="assessment-rules">
+
+              <span>
+                10 questões
+              </span>
+
+              <span>
+                mínimo 8 acertos
+              </span>
+
+              <span>
+                sem consulta
+              </span>
+
+            </div>
+
+          </header>
+
+
+          <div
+            style="padding-top:32px;"
+          >
 
             <button
               class="btn btn-primary"
+              type="button"
               onclick="startBoss()"
             >
-              Começar Boss →
+              Começar Boss
             </button>
 
-          </article>
+          </div>
 
-        </div>
+        </article>
 
       </section>
 
 
       <!-- =================================================
-           BOSS QUESTIONS
+           BOSS
            ================================================= -->
 
       <section
@@ -1525,38 +1825,39 @@ novo->prox = lista;</pre>
         class="lesson-panel"
       >
 
-        <div class="lesson">
+        <article class="course-lesson">
 
-          <div class="boss-intro">
 
-            <div class="boss-lock">
-              🔒 BOSS EM ANDAMENTO
+          <header class="assessment-head">
+
+            <div class="assessment-type">
+              Boss em andamento
             </div>
 
             <h2>
-              Sem consulta.
+              Fundamentos.
             </h2>
 
             <p>
-              Responda com o que você conseguiu
-              entender até aqui.
+              Responda todas as questões antes de
+              finalizar. As respostas corretas não
+              serão exibidas durante a tentativa.
             </p>
 
-          </div>
+          </header>
 
 
           <form
             id="bossForm"
-            style="margin-top:20px;"
           ></form>
 
-        </div>
+        </article>
 
       </section>
 
 
       <!-- =================================================
-           ESSAY
+           DISSERTATIVA
            ================================================= -->
 
       <section
@@ -1564,31 +1865,41 @@ novo->prox = lista;</pre>
         class="lesson-panel"
       >
 
-        <div class="lesson">
+        <article class="course-lesson">
 
-          <article class="lesson-block">
 
-            <div class="kicker">
-              PERGUNTA-CHAVE
+          <header class="lesson-heading">
+
+            <div class="lesson-sequence">
+              Pergunta-chave
             </div>
 
             <h2>
-              Agora explique sem alternativas.
+              Explique sem alternativas.
             </h2>
 
             <p>
-              Escreva com suas próprias palavras:
+              A resposta precisa mostrar
+              entendimento, não apenas palavras
+              decoradas.
             </p>
 
+          </header>
 
-            <div class="callout">
 
-              O que é um TAD e qual é a função de
-              <code>info</code>,
-              <code>prox</code>
-              e
-              <code>NULL</code>
-              em um nó de uma lista encadeada?
+          <section class="course-section">
+
+            <div class="course-definition">
+
+              <div class="course-definition-term">
+                Sua tarefa
+              </div>
+
+              <p>
+                O que é um TAD e qual é a função de
+                info, prox e NULL em um nó de uma
+                lista encadeada?
+              </p>
 
             </div>
 
@@ -1596,13 +1907,18 @@ novo->prox = lista;</pre>
             <textarea
               id="essayAnswer"
               class="essay"
-              placeholder="Escreva como se estivesse explicando o conteúdo para outra pessoa..."
+              placeholder="Explique como se estivesse ensinando o conteúdo para outra pessoa..."
             ></textarea>
 
 
             <p
               id="essayCounter"
-              style="color:var(--muted);font-size:12px;"
+              style="
+                margin-top:8px;
+                color:var(--muted);
+                font-family:var(--font-code);
+                font-size:9px;
+              "
             >
               0 caracteres
             </p>
@@ -1610,6 +1926,7 @@ novo->prox = lista;</pre>
 
             <button
               class="btn btn-primary btn-full"
+              type="button"
               onclick="evaluateEssay()"
             >
               Avaliar minha explicação
@@ -1622,15 +1939,15 @@ novo->prox = lista;</pre>
               style="display:none;"
             ></div>
 
-          </article>
+          </section>
 
-        </div>
+        </article>
 
       </section>
 
 
       <!-- =================================================
-           COMPLETED
+           CONCLUÍDO
            ================================================= -->
 
       <section
@@ -1638,12 +1955,13 @@ novo->prox = lista;</pre>
         class="lesson-panel"
       >
 
-        <div class="lesson">
+        <article class="course-lesson">
 
-          <article class="lesson-block">
 
-            <div class="kicker">
-              MÓDULO CONCLUÍDO
+          <header class="lesson-heading">
+
+            <div class="lesson-sequence">
+              Módulo concluído
             </div>
 
             <h2>
@@ -1651,37 +1969,28 @@ novo->prox = lista;</pre>
             </h2>
 
             <p>
-              Você não precisava sair daqui sabendo
-              programar uma lista inteira.
+              Agora os próximos conteúdos já podem
+              usar conceitos como struct, ponteiro,
+              prox, NULL e acesso por
+              <code>-></code>.
             </p>
+
+          </header>
+
+
+          <section class="course-section">
+
+            <p>
+              Você não precisava sair deste módulo
+              sabendo implementar uma lista inteira.
+            </p>
+
 
             <p>
               O objetivo era conseguir olhar para
-              palavras como
-              <code>struct</code>,
-              <code>ponteiro</code>,
-              <code>prox</code>,
-              <code>NULL</code>
-              e
-              <code>-></code>
-              sem que o código parecesse uma língua
-              desconhecida.
+              esses termos e compreender o papel
+              de cada um antes de avançar.
             </p>
-
-
-            <div class="callout">
-
-              <strong>
-                Próximo passo
-              </strong>
-
-              Lista sequencial: vetor, posições,
-              campo
-              <code>ultimo</code>,
-              lista vazia, lista cheia, inserção
-              e busca.
-
-            </div>
 
 
             <div
@@ -1689,48 +1998,105 @@ novo->prox = lista;</pre>
               class="result-box"
             ></div>
 
-          </article>
+          </section>
 
 
-          <div class="module-nav">
+          <div class="course-actions">
 
             <a
               class="btn btn-secondary"
               href="../../../"
             >
-              ← Voltar ao QuizADS
+              Voltar ao QuizADS
             </a>
+
 
             <a
               class="btn btn-primary"
               href="../modulo-02/"
             >
-              Módulo 02 — Lista Sequencial →
+              Módulo 02 · Lista Sequencial
             </a>
 
           </div>
 
-        </div>
+        </article>
 
       </section>
 
-    </div>
+    </section>
+
+
+    <!-- ===================================================
+         OUTLINE DIREITA
+         =================================================== -->
+
+    <aside
+      class="course-outline"
+      aria-label="Conteúdo do módulo"
+    >
+
+      <div class="course-outline-inner">
+
+        <div class="course-outline-title">
+          Neste módulo
+        </div>
+
+        <div
+          id="courseOutline"
+          class="course-outline-list"
+        ></div>
+
+      </div>
+
+    </aside>
 
   </main>
 
 
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+
   <footer class="site-footer">
 
-    <div class="container">
-
-      <div class="footer-title">
-        QuizADS · KorDevs
-      </div>
+    <div class="container footer-grid">
 
       <div>
-        ©
-        <span data-current-year></span>
-        KorDevs Tecnologia e Automação.
+
+        <div class="footer-title">
+          QuizADS · KorDevs
+        </div>
+
+        <div>
+          ©
+          <span data-current-year></span>
+          KorDevs Tecnologia e Automação.
+        </div>
+
+        <div>
+          Conteúdo autoral com direitos reservados.
+          Código-fonte disponibilizado sob licença MIT.
+        </div>
+
+      </div>
+
+
+      <div class="footer-links">
+
+        <a href="../../../">
+          QuizADS
+        </a>
+
+        <a
+          data-support-link
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Apoiar
+        </a>
+
       </div>
 
     </div>
@@ -1738,10 +2104,18 @@ novo->prox = lista;</pre>
   </footer>
 
 
+  <!-- =====================================================
+       SHARED JS
+       ===================================================== -->
+
   <script
     src="../../../assets/js/quizads.js"
   ></script>
 
+
+  <!-- =====================================================
+       MODULE JS
+       ===================================================== -->
 
   <script>
 
@@ -1772,28 +2146,39 @@ novo->prox = lista;</pre>
         : 0;
 
 
-    if (
-      state.completed
-    ) {
+    if (state.completed) {
       currentPanel = 8;
     }
+
+
+    state.maxPanel =
+      Math.max(
+        Number(
+          state.maxPanel || 0
+        ),
+        currentPanel
+      );
+
+
+    let resumeAssessmentPanel =
+      null;
 
 
     saveState();
 
 
     /* =====================================================
-       PAINÉIS
+       CONFIGURAÇÃO VISUAL
        ===================================================== */
 
     const panelProgress = [
       20,
-      30,
+      32,
       45,
       60,
       70,
-      75,
-      85,
+      76,
+      86,
       95,
       100
     ];
@@ -1812,10 +2197,67 @@ novo->prox = lista;</pre>
     ];
 
 
+    const outlineItems = [
+      {
+        panel: 0,
+        number: "01",
+        name: "Estruturas de dados",
+        note: "dados e operações"
+      },
+
+      {
+        panel: 1,
+        number: "02",
+        name: "TAD",
+        note: "abstração"
+      },
+
+      {
+        panel: 2,
+        number: "03",
+        name: "Memória e ponteiros",
+        note: "nó, info e prox"
+      },
+
+      {
+        panel: 3,
+        number: "04",
+        name: "Leitura de código",
+        note: "struct, *, -> e NULL"
+      },
+
+      {
+        panel: 4,
+        number: "05",
+        name: "Checkpoint",
+        note: "consulta permitida"
+      },
+
+      {
+        panel: 5,
+        number: "06",
+        name: "Boss",
+        note: "sem consulta"
+      },
+
+      {
+        panel: 7,
+        number: "07",
+        name: "Pergunta-chave",
+        note: "explicação livre"
+      }
+    ];
+
+
+    /* =====================================================
+       PERSISTÊNCIA
+       ===================================================== */
+
     function saveState() {
 
       state.currentPanel =
         currentPanel;
+
 
       localStorage.setItem(
         STORAGE_KEY,
@@ -1825,7 +2267,25 @@ novo->prox = lista;</pre>
     }
 
 
-    function goToPanel(index) {
+    /* =====================================================
+       NAVEGAÇÃO
+       ===================================================== */
+
+    function goToPanel(
+      index,
+      scroll = true
+    ) {
+
+      const target =
+        document.getElementById(
+          `panel-${index}`
+        );
+
+
+      if (!target) {
+        return;
+      }
+
 
       document
         .querySelectorAll(
@@ -1838,33 +2298,50 @@ novo->prox = lista;</pre>
         });
 
 
-      const next =
-        document.getElementById(
-          `panel-${index}`
-        );
-
-
-      if (!next) {
-        return;
-      }
-
-
-      next.classList.add(
+      target.classList.add(
         "active"
       );
 
 
-      currentPanel = index;
+      currentPanel =
+        index;
+
+
+      state.maxPanel =
+        Math.max(
+          Number(
+            state.maxPanel || 0
+          ),
+          index
+        );
+
+
+      document.body.classList.toggle(
+        "assessment-mode",
+        index === 4 ||
+        index === 6
+      );
+
 
       saveState();
 
       updateProgress();
 
+      renderOutline();
 
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+      renderModuleRail();
+
+      updateResumeAssessment();
+
+
+      if (scroll) {
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
+      }
 
     }
 
@@ -1896,29 +2373,515 @@ novo->prox = lista;</pre>
           currentPanel
         ] || "";
 
+
+      document.getElementById(
+        "mobileProgressFill"
+      ).style.width =
+        `${percent}%`;
+
+
+      document.getElementById(
+        "mobileProgressLabel"
+      ).textContent =
+        `${percent}%`;
+
     }
 
 
     /* =====================================================
-       CHECKPOINT
+       OUTLINE DO MÓDULO
        ===================================================== */
 
-    const checkpointAnswers = {
-      c1: "b",
-      c2: "a",
-      c3: "b",
-      c4: "a",
-      c5: "b",
-      c6: "a"
-    };
+    function canAccessPanel(panel) {
+
+      if (panel <= 3) {
+        return (
+          panel <=
+          Number(
+            state.maxPanel || 0
+          )
+        );
+      }
 
 
-    function startCheckpoint() {
-      goToPanel(4);
+      if (panel === 4) {
+
+        return (
+          Number(
+            state.maxPanel || 0
+          ) >= 4
+        );
+
+      }
+
+
+      if (panel === 5) {
+
+        return (
+          state.checkpointPassed === true
+        );
+
+      }
+
+
+      if (panel === 7) {
+
+        return (
+          state.bossPassed === true
+        );
+
+      }
+
+
+      return false;
+
     }
 
 
-    function toggleHint(button) {
+    function renderOutline() {
+
+      const container =
+        document.getElementById(
+          "courseOutline"
+        );
+
+
+      container.innerHTML = "";
+
+
+      outlineItems.forEach(
+        (item) => {
+
+          const button =
+            document.createElement(
+              "button"
+            );
+
+
+          const bossActive =
+            item.panel === 5 &&
+            (
+              currentPanel === 5 ||
+              currentPanel === 6
+            );
+
+
+          button.type =
+            "button";
+
+
+          button.className =
+            "course-outline-item";
+
+
+          if (
+            item.panel ===
+              currentPanel ||
+            bossActive
+          ) {
+
+            button.classList.add(
+              "active"
+            );
+
+          }
+
+
+          const accessible =
+            canAccessPanel(
+              item.panel
+            );
+
+
+          button.disabled =
+            !accessible;
+
+
+          button.innerHTML = `
+            <span
+              class="course-outline-index"
+            >
+              ${item.number}
+            </span>
+
+            <span
+              class="course-outline-name"
+            >
+              ${item.name}
+
+              <span
+                class="course-outline-note"
+              >
+                ${item.note}
+              </span>
+            </span>
+          `;
+
+
+          if (accessible) {
+
+            button.addEventListener(
+              "click",
+              () => {
+
+                goToPanel(
+                  item.panel
+                );
+
+              }
+            );
+
+          }
+
+
+          container.appendChild(
+            button
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =====================================================
+       RAIL DE MÓDULOS
+       ===================================================== */
+
+    const moduleDefinitions = [
+      {
+        id: 1,
+        name: "Fundamentos",
+        topic: "TAD e ponteiros",
+        path: "../modulo-01/",
+        key: "quizads_ed_m01_v1",
+        online: true
+      },
+
+      {
+        id: 2,
+        name: "Lista Sequencial",
+        topic: "vetor e operações",
+        path: "../modulo-02/",
+        key: "quizads_ed_m02_v1",
+        online: true
+      },
+
+      {
+        id: 3,
+        name: "Lista Encadeada",
+        topic: "nós e memória dinâmica",
+        path: "../modulo-03/",
+        key: "quizads_ed_m03_v1",
+        online: true
+      },
+
+      {
+        id: 4,
+        name: "Variações de Lista",
+        topic: "circular e dupla",
+        online: false
+      },
+
+      {
+        id: 5,
+        name: "Pilha e Fila",
+        topic: "LIFO e FIFO",
+        online: false
+      },
+
+      {
+        id: 6,
+        name: "Árvores",
+        topic: "conceitos e percursos",
+        online: false
+      },
+
+      {
+        id: 7,
+        name: "BST e AVL",
+        topic: "busca e balanceamento",
+        online: false
+      },
+
+      {
+        id: 8,
+        name: "Árvore B e Hash",
+        topic: "estrutura e dispersão",
+        online: false
+      }
+    ];
+
+
+    function readModuleState(
+      key
+    ) {
+
+      if (!key) {
+        return {};
+      }
+
+
+      try {
+
+        return JSON.parse(
+          localStorage.getItem(
+            key
+          ) || "{}"
+        );
+
+      } catch {
+
+        return {};
+
+      }
+
+    }
+
+
+    function canAccessModule(
+      module
+    ) {
+
+      if (!module.online) {
+        return false;
+      }
+
+
+      if (module.id === 1) {
+        return true;
+      }
+
+
+      if (module.id === 2) {
+
+        return (
+          state.completed === true
+        );
+
+      }
+
+
+      if (module.id === 3) {
+
+        const module2 =
+          readModuleState(
+            "quizads_ed_m02_v1"
+          );
+
+
+        return (
+          module2.completed === true
+        );
+
+      }
+
+
+      return false;
+
+    }
+
+
+    function renderModuleRail() {
+
+      const container =
+        document.getElementById(
+          "courseModules"
+        );
+
+
+      container.innerHTML = "";
+
+
+      moduleDefinitions.forEach(
+        (module) => {
+
+          const stored =
+            module.id === 1
+              ? state
+              : readModuleState(
+                  module.key
+                );
+
+
+          const completed =
+            stored.completed === true;
+
+
+          const accessible =
+            canAccessModule(
+              module
+            );
+
+
+          const element =
+            document.createElement(
+              accessible
+                ? "a"
+                : "div"
+            );
+
+
+          element.className =
+            "course-module-link";
+
+
+          if (
+            module.id === 1
+          ) {
+
+            element.classList.add(
+              "current"
+            );
+
+          }
+
+
+          if (completed) {
+
+            element.classList.add(
+              "done"
+            );
+
+          }
+
+
+          if (!accessible) {
+
+            element.classList.add(
+              "locked"
+            );
+
+          }
+
+
+          if (accessible) {
+
+            element.href =
+              module.path;
+
+          }
+
+
+          element.innerHTML = `
+            <span
+              class="course-module-dot"
+              aria-hidden="true"
+            ></span>
+
+            <span>
+
+              <span
+                class="course-module-number"
+              >
+                Módulo
+                ${String(
+                  module.id
+                ).padStart(2, "0")}
+              </span>
+
+              <span
+                class="course-module-name"
+              >
+                ${module.name}
+              </span>
+
+              <span
+                class="course-module-topic"
+              >
+                ${
+                  module.online
+                    ? module.topic
+                    : "em breve"
+                }
+              </span>
+
+            </span>
+          `;
+
+
+          container.appendChild(
+            element
+          );
+
+        }
+      );
+
+    }
+
+
+    /* =====================================================
+       CONSULTAR AULA
+       ===================================================== */
+
+    function consultLesson(
+      lessonIndex
+    ) {
+
+      resumeAssessmentPanel =
+        4;
+
+
+      goToPanel(
+        lessonIndex
+      );
+
+    }
+
+
+    function returnToAssessment() {
+
+      if (
+        resumeAssessmentPanel === null
+      ) {
+        return;
+      }
+
+
+      const destination =
+        resumeAssessmentPanel;
+
+
+      resumeAssessmentPanel =
+        null;
+
+
+      goToPanel(
+        destination
+      );
+
+    }
+
+
+    function updateResumeAssessment() {
+
+      const element =
+        document.getElementById(
+          "resumeAssessment"
+        );
+
+
+      const visible =
+        resumeAssessmentPanel !== null &&
+        currentPanel >= 0 &&
+        currentPanel <= 3;
+
+
+      element.classList.toggle(
+        "visible",
+        visible
+      );
+
+    }
+
+
+    /* =====================================================
+       DICAS
+       ===================================================== */
+
+    function toggleHint(
+      button
+    ) {
 
       const question =
         button.closest(
@@ -1939,6 +2902,20 @@ novo->prox = lista;</pre>
     }
 
 
+    /* =====================================================
+       CHECKPOINT
+       ===================================================== */
+
+    const checkpointAnswers = {
+      c1: "b",
+      c2: "a",
+      c3: "b",
+      c4: "a",
+      c5: "b",
+      c6: "a"
+    };
+
+
     document
       .getElementById(
         "checkpointForm"
@@ -1950,6 +2927,7 @@ novo->prox = lista;</pre>
           event.preventDefault();
 
 
+          let answered = 0;
           let score = 0;
 
 
@@ -1965,15 +2943,41 @@ novo->prox = lista;</pre>
                 );
 
 
+              if (!selected) {
+                return;
+              }
+
+
+              answered++;
+
+
               if (
-                selected &&
-                selected.value === answer
+                selected.value ===
+                answer
               ) {
+
                 score++;
+
               }
 
             }
           );
+
+
+          if (
+            answered <
+            Object.keys(
+              checkpointAnswers
+            ).length
+          ) {
+
+            alert(
+              "Responda todas as questões antes de corrigir o Checkpoint."
+            );
+
+            return;
+
+          }
 
 
           const result =
@@ -1994,7 +2998,16 @@ novo->prox = lista;</pre>
             state.checkpointScore =
               score;
 
+            state.maxPanel =
+              Math.max(
+                state.maxPanel || 0,
+                5
+              );
+
+
             saveState();
+
+            renderOutline();
 
 
             result.innerHTML = `
@@ -2007,15 +3020,16 @@ novo->prox = lista;</pre>
               </h3>
 
               <p>
-                Você atingiu o mínimo necessário
-                para enfrentar o Boss.
+                Você atingiu o mínimo para
+                enfrentar o Boss.
               </p>
 
               <button
+                type="button"
                 class="btn btn-primary"
                 onclick="goToPanel(5)"
               >
-                Liberar Boss →
+                Liberar Boss
               </button>
             `;
 
@@ -2032,11 +3046,12 @@ novo->prox = lista;</pre>
 
               <p>
                 Precisamos de pelo menos 5 acertos.
-                Revise as aulas, use as dicas e
-                tente novamente.
+                Consulte as aulas, reveja os conceitos
+                e tente novamente.
               </p>
 
               <button
+                type="button"
                 class="btn btn-secondary"
                 onclick="goToPanel(0)"
               >
@@ -2202,7 +3217,8 @@ novo->prox = lista;</pre>
     function startBoss() {
 
       if (
-        !state.checkpointPassed
+        state.checkpointPassed !==
+        true
       ) {
         return;
       }
@@ -2241,7 +3257,8 @@ novo->prox = lista;</pre>
 
           wrapper.innerHTML = `
             <div class="question-number">
-              BOSS ${String(
+              Questão
+              ${String(
                 index + 1
               ).padStart(2, "0")}
             </div>
@@ -2254,7 +3271,10 @@ novo->prox = lista;</pre>
 
               ${question.options
                 .map(
-                  (option, optionIndex) => `
+                  (
+                    option,
+                    optionIndex
+                  ) => `
                     <label class="option">
 
                       <input
@@ -2282,23 +3302,28 @@ novo->prox = lista;</pre>
       );
 
 
-      const button =
+      const submitArea =
         document.createElement(
-          "button"
+          "div"
         );
 
 
-      button.type = "submit";
+      submitArea.className =
+        "assessment-submit";
 
-      button.className =
-        "btn btn-primary btn-full";
 
-      button.textContent =
-        "Finalizar Boss";
+      submitArea.innerHTML = `
+        <button
+          type="submit"
+          class="btn btn-primary"
+        >
+          Finalizar Boss
+        </button>
+      `;
 
 
       form.appendChild(
-        button
+        submitArea
       );
 
 
@@ -2308,7 +3333,9 @@ novo->prox = lista;</pre>
     }
 
 
-    function submitBoss(event) {
+    function submitBoss(
+      event
+    ) {
 
       event.preventDefault();
 
@@ -2326,19 +3353,22 @@ novo->prox = lista;</pre>
             );
 
 
-          if (selected) {
+          if (!selected) {
+            return;
+          }
 
-            answered++;
+
+          answered++;
 
 
-            if (
-              Number(
-                selected.value
-              ) ===
-              question.answer
-            ) {
-              score++;
-            }
+          if (
+            Number(
+              selected.value
+            ) ===
+            question.answer
+          ) {
+
+            score++;
 
           }
 
@@ -2356,6 +3386,7 @@ novo->prox = lista;</pre>
         );
 
         return;
+
       }
 
 
@@ -2367,6 +3398,13 @@ novo->prox = lista;</pre>
 
         state.bossPassed =
           true;
+
+        state.maxPanel =
+          Math.max(
+            state.maxPanel || 0,
+            7
+          );
+
 
         saveState();
 
@@ -2390,24 +3428,26 @@ novo->prox = lista;</pre>
             </div>
 
             <h2>
-              Ainda não liberou.
+              Ainda não.
             </h2>
 
             <p>
-              O mínimo é 8/10.
+              O mínimo para vencer o Boss é 8/10.
+              As respostas corretas não serão
+              reveladas aqui.
             </p>
 
             <p>
-              Isso não significa voltar ao zero.
-              Agora você já sabe exatamente quais
-              conceitos precisam de mais atenção.
+              Volte às aulas, reconstrua o
+              raciocínio e faça uma nova tentativa.
             </p>
 
             <button
+              type="button"
               class="btn btn-secondary"
-              onclick="goToPanel(0)"
+              onclick="reviewAfterBoss()"
             >
-              Revisar conteúdo
+              Revisar módulo
             </button>
 
           </div>
@@ -2418,8 +3458,17 @@ novo->prox = lista;</pre>
     }
 
 
+    function reviewAfterBoss() {
+
+      renderBoss();
+
+      goToPanel(0);
+
+    }
+
+
     /* =====================================================
-       QUESTÃO DISSERTATIVA
+       DISSERTATIVA
        ===================================================== */
 
     const essay =
@@ -2441,6 +3490,21 @@ novo->prox = lista;</pre>
     );
 
 
+    function normalizeText(
+      text
+    ) {
+
+      return text
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(
+          /[\u0300-\u036f]/g,
+          ""
+        );
+
+    }
+
+
     function hasAny(
       text,
       terms
@@ -2448,7 +3512,9 @@ novo->prox = lista;</pre>
 
       return terms.some(
         (term) =>
-          text.includes(term)
+          text.includes(
+            term
+          )
       );
 
     }
@@ -2461,13 +3527,9 @@ novo->prox = lista;</pre>
 
 
       const text =
-        raw
-          .toLowerCase()
-          .normalize("NFD")
-          .replace(
-            /[\u0300-\u036f]/g,
-            ""
-          );
+        normalizeText(
+          raw
+        );
 
 
       const criteria = [
@@ -2515,7 +3577,7 @@ novo->prox = lista;</pre>
 
         {
           title:
-            "prox como ligação/endereço do próximo nó",
+            "prox como endereço ou ligação para o próximo nó",
 
           ok:
             text.includes(
@@ -2557,7 +3619,8 @@ novo->prox = lista;</pre>
 
       const covered =
         criteria.filter(
-          (item) => item.ok
+          (item) =>
+            item.ok
         ).length;
 
 
@@ -2581,9 +3644,9 @@ novo->prox = lista;</pre>
         </h3>
 
         <p>
-          Esta avaliação é local e procura
-          conceitos-chave. Ela não substitui
-          uma correção humana da resposta.
+          A análise local procura conceitos-chave.
+          Ela não substitui uma avaliação humana
+          da qualidade da resposta.
         </p>
 
         <div class="rubric">
@@ -2600,10 +3663,10 @@ novo->prox = lista;</pre>
                 >
                   ${
                     item.ok
-                      ? "✓"
-                      : "○"
+                      ? "Atendido"
+                      : "Revisar"
                   }
-
+                  ·
                   ${item.title}
                 </div>
               `
@@ -2616,9 +3679,9 @@ novo->prox = lista;</pre>
           !enoughText
             ? `
               <p>
-                Sua explicação ainda está curta.
-                Tente desenvolver um pouco mais
-                com suas próprias palavras.
+                Desenvolva um pouco mais a
+                explicação usando suas próprias
+                palavras.
               </p>
             `
             : ""
@@ -2631,18 +3694,20 @@ novo->prox = lista;</pre>
             ? `
               <p>
                 <strong>
-                  Boa explicação.
+                  Critério atingido.
                 </strong>
 
-                Você demonstrou domínio de
-                ${covered}/4 pontos essenciais.
+                Você cobriu
+                ${covered}/4
+                fundamentos essenciais.
               </p>
 
               <button
+                type="button"
                 class="btn btn-success"
                 onclick="completeModule()"
               >
-                Concluir Módulo 01 →
+                Concluir Módulo 01
               </button>
             `
 
@@ -2654,8 +3719,8 @@ novo->prox = lista;</pre>
                 </strong>
                 pontos essenciais.
 
-                Releia a pergunta e complemente
-                a explicação antes de concluir.
+                Precisamos de pelo menos 3/4
+                e uma explicação mais desenvolvida.
               </p>
             `
         }
@@ -2673,19 +3738,21 @@ novo->prox = lista;</pre>
       state.completed =
         true;
 
+
       state.completedAt =
         new Date().toISOString();
+
+
+      state.maxPanel =
+        8;
+
 
       saveState();
 
 
-      const finalScore =
-        document.getElementById(
-          "finalScore"
-        );
-
-
-      finalScore.innerHTML = `
+      document.getElementById(
+        "finalScore"
+      ).innerHTML = `
         <div class="result-score">
           ${state.bossScore}/10
         </div>
@@ -2695,11 +3762,17 @@ novo->prox = lista;</pre>
         </strong>
 
         <p>
-          Módulo 01 registrado como concluído
-          neste navegador.
+          O Módulo 01 foi registrado como
+          concluído neste navegador.
+
+          O Módulo 02 agora está liberado.
         </p>
       `;
 
+
+      renderModuleRail();
+
+      renderOutline();
 
       goToPanel(8);
 
@@ -2710,8 +3783,13 @@ novo->prox = lista;</pre>
        START
        ===================================================== */
 
+    renderModuleRail();
+
+    renderOutline();
+
     goToPanel(
-      currentPanel
+      currentPanel,
+      false
     );
 
   </script>

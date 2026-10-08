@@ -3013,3 +3013,8 @@ code {
     min-height: 58px;
   }
 }
+
+/* Não renderizar caixas de resultado sem conteúdo */
+.result-box:empty {
+  display: none;
+}

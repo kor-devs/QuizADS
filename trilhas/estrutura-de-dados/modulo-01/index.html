@@ -3733,6 +3733,47 @@ novo->prox = lista;</pre>
        CONCLUSÃO
        ===================================================== */
 
+    function renderFinalScore() {
+
+      const finalScore =
+        document.getElementById(
+          "finalScore"
+        );
+
+
+      if (
+        !finalScore ||
+        state.completed !== true
+      ) {
+        return;
+      }
+
+
+      const score =
+        Number.isFinite(
+          Number(state.bossScore)
+        )
+          ? `${state.bossScore}/10`
+          : "Concluído";
+
+
+      finalScore.innerHTML = `
+        <div class="result-score">
+          ${score}
+        </div>
+
+        <strong>
+          Boss concluído.
+        </strong>
+
+        <p>
+          O Módulo 01 foi concluído neste navegador.
+          Você já pode avançar para Lista Sequencial.
+        </p>
+      `;
+    }
+
+
     function completeModule() {
 
       state.completed =
@@ -3749,33 +3790,16 @@ novo->prox = lista;</pre>
 
       saveState();
 
-
-      document.getElementById(
-        "finalScore"
-      ).innerHTML = `
-        <div class="result-score">
-          ${state.bossScore}/10
-        </div>
-
-        <strong>
-          Boss concluído.
-        </strong>
-
-        <p>
-          O Módulo 01 foi registrado como
-          concluído neste navegador.
-
-          O Módulo 02 agora está liberado.
-        </p>
-      `;
-
-
       renderModuleRail();
 
       renderOutline();
 
-      goToPanel(8);
+      renderFinalScore();
 
+      goToPanel(
+        currentPanel,
+        false
+      );
     }
 
 

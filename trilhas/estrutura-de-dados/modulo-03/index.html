@@ -1,0 +1,5234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <meta
+    name="theme-color"
+    content="#123744"
+  />
+
+  <meta
+    name="description"
+    content="QuizADS — Módulo 03: Lista Encadeada Simples."
+  />
+
+  <title>
+    Módulo 03 | Lista Encadeada | QuizADS
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="../../../assets/css/quizads.css"
+  />
+
+  <style>
+    /* =====================================================
+       COMPONENTES EXCLUSIVOS DO MÓDULO 03
+       ===================================================== */
+
+    .memory-strip {
+      display: grid;
+      gap: 10px;
+
+      margin: 18px 0;
+    }
+
+    .memory-row {
+      display: grid;
+      grid-template-columns: 85px 1fr;
+
+      overflow: hidden;
+
+      border: 1px solid var(--border);
+      border-radius: 10px;
+
+      background: var(--surface);
+    }
+
+    .memory-address {
+      display: grid;
+      place-items: center;
+
+      padding: 13px 8px;
+
+      color: var(--kor-accent);
+      background: var(--surface-soft);
+
+      font-family: var(--font-code);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .memory-content {
+      padding: 13px;
+
+      font-family: var(--font-code);
+      font-size: 13px;
+    }
+
+    .linked-chain {
+      display: flex;
+      align-items: center;
+
+      gap: 8px;
+
+      overflow-x: auto;
+
+      padding: 18px 2px 22px;
+    }
+
+    .node-visual {
+      min-width: 118px;
+
+      overflow: hidden;
+
+      border: 2px solid var(--kor-primary);
+      border-radius: 11px;
+
+      background: var(--surface);
+    }
+
+    .node-address {
+      padding: 5px 8px;
+
+      text-align: center;
+
+      color: var(--muted);
+      background: var(--surface-soft);
+
+      font-family: var(--font-code);
+      font-size: 10px;
+    }
+
+    .node-fields {
+      display: grid;
+      grid-template-columns: 1fr 1.25fr;
+    }
+
+    .node-field {
+      padding: 12px 8px;
+
+      text-align: center;
+
+      font-family: var(--font-code);
+      font-size: 12px;
+    }
+
+    .node-field + .node-field {
+      border-left: 1px solid var(--border);
+    }
+
+    .node-field strong {
+      display: block;
+
+      margin-bottom: 4px;
+
+      color: var(--kor-accent);
+
+      font-size: 10px;
+    }
+
+    .arrow {
+      min-width: 28px;
+
+      text-align: center;
+
+      color: var(--kor-accent);
+
+      font-size: 25px;
+      font-weight: 800;
+    }
+
+    .null-box {
+      min-width: 68px;
+
+      padding: 11px;
+
+      text-align: center;
+
+      border: 1px dashed var(--kor-accent);
+      border-radius: 8px;
+
+      color: var(--kor-accent);
+
+      font-family: var(--font-code);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .pointer-label {
+      display: inline-flex;
+      align-items: center;
+
+      gap: 7px;
+
+      margin: 7px 0;
+
+      padding: 7px 10px;
+
+      border-radius: 7px;
+
+      color: #fff;
+      background: var(--kor-primary-dark);
+
+      font-family: var(--font-code);
+      font-size: 12px;
+    }
+
+    .pointer-label.orange {
+      background: var(--kor-accent);
+    }
+
+    .flow {
+      display: grid;
+      gap: 10px;
+
+      margin: 18px 0;
+    }
+
+    .flow-step {
+      position: relative;
+
+      padding: 15px 15px 15px 51px;
+
+      border: 1px solid var(--border);
+      border-radius: 10px;
+
+      background: var(--surface-soft);
+    }
+
+    .flow-number {
+      position: absolute;
+
+      top: 13px;
+      left: 13px;
+
+      width: 27px;
+      height: 27px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 7px;
+
+      color: #fff;
+      background: var(--kor-accent);
+
+      font-family: var(--font-code);
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    /* =====================================================
+       SIMULADOR
+       ===================================================== */
+
+    .simulator {
+      overflow: hidden;
+
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+
+      background: var(--surface);
+    }
+
+    .simulator-header {
+      padding: 20px;
+
+      color: #fff;
+
+      background:
+        linear-gradient(
+          135deg,
+          var(--kor-primary-dark),
+          var(--kor-primary)
+        );
+    }
+
+    .simulator-header h3 {
+      margin: 0;
+
+      font-size: 25px;
+    }
+
+    .simulator-body {
+      padding: 20px;
+    }
+
+    .sim-pointers {
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 8px;
+
+      margin-bottom: 15px;
+    }
+
+    .sim-pointer {
+      padding: 6px 9px;
+
+      border-radius: 7px;
+
+      background: var(--surface-soft);
+
+      font-family: var(--font-code);
+      font-size: 11px;
+    }
+
+    .sim-chain {
+      min-height: 135px;
+
+      display: flex;
+      align-items: center;
+
+      gap: 8px;
+
+      overflow-x: auto;
+
+      margin-bottom: 19px;
+      padding: 10px 2px 20px;
+    }
+
+    .sim-node {
+      min-width: 130px;
+
+      overflow: hidden;
+
+      border: 2px solid var(--kor-primary);
+      border-radius: 10px;
+
+      background: var(--surface);
+
+      transition:
+        border-color 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .sim-node.active {
+      border-color: var(--kor-accent);
+
+      transform: translateY(-4px);
+    }
+
+    .sim-node-address {
+      padding: 5px;
+
+      text-align: center;
+
+      color: var(--muted);
+      background: var(--surface-soft);
+
+      font-family: var(--font-code);
+      font-size: 10px;
+    }
+
+    .sim-node-fields {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+    }
+
+    .sim-node-field {
+      padding: 12px 7px;
+
+      text-align: center;
+
+      font-family: var(--font-code);
+      font-size: 12px;
+    }
+
+    .sim-node-field + .sim-node-field {
+      border-left: 1px solid var(--border);
+    }
+
+    .sim-node-field strong {
+      display: block;
+
+      margin-bottom: 4px;
+
+      color: var(--kor-accent);
+
+      font-size: 9px;
+    }
+
+    .sim-arrow {
+      min-width: 27px;
+
+      color: var(--kor-accent);
+
+      text-align: center;
+
+      font-size: 23px;
+    }
+
+    .sim-null {
+      min-width: 64px;
+
+      padding: 10px;
+
+      text-align: center;
+
+      border: 1px dashed var(--kor-accent);
+      border-radius: 8px;
+
+      color: var(--kor-accent);
+
+      font-family: var(--font-code);
+      font-size: 11px;
+    }
+
+    .sim-controls {
+      display: grid;
+      gap: 12px;
+    }
+
+    .sim-control {
+      padding: 14px;
+
+      border: 1px solid var(--border);
+      border-radius: 9px;
+
+      background: var(--surface-soft);
+    }
+
+    .sim-control strong {
+      display: block;
+
+      margin-bottom: 9px;
+    }
+
+    .sim-control-line {
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 8px;
+    }
+
+    .sim-input {
+      min-height: 44px;
+
+      flex: 1;
+
+      min-width: 100px;
+
+      padding: 0 12px;
+
+      border: 1px solid var(--border);
+      border-radius: 8px;
+
+      outline: 0;
+
+      color: var(--text);
+      background: var(--surface);
+    }
+
+    .sim-input:focus {
+      border-color: var(--kor-accent);
+    }
+
+    .sim-log {
+      margin-top: 15px;
+      padding: 14px;
+
+      border-left: 3px solid var(--kor-accent);
+      border-radius: 0 8px 8px 0;
+
+      color: var(--muted);
+      background: var(--surface-soft);
+
+      font-size: 14px;
+    }
+
+    /* =====================================================
+       MISSÕES
+       ===================================================== */
+
+    .missions {
+      display: grid;
+      gap: 10px;
+
+      margin-top: 18px;
+    }
+
+    .mission {
+      display: flex;
+      gap: 11px;
+
+      padding: 14px;
+
+      border: 1px solid var(--border);
+      border-radius: 9px;
+
+      background: var(--surface-soft);
+    }
+
+    .mission-status {
+      width: 27px;
+      height: 27px;
+
+      display: grid;
+      place-items: center;
+
+      flex: 0 0 auto;
+
+      border-radius: 50%;
+
+      color: var(--muted);
+      background: var(--surface);
+    }
+
+    .mission.done {
+      border-color:
+        color-mix(
+          in srgb,
+          var(--success) 45%,
+          var(--border)
+        );
+    }
+
+    .mission.done .mission-status {
+      color: #fff;
+      background: var(--success);
+    }
+
+    .mission strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .mission p {
+      margin: 0;
+
+      color: var(--muted);
+
+      font-size: 13px;
+    }
+
+    .comparison-grid {
+      display: grid;
+      gap: 12px;
+
+      margin-top: 17px;
+    }
+
+    .comparison-card {
+      padding: 17px;
+
+      border: 1px solid var(--border);
+      border-radius: 9px;
+
+      background: var(--surface-soft);
+    }
+
+    .comparison-card strong {
+      display: block;
+
+      margin-bottom: 7px;
+
+      color: var(--kor-accent);
+    }
+
+    @media (min-width: 700px) {
+      .sim-controls {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+
+      .comparison-grid {
+        grid-template-columns:
+          repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
+
+  <header class="site-header">
+
+    <div class="container header-inner">
+
+      <a
+        href="../../../"
+        class="brand"
+      >
+
+        <img
+          data-kordevs-logo
+          data-root="../../../"
+          class="brand-logo"
+          src="../../../assets/brand/KorDevs_White.png"
+          alt="KorDevs"
+        />
+
+        <div class="brand-info">
+
+          <span class="brand-name">
+            QuizADS
+          </span>
+
+          <span class="brand-product">
+            estrutura de dados
+          </span>
+
+        </div>
+
+      </a>
+
+
+      <div class="header-actions">
+
+        <button
+          data-theme-toggle
+          data-theme-icon
+          class="icon-button"
+          type="button"
+          aria-label="Alternar tema"
+        >
+          🌙
+        </button>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =====================================================
+       CONTEÚDO PRINCIPAL
+       ===================================================== -->
+
+  <main class="module-main">
+
+    <div
+      id="moduleContent"
+      class="container"
+    >
+
+      <header class="module-top">
+
+        <div class="breadcrumb">
+
+          <a href="../../../">
+            QuizADS
+          </a>
+
+          &nbsp;›&nbsp;
+
+          Estrutura de Dados
+
+          &nbsp;›&nbsp;
+
+          Módulo 03
+
+        </div>
+
+
+        <div class="kicker">
+          MÓDULO 03 · LISTA ENCADEADA
+        </div>
+
+
+        <h1 class="module-title">
+          Agora os elementos não precisam
+          ficar lado a lado.
+          <span class="accent">
+            Eles precisam saber onde está o próximo.
+          </span>
+        </h1>
+
+
+        <p class="module-summary">
+          Você vai entender memória dinâmica,
+          ponteiro de início, malloc, inserção,
+          busca, remoção e liberação de memória
+          visualizando as setas mudarem.
+        </p>
+
+
+        <div class="progress-card">
+
+          <div class="progress-head">
+
+            <span id="progressLabel">
+              Aula 1 de 6
+            </span>
+
+            <span id="progressPercent">
+              10%
+            </span>
+
+          </div>
+
+          <div class="progress-bar">
+
+            <div
+              id="progressFill"
+              class="progress-fill"
+            ></div>
+
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <!-- =================================================
+           AULA 1
+           ================================================= -->
+
+      <section
+        id="panel-0"
+        class="lesson-panel active"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              AULA 01 · MODELO MENTAL
+            </div>
+
+            <h2>
+              Esqueça as posições fixas.
+            </h2>
+
+
+            <p>
+              Na lista sequencial, nossos elementos
+              estavam dentro de um vetor:
+            </p>
+
+
+            <div class="diagram">[ A ][ B ][ C ][ D ]
+  0    1    2    3</div>
+
+
+            <p>
+              Os elementos ocupavam posições
+              sequenciais.
+            </p>
+
+
+            <p>
+              Na lista encadeada, os nós podem estar
+              espalhados pela memória.
+            </p>
+
+
+            <div class="memory-strip">
+
+              <div class="memory-row">
+
+                <div class="memory-address">
+                  1000
+                </div>
+
+                <div class="memory-content">
+                  nó contendo B
+                </div>
+
+              </div>
+
+
+              <div class="memory-row">
+
+                <div class="memory-address">
+                  1250
+                </div>
+
+                <div class="memory-content">
+                  nó contendo D
+                </div>
+
+              </div>
+
+
+              <div class="memory-row">
+
+                <div class="memory-address">
+                  1430
+                </div>
+
+                <div class="memory-content">
+                  nó contendo A
+                </div>
+
+              </div>
+
+
+              <div class="memory-row">
+
+                <div class="memory-address">
+                  1530
+                </div>
+
+                <div class="memory-content">
+                  nó contendo C
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <p>
+              Mesmo espalhados fisicamente,
+              conseguimos formar:
+            </p>
+
+
+            <div class="diagram">A → B → C → D → NULL</div>
+
+
+            <div class="callout">
+
+              <strong>
+                Ideia principal
+              </strong>
+
+              A ordem lógica da lista é determinada
+              pelas ligações entre os nós, e não
+              pela posição física deles na memória.
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              Como uma ligação funciona?
+            </h2>
+
+
+            <div class="linked-chain">
+
+              <div class="node-visual">
+
+                <div class="node-address">
+                  endereço 1430
+                </div>
+
+                <div class="node-fields">
+
+                  <div class="node-field">
+                    <strong>info</strong>
+                    A
+                  </div>
+
+                  <div class="node-field">
+                    <strong>prox</strong>
+                    1000
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="arrow">
+                →
+              </div>
+
+
+              <div class="node-visual">
+
+                <div class="node-address">
+                  endereço 1000
+                </div>
+
+                <div class="node-fields">
+
+                  <div class="node-field">
+                    <strong>info</strong>
+                    B
+                  </div>
+
+                  <div class="node-field">
+                    <strong>prox</strong>
+                    1530
+                  </div>
+
+                </div>
+
+              </div>
+
+              <div class="arrow">
+                →
+              </div>
+
+
+              <div class="node-visual">
+
+                <div class="node-address">
+                  endereço 1530
+                </div>
+
+                <div class="node-fields">
+
+                  <div class="node-field">
+                    <strong>info</strong>
+                    C
+                  </div>
+
+                  <div class="node-field">
+                    <strong>prox</strong>
+                    NULL
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <p>
+              `prox` não contém o próximo valor.
+            </p>
+
+            <p>
+              Ele contém o
+              <strong>endereço do próximo nó</strong>.
+            </p>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              Quem sabe onde a lista começa?
+            </h2>
+
+
+            <div class="pointer-label orange">
+              inicio → endereço 1430
+            </div>
+
+
+            <div class="diagram">inicio
+  │
+  ↓
+[A] → [B] → [C] → NULL</div>
+
+
+            <p>
+              Se sabemos onde está o primeiro nó,
+              podemos seguir as ligações até chegar
+              ao último.
+            </p>
+
+
+            <div class="callout">
+
+              Perdendo o endereço do primeiro nó,
+              podemos perder o acesso à lista inteira.
+
+            </div>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <a
+              class="btn btn-secondary"
+              href="../modulo-02/"
+            >
+              ← Módulo 02
+            </a>
+
+            <button
+              class="btn btn-primary"
+              onclick="goToPanel(1)"
+            >
+              Continuar →
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           AULA 2
+           ================================================= -->
+
+      <section
+        id="panel-1"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              AULA 02 · O NÓ
+            </div>
+
+            <h2>
+              A estrutura que representa cada nó.
+            </h2>
+
+
+            <pre class="code">typedef struct no {
+
+    char info;
+    struct no *prox;
+
+} no;</pre>
+
+
+            <div class="translation">
+
+              <div class="translation-row">
+
+                <code>
+                  char info;
+                </code>
+
+                Guarda o conteúdo do nó.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  struct no *prox;
+                </code>
+
+                Guarda o endereço do próximo nó.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  no
+                </code>
+
+                Passa a ser o nome curto do tipo.
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              Criando uma lista vazia.
+            </h2>
+
+
+            <pre class="code">no* cria() {
+
+    return NULL;
+
+}</pre>
+
+
+            <p>
+              Por que
+              <code>NULL</code>?
+            </p>
+
+
+            <div class="diagram">lista = NULL
+
+Não existe primeiro nó.</div>
+
+
+            <p>
+              Diferente da lista sequencial,
+              não usamos:
+            </p>
+
+
+            <div class="diagram">ultimo = -1</div>
+
+
+            <p>
+              Aqui a própria referência para o
+              primeiro nó é nula.
+            </p>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              Verificando se está vazia.
+            </h2>
+
+
+            <pre class="code">int vazia(no *lista) {
+
+    if (lista == NULL)
+        return 1;
+
+    else
+        return 0;
+}</pre>
+
+
+            <div class="callout">
+
+              Leia assim:
+
+              <br /><br />
+
+              “Se o ponteiro que deveria apontar
+              para o primeiro nó não aponta para
+              nada, a lista está vazia.”
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              COMPARAÇÃO
+            </div>
+
+            <h2>
+              Duas listas, duas formas de saber
+              se estão vazias.
+            </h2>
+
+
+            <div class="comparison-grid">
+
+              <div class="comparison-card">
+
+                <strong>
+                  Lista sequencial
+                </strong>
+
+                <code>
+                  ultimo == -1
+                </code>
+
+              </div>
+
+
+              <div class="comparison-card">
+
+                <strong>
+                  Lista encadeada
+                </strong>
+
+                <code>
+                  lista == NULL
+                </code>
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <button
+              class="btn btn-secondary"
+              onclick="goToPanel(0)"
+            >
+              ← Voltar
+            </button>
+
+            <button
+              class="btn btn-primary"
+              onclick="goToPanel(2)"
+            >
+              malloc e inserção →
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           AULA 3
+           ================================================= -->
+
+      <section
+        id="panel-2"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              AULA 03 · MEMÓRIA DINÂMICA
+            </div>
+
+            <h2>
+              O que
+              <code>malloc</code>
+              está fazendo?
+            </h2>
+
+
+            <pre class="code">no *novo =
+    (no*) malloc(sizeof(no));</pre>
+
+
+            <p>
+              Essa linha assusta quando aparece
+              inteira.
+            </p>
+
+            <p>
+              Vamos desmontá-la.
+            </p>
+
+
+            <div class="translation">
+
+              <div class="translation-row">
+
+                <code>
+                  sizeof(no)
+                </code>
+
+                Descubra quanto espaço um nó precisa.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  malloc(...)
+                </code>
+
+                Reserve esse espaço na memória.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  no *novo
+                </code>
+
+                Guarde o endereço desse espaço
+                em um ponteiro chamado
+                <strong>novo</strong>.
+
+              </div>
+
+            </div>
+
+
+            <div class="callout">
+
+              <strong>
+                Modelo mental
+              </strong>
+
+              `malloc` encontra um espaço livre
+              na memória e nos devolve seu endereço.
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              INSERÇÃO
+            </div>
+
+            <h2>
+              O novo nó entra no início.
+            </h2>
+
+
+            <pre class="code">no* insere(
+    no *lista,
+    char info
+) {
+
+    no *novo =
+        (no*) malloc(sizeof(no));
+
+    novo->info = info;
+
+    novo->prox = lista;
+
+    return novo;
+}</pre>
+
+
+            <p>
+              Imagine:
+            </p>
+
+
+            <div class="diagram">ANTES
+
+lista
+  ↓
+[B] → [C] → [D] → NULL</div>
+
+
+            <p>
+              Queremos inserir
+              <strong>A</strong>.
+            </p>
+
+
+            <div class="flow">
+
+              <div class="flow-step">
+
+                <span class="flow-number">
+                  01
+                </span>
+
+                Criamos um novo nó.
+
+              </div>
+
+
+              <div class="flow-step">
+
+                <span class="flow-number">
+                  02
+                </span>
+
+                Gravamos A em
+                <code>novo->info</code>.
+
+              </div>
+
+
+              <div class="flow-step">
+
+                <span class="flow-number">
+                  03
+                </span>
+
+                Fazemos
+                <code>novo->prox = lista</code>.
+
+                O novo nó aponta para B.
+
+              </div>
+
+
+              <div class="flow-step">
+
+                <span class="flow-number">
+                  04
+                </span>
+
+                Retornamos
+                <code>novo</code>.
+
+                Ele passa a ser o primeiro nó.
+
+              </div>
+
+            </div>
+
+
+            <div class="diagram">DEPOIS
+
+lista
+  ↓
+[A] → [B] → [C] → [D] → NULL</div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              Por que esta atribuição aparece?
+            </h2>
+
+
+            <pre class="code">lista =
+    insere(lista, 'A');</pre>
+
+
+            <p>
+              Porque o endereço do primeiro nó
+              mudou.
+            </p>
+
+
+            <div class="callout">
+
+              Antes:
+              `lista` apontava para B.
+
+              <br /><br />
+
+              Depois:
+              `lista` precisa apontar para A.
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              PREVEJA
+            </div>
+
+            <h2>
+              Qual será a ordem?
+            </h2>
+
+
+            <pre class="code">lista = cria();
+
+lista = insere(lista, 'D');
+lista = insere(lista, 'C');
+lista = insere(lista, 'B');
+lista = insere(lista, 'A');</pre>
+
+
+            <button
+              class="small-button"
+              type="button"
+              onclick="showHint('insertPrediction')"
+            >
+              Ver resposta
+            </button>
+
+
+            <div
+              id="insertPrediction"
+              class="hint"
+            >
+              <strong>A → B → C → D → NULL</strong>
+
+              <br /><br />
+
+              Cada novo elemento entra na frente
+              do anterior.
+            </div>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <button
+              class="btn btn-secondary"
+              onclick="goToPanel(1)"
+            >
+              ← Voltar
+            </button>
+
+            <button
+              class="btn btn-primary"
+              onclick="goToPanel(3)"
+            >
+              Percorrer e buscar →
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           AULA 4
+           ================================================= -->
+
+      <section
+        id="panel-3"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              AULA 04 · PERCURSO
+            </div>
+
+            <h2>
+              Como visitar todos os nós?
+            </h2>
+
+
+            <p>
+              Precisamos de um ponteiro auxiliar:
+            </p>
+
+
+            <pre class="code">no *aux;</pre>
+
+
+            <p>
+              Ele funciona como um marcador que
+              percorre a lista.
+            </p>
+
+
+            <div class="diagram">lista
+  ↓
+[A] → [B] → [C] → NULL
+
+aux começa em A</div>
+
+
+            <p>
+              Depois:
+            </p>
+
+
+            <pre class="code">aux = aux->prox;</pre>
+
+
+            <div class="diagram">lista
+  ↓
+[A] → [B] → [C] → NULL
+       ↑
+      aux</div>
+
+
+            <p>
+              E novamente:
+            </p>
+
+
+            <div class="diagram">lista
+  ↓
+[A] → [B] → [C] → NULL
+             ↑
+            aux</div>
+
+
+            <p>
+              Até:
+            </p>
+
+
+            <div class="diagram">aux = NULL</div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              A função
+              <code>busca</code>.
+            </h2>
+
+
+            <pre class="code">no* busca(
+    no *lista,
+    char info
+) {
+
+    no *aux;
+
+    for (
+        aux = lista;
+        aux != NULL;
+        aux = aux->prox
+    )
+
+        if (
+            aux->info == info
+        )
+
+            return aux;
+
+    return NULL;
+}</pre>
+
+
+            <div class="translation">
+
+              <div class="translation-row">
+
+                <code>
+                  aux = lista
+                </code>
+
+                Comece no primeiro nó.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  aux != NULL
+                </code>
+
+                Continue enquanto ainda existir nó.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  aux = aux->prox
+                </code>
+
+                Vá para o próximo.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  aux->info == info
+                </code>
+
+                Verifique se encontrou o valor.
+
+              </div>
+
+
+              <div class="translation-row">
+
+                <code>
+                  return NULL
+                </code>
+
+                Chegou ao fim sem encontrar.
+
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              Imprimir usa a mesma caminhada.
+            </h2>
+
+
+            <pre class="code">void imprime(no *lista) {
+
+    no *aux;
+
+    for (
+        aux = lista;
+        aux != NULL;
+        aux = aux->prox
+    )
+
+        printf(
+            "%c\t",
+            aux->info
+        );
+}</pre>
+
+
+            <div class="callout">
+
+              A lógica de percurso é praticamente
+              a mesma.
+
+              <br /><br />
+
+              O que muda é a ação realizada
+              em cada nó.
+
+            </div>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <button
+              class="btn btn-secondary"
+              onclick="goToPanel(2)"
+            >
+              ← Voltar
+            </button>
+
+            <button
+              class="btn btn-primary"
+              onclick="goToPanel(4)"
+            >
+              Remoção →
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           AULA 5
+           ================================================= -->
+
+      <section
+        id="panel-4"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              AULA 05 · REMOÇÃO
+            </div>
+
+            <h2>
+              Agora precisamos de dois ponteiros.
+            </h2>
+
+
+            <pre class="code">no *ant = NULL;
+no *aux = lista;</pre>
+
+
+            <div class="comparison-grid">
+
+              <div class="comparison-card">
+
+                <strong>
+                  aux
+                </strong>
+
+                Aponta para o nó que estamos
+                analisando.
+
+              </div>
+
+
+              <div class="comparison-card">
+
+                <strong>
+                  ant
+                </strong>
+
+                Guarda o endereço do nó anterior.
+
+              </div>
+
+            </div>
+
+
+            <div class="diagram">A → B → C → D → NULL
+
+    ant   aux
+     ↓     ↓
+    [A] → [B]</div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              Procurando o elemento.
+            </h2>
+
+
+            <pre class="code">while (
+    aux != NULL &&
+    aux->info != info
+) {
+
+    ant = aux;
+    aux = aux->prox;
+}</pre>
+
+
+            <p>
+              Enquanto:
+            </p>
+
+
+            <div class="callout">
+
+              ainda existir um nó
+
+              <strong>E</strong>
+
+              o valor ainda não for o procurado,
+
+              avance os dois ponteiros.
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              Caso 1 — elemento não encontrado.
+            </h2>
+
+
+            <pre class="code">if (aux == NULL)
+    return lista;</pre>
+
+
+            <p>
+              Se `aux` chegou em `NULL`, percorremos
+              tudo e não encontramos o valor.
+            </p>
+
+            <p>
+              Nada muda.
+            </p>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              Caso 2 — remover o primeiro.
+            </h2>
+
+
+            <div class="diagram">ANTES
+
+lista
+  ↓
+[A] → [B] → [C] → NULL
+
+aux = A
+ant = NULL</div>
+
+
+            <pre class="code">if (ant == NULL)
+
+    lista = aux->prox;</pre>
+
+
+            <div class="diagram">DEPOIS
+
+lista
+  ↓
+[B] → [C] → NULL</div>
+
+
+            <p>
+              Se `ant` ainda é `NULL`, significa que
+              nunca avançamos.
+            </p>
+
+
+            <div class="callout">
+
+              Portanto o elemento encontrado era
+              justamente o primeiro nó.
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              Caso 3 — remover no meio.
+            </h2>
+
+
+            <div class="diagram">Queremos remover B
+
+A → B → C → NULL
+
+ant   aux
+ ↓     ↓
+ A     B</div>
+
+
+            <pre class="code">ant->prox =
+    aux->prox;</pre>
+
+
+            <p>
+              A ligação:
+            </p>
+
+
+            <div class="diagram">A → B</div>
+
+
+            <p>
+              passa a ser:
+            </p>
+
+
+            <div class="diagram">A → C</div>
+
+
+            <p>
+              B deixa de fazer parte da corrente.
+            </p>
+
+
+            <pre class="code">free(aux);</pre>
+
+
+            <div class="callout">
+
+              Só depois de corrigir as ligações
+              liberamos a memória do nó removido.
+
+            </div>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <button
+              class="btn btn-secondary"
+              onclick="goToPanel(3)"
+            >
+              ← Voltar
+            </button>
+
+            <button
+              class="btn btn-primary"
+              onclick="goToPanel(5)"
+            >
+              Liberar memória →
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           AULA 6
+           ================================================= -->
+
+      <section
+        id="panel-5"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              AULA 06 · LIBERAÇÃO
+            </div>
+
+            <h2>
+              Não podemos simplesmente esquecer
+              os nós na memória.
+            </h2>
+
+
+            <pre class="code">void libera(no *lista) {
+
+    no *aux = lista;
+
+    while (aux != NULL) {
+
+        no *temp =
+            aux->prox;
+
+        free(aux);
+
+        aux = temp;
+    }
+}</pre>
+
+
+            <p>
+              Existe um detalhe muito importante:
+            </p>
+
+
+            <div class="callout">
+
+              Antes de executar
+              <code>free(aux)</code>,
+              salvamos onde está o próximo nó.
+
+            </div>
+
+
+            <div class="flow">
+
+              <div class="flow-step">
+
+                <span class="flow-number">
+                  01
+                </span>
+
+                `temp = aux->prox`
+
+                <br />
+
+                salve o endereço do próximo.
+
+              </div>
+
+
+              <div class="flow-step">
+
+                <span class="flow-number">
+                  02
+                </span>
+
+                `free(aux)`
+
+                <br />
+
+                libere o nó atual.
+
+              </div>
+
+
+              <div class="flow-step">
+
+                <span class="flow-number">
+                  03
+                </span>
+
+                `aux = temp`
+
+                <br />
+
+                continue a partir do próximo nó.
+
+              </div>
+
+            </div>
+
+
+            <p>
+              Se fizéssemos `free(aux)` antes de
+              guardar `aux->prox`, poderíamos perder
+              o endereço necessário para continuar.
+            </p>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              LEITURA DO PROGRAMA
+            </div>
+
+            <h2>
+              Agora o conjunto faz sentido.
+            </h2>
+
+
+            <pre class="code">no *list2 = cria();
+
+list2 = insere(list2, 'D');
+list2 = insere(list2, 'C');
+list2 = insere(list2, 'B');
+list2 = insere(list2, 'A');
+
+imprime(list2);
+
+list2 = retira(
+    list2,
+    'C'
+);
+
+imprime(list2);
+
+libera(list2);</pre>
+
+
+            <p>
+              Resultado após as inserções:
+            </p>
+
+
+            <div class="diagram">A → B → C → D → NULL</div>
+
+
+            <p>
+              Depois de retirar C:
+            </p>
+
+
+            <div class="diagram">A → B → D → NULL</div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <h2>
+              Por que
+              <code>list2 =</code>
+              aparece tantas vezes?
+            </h2>
+
+
+            <pre class="code">list2 =
+    insere(list2, 'A');
+
+list2 =
+    retira(list2, 'A');</pre>
+
+
+            <p>
+              Porque inserir ou remover pode alterar
+              quem é o primeiro nó.
+            </p>
+
+
+            <div class="callout">
+
+              A variável que guarda o início da lista
+              precisa receber o endereço atualizado.
+
+            </div>
+
+          </article>
+
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              BÔNUS · OLHANDO ADIANTE
+            </div>
+
+            <h2>
+              E se quisermos inserir em ordem?
+            </h2>
+
+
+            <p>
+              O material também apresenta uma
+              extensão que usa dois ponteiros:
+            </p>
+
+
+            <pre class="code">ant = NULL;
+aux = lista;
+
+while (
+    aux != NULL &&
+    aux->info < info
+) {
+
+    ant = aux;
+    aux = aux->prox;
+}</pre>
+
+
+            <p>
+              O raciocínio é o mesmo que acabamos
+              de aprender:
+            </p>
+
+
+            <div class="diagram">ant → nó anterior
+
+aux → nó posterior
+
+novo entra entre os dois</div>
+
+
+            <div class="callout">
+
+              Você não precisa decorar essa função
+              agora.
+
+              <br /><br />
+
+              O importante é perceber que
+              `ant` + `aux` formam uma técnica
+              para manipular ligações entre nós.
+
+            </div>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <button
+              class="btn btn-secondary"
+              onclick="goToPanel(4)"
+            >
+              ← Voltar
+            </button>
+
+            <button
+              class="btn btn-primary"
+              onclick="goToPanel(6)"
+            >
+              Laboratório visual →
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           LABORATÓRIO
+           ================================================= -->
+
+      <section
+        id="panel-6"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              LABORATÓRIO VISUAL
+            </div>
+
+            <h2>
+              Agora você vai mexer nas setas.
+            </h2>
+
+
+            <p>
+              Cada nó receberá um endereço
+              simulado.
+            </p>
+
+            <p>
+              O simulador reproduz a lógica das
+              funções estudadas, inclusive inserção
+              sempre no início.
+            </p>
+
+          </article>
+
+
+          <section class="simulator">
+
+            <header class="simulator-header">
+
+              <div class="kicker">
+                MEMÓRIA SIMULADA
+              </div>
+
+              <h3>
+                lista encadeada
+              </h3>
+
+            </header>
+
+
+            <div class="simulator-body">
+
+              <div class="sim-pointers">
+
+                <span
+                  id="simInicio"
+                  class="sim-pointer"
+                >
+                  inicio = NULL
+                </span>
+
+                <span
+                  id="simCount"
+                  class="sim-pointer"
+                >
+                  nós = 0
+                </span>
+
+              </div>
+
+
+              <div
+                id="simChain"
+                class="sim-chain"
+              ></div>
+
+
+              <div class="sim-controls">
+
+                <div class="sim-control">
+
+                  <strong>
+                    Inserir no início
+                  </strong>
+
+                  <div class="sim-control-line">
+
+                    <input
+                      id="insertValue"
+                      class="sim-input"
+                      maxlength="1"
+                      placeholder="A"
+                    />
+
+                    <button
+                      class="small-button"
+                      type="button"
+                      onclick="simInsert()"
+                    >
+                      Inserir
+                    </button>
+
+                  </div>
+
+                </div>
+
+
+                <div class="sim-control">
+
+                  <strong>
+                    Buscar
+                  </strong>
+
+                  <div class="sim-control-line">
+
+                    <input
+                      id="searchValue"
+                      class="sim-input"
+                      maxlength="1"
+                      placeholder="B"
+                    />
+
+                    <button
+                      class="small-button"
+                      type="button"
+                      onclick="simSearch()"
+                    >
+                      Buscar
+                    </button>
+
+                  </div>
+
+                </div>
+
+
+                <div class="sim-control">
+
+                  <strong>
+                    Remover
+                  </strong>
+
+                  <div class="sim-control-line">
+
+                    <input
+                      id="removeValue"
+                      class="sim-input"
+                      maxlength="1"
+                      placeholder="C"
+                    />
+
+                    <button
+                      class="small-button"
+                      type="button"
+                      onclick="simRemove()"
+                    >
+                      Remover
+                    </button>
+
+                  </div>
+
+                </div>
+
+
+                <div class="sim-control">
+
+                  <strong>
+                    Reiniciar
+                  </strong>
+
+                  <div class="sim-control-line">
+
+                    <button
+                      class="small-button"
+                      type="button"
+                      onclick="resetSimulator()"
+                    >
+                      Limpar memória
+                    </button>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div
+                id="simLog"
+                class="sim-log"
+              >
+                lista = NULL.
+                Insira o primeiro nó.
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <article
+            class="lesson-block"
+            style="margin-top:22px;"
+          >
+
+            <div class="kicker">
+              MISSÕES
+            </div>
+
+            <h2>
+              Complete a sequência.
+            </h2>
+
+
+            <div class="missions">
+
+              <div
+                id="mission1"
+                class="mission"
+              >
+
+                <div class="mission-status">
+                  1
+                </div>
+
+                <div>
+
+                  <strong>
+                    Construa A → B → C → D
+                  </strong>
+
+                  <p>
+                    Como a inserção é no início,
+                    descubra em qual ordem os valores
+                    precisam ser inseridos.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div
+                id="mission2"
+                class="mission"
+              >
+
+                <div class="mission-status">
+                  2
+                </div>
+
+                <div>
+
+                  <strong>
+                    Busque B
+                  </strong>
+
+                  <p>
+                    Percorra a lista até encontrar
+                    o nó contendo B.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div
+                id="mission3"
+                class="mission"
+              >
+
+                <div class="mission-status">
+                  3
+                </div>
+
+                <div>
+
+                  <strong>
+                    Remova C
+                  </strong>
+
+                  <p>
+                    O resultado deve ser:
+                    A → B → D.
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <div
+                id="mission4"
+                class="mission"
+              >
+
+                <div class="mission-status">
+                  4
+                </div>
+
+                <div>
+
+                  <strong>
+                    Remova A
+                  </strong>
+
+                  <p>
+                    Observe a mudança do ponteiro
+                    de início.
+                  </p>
+
+                </div>
+
+              </div>
+
+            </div>
+
+
+            <div
+              id="missionResult"
+              class="result-box"
+              style="display:none;"
+            ></div>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <button
+              class="btn btn-secondary"
+              onclick="goToPanel(5)"
+            >
+              ← Rever aula
+            </button>
+
+            <button
+              id="checkpointButton"
+              class="btn btn-primary"
+              type="button"
+              onclick="startCheckpoint()"
+              disabled
+            >
+              Complete as missões
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           CHECKPOINT
+           ================================================= -->
+
+      <section
+        id="panel-7"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              CHECKPOINT
+            </div>
+
+            <h2>
+              Antes do Boss, vamos consolidar.
+            </h2>
+
+
+            <p>
+              Consulta e dicas continuam disponíveis.
+            </p>
+
+            <p>
+              Para avançar:
+              <strong>8/9</strong>.
+            </p>
+
+          </article>
+
+
+          <form id="checkpointForm"></form>
+
+
+          <div
+            id="checkpointResult"
+            class="result-box"
+            style="display:none;"
+          ></div>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           BOSS INTRO
+           ================================================= -->
+
+      <section
+        id="panel-8"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="boss-intro">
+
+            <div class="boss-lock">
+              🔒 BOSS · LISTA ENCADEADA
+            </div>
+
+            <h2>
+              Agora as setas estão por sua conta.
+            </h2>
+
+
+            <p>
+              São
+              <strong>14 questões</strong>
+              misturando conceito, código e
+              simulação mental.
+            </p>
+
+            <p>
+              Para vencer:
+              <strong>12/14</strong>.
+            </p>
+
+
+            <button
+              class="btn btn-primary"
+              type="button"
+              onclick="startBoss()"
+            >
+              Começar Boss →
+            </button>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           BOSS
+           ================================================= -->
+
+      <section
+        id="panel-9"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <div class="boss-intro">
+
+            <div class="boss-lock">
+              🔒 BOSS EM ANDAMENTO
+            </div>
+
+            <h2>
+              Sem dicas.
+              Sem consulta.
+            </h2>
+
+            <p>
+              Leia cada trecho como se estivesse
+              narrando as mudanças dos ponteiros.
+            </p>
+
+          </div>
+
+
+          <form
+            id="bossForm"
+            style="margin-top:20px;"
+          ></form>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           DISSERTATIVA
+           ================================================= -->
+
+      <section
+        id="panel-10"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              PERGUNTA-CHAVE
+            </div>
+
+            <h2>
+              Explique as setas.
+            </h2>
+
+
+            <div class="callout">
+
+              Explique com suas próprias palavras
+              como funciona uma lista encadeada
+              simples.
+
+              <br /><br />
+
+              Sua explicação deve incluir:
+              o papel de
+              <code>inicio/lista</code>,
+              <code>info</code>,
+              <code>prox</code>,
+              <code>NULL</code>,
+              como um novo nó é inserido no início
+              e como
+              <code>ant</code>
+              e
+              <code>aux</code>
+              permitem remover um nó.
+
+            </div>
+
+
+            <textarea
+              id="essayAnswer"
+              class="essay"
+              placeholder="Explique como se estivesse ensinando lista encadeada para outra pessoa..."
+            ></textarea>
+
+
+            <p
+              id="essayCounter"
+              style="
+                color:var(--muted);
+                font-size:12px;
+              "
+            >
+              0 caracteres
+            </p>
+
+
+            <button
+              class="btn btn-primary btn-full"
+              type="button"
+              onclick="evaluateEssay()"
+            >
+              Avaliar minha explicação
+            </button>
+
+
+            <div
+              id="essayResult"
+              class="result-box"
+              style="display:none;"
+            ></div>
+
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- =================================================
+           CONCLUSÃO
+           ================================================= -->
+
+      <section
+        id="panel-11"
+        class="lesson-panel"
+      >
+
+        <div class="lesson">
+
+          <article class="lesson-block">
+
+            <div class="kicker">
+              MÓDULO 03 CONCLUÍDO
+            </div>
+
+            <h2>
+              Ponteiros começam a deixar
+              de ser um mistério.
+            </h2>
+
+
+            <p>
+              Agora você deve conseguir olhar para:
+            </p>
+
+
+            <div class="diagram">lista
+
+novo
+
+aux
+
+ant
+
+temp
+
+prox
+
+malloc()
+
+free()
+
+NULL</div>
+
+
+            <p>
+              e entender o papel de cada um dentro
+              da lista.
+            </p>
+
+
+            <div class="callout">
+
+              <strong>
+                Próximo módulo
+              </strong>
+
+              Lista Circular e Lista Duplamente
+              Encadeada.
+
+              <br /><br />
+
+              Vamos alterar as ligações que você
+              acabou de dominar.
+
+            </div>
+
+
+            <div
+              id="finalResult"
+              class="result-box"
+            ></div>
+
+          </article>
+
+
+          <div class="module-nav">
+
+            <a
+              class="btn btn-secondary"
+              href="../modulo-02/"
+            >
+              ← Revisar Módulo 02
+            </a>
+
+            <button
+              class="btn btn-primary"
+              disabled
+            >
+              Módulo 04 em breve
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </div>
+
+
+    <!-- ===================================================
+         BLOQUEIO
+         =================================================== -->
+
+    <div
+      id="lockedContent"
+      class="container"
+      style="display:none;"
+    >
+
+      <div class="lesson">
+
+        <article class="boss-intro">
+
+          <div class="boss-lock">
+            🔒 MÓDULO BLOQUEADO
+          </div>
+
+          <h1 class="module-title">
+            Primeiro conclua
+            Lista Sequencial.
+          </h1>
+
+          <p>
+            O Módulo 03 pressupõe que você já
+            entende vetor, índice, operações
+            básicas e o papel de uma estrutura
+            de dados.
+          </p>
+
+          <a
+            class="btn btn-primary"
+            href="../modulo-02/"
+          >
+            Voltar ao Módulo 02 →
+          </a>
+
+        </article>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+
+  <footer class="site-footer">
+
+    <div class="container footer-grid">
+
+      <div>
+
+        <div class="footer-title">
+          QuizADS · KorDevs
+        </div>
+
+        <div>
+          ©
+          <span data-current-year></span>
+          KorDevs Tecnologia e Automação.
+        </div>
+
+        <div>
+          Conteúdo autoral com direitos reservados.
+          Código-fonte disponibilizado sob licença MIT.
+        </div>
+
+      </div>
+
+
+      <div class="footer-links">
+
+        <a href="../../../">
+          QuizADS
+        </a>
+
+        <a
+          data-support-link
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ☕ Apoiar
+        </a>
+
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <script src="../../../assets/js/quizads.js"></script>
+
+
+  <script>
+    /* =====================================================
+       ESTADO E PROGRESSÃO
+       ===================================================== */
+
+    const MODULE_KEY =
+      "quizads_ed_m03_v1";
+
+    const PREVIOUS_MODULE_KEY =
+      "quizads_ed_m02_v1";
+
+
+    const previousModule =
+      JSON.parse(
+        localStorage.getItem(
+          PREVIOUS_MODULE_KEY
+        ) || "{}"
+      );
+
+
+    const state =
+      JSON.parse(
+        localStorage.getItem(
+          MODULE_KEY
+        ) || "{}"
+      );
+
+
+    if (!previousModule.completed) {
+
+      document.getElementById(
+        "moduleContent"
+      ).style.display =
+        "none";
+
+
+      document.getElementById(
+        "lockedContent"
+      ).style.display =
+        "block";
+
+    } else {
+
+      initializeModule();
+
+    }
+
+
+    function initializeModule() {
+
+      state.started = true;
+
+      if (!state.missions) {
+
+        state.missions = {
+          one: false,
+          two: false,
+          three: false,
+          four: false
+        };
+
+      }
+
+
+      saveState();
+
+      renderCheckpoint();
+
+      initializeSimulator();
+
+
+      let initialPanel =
+        Number.isInteger(
+          state.currentPanel
+        )
+          ? state.currentPanel
+          : 0;
+
+
+      if (state.completed) {
+        initialPanel = 11;
+      }
+
+
+      goToPanel(
+        initialPanel,
+        false
+      );
+
+    }
+
+
+    function saveState() {
+
+      localStorage.setItem(
+        MODULE_KEY,
+        JSON.stringify(state)
+      );
+
+    }
+
+
+    /* =====================================================
+       NAVEGAÇÃO
+       ===================================================== */
+
+    const panelProgress = [
+      8,
+      18,
+      30,
+      42,
+      54,
+      64,
+      72,
+      78,
+      82,
+      90,
+      97,
+      100
+    ];
+
+
+    const panelLabels = [
+      "Aula 1 de 6",
+      "Aula 2 de 6",
+      "Aula 3 de 6",
+      "Aula 4 de 6",
+      "Aula 5 de 6",
+      "Aula 6 de 6",
+      "Laboratório",
+      "Checkpoint",
+      "Boss",
+      "Boss",
+      "Pergunta-chave",
+      "Concluído"
+    ];
+
+
+    function goToPanel(
+      index,
+      scroll = true
+    ) {
+
+      document
+        .querySelectorAll(
+          ".lesson-panel"
+        )
+        .forEach(
+          panel =>
+            panel.classList.remove(
+              "active"
+            )
+        );
+
+
+      const target =
+        document.getElementById(
+          `panel-${index}`
+        );
+
+
+      if (!target) {
+        return;
+      }
+
+
+      target.classList.add(
+        "active"
+      );
+
+
+      state.currentPanel =
+        index;
+
+
+      saveState();
+
+      updateProgress();
+
+
+      if (scroll) {
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+
+      }
+
+    }
+
+
+    function updateProgress() {
+
+      const index =
+        state.currentPanel || 0;
+
+
+      const percent =
+        panelProgress[index] || 0;
+
+
+      document.getElementById(
+        "progressFill"
+      ).style.width =
+        `${percent}%`;
+
+
+      document.getElementById(
+        "progressPercent"
+      ).textContent =
+        `${percent}%`;
+
+
+      document.getElementById(
+        "progressLabel"
+      ).textContent =
+        panelLabels[index] || "";
+
+    }
+
+
+    function showHint(id) {
+
+      document
+        .getElementById(id)
+        .classList
+        .add("visible");
+
+    }
+
+
+    /* =====================================================
+       SIMULADOR
+       ===================================================== */
+
+    let simNodes = [];
+
+    let nextAddress = 1000;
+
+
+    function initializeSimulator() {
+
+      simNodes = [];
+
+      nextAddress = 1000;
+
+      renderSimulator();
+
+      updateMissionUI();
+
+    }
+
+
+    function createNode(value) {
+
+      return {
+        info: value,
+        address: nextAddress,
+        prox: null
+      };
+
+    }
+
+
+    function advanceAddress() {
+
+      nextAddress += 130;
+
+    }
+
+
+    function simInsert() {
+
+      const input =
+        document.getElementById(
+          "insertValue"
+        );
+
+
+      const value =
+        input.value
+          .trim()
+          .toUpperCase();
+
+
+      if (!value) {
+
+        logSimulator(
+          "Digite um valor antes de inserir."
+        );
+
+        return;
+
+      }
+
+
+      const newNode =
+        createNode(value[0]);
+
+
+      if (simNodes.length > 0) {
+
+        newNode.prox =
+          simNodes[0].address;
+
+      }
+
+
+      simNodes.unshift(
+        newNode
+      );
+
+
+      advanceAddress();
+
+
+      input.value = "";
+
+
+      logSimulator(
+        `malloc criou o nó ${newNode.address}. ${value[0]} foi gravado em info. novo->prox recebeu o antigo início. O novo nó agora é o primeiro.`
+      );
+
+
+      renderSimulator();
+
+      verifyMissions();
+
+    }
+
+
+    function simSearch() {
+
+      const value =
+        document.getElementById(
+          "searchValue"
+        )
+        .value
+        .trim()
+        .toUpperCase();
+
+
+      if (!value) {
+
+        logSimulator(
+          "Digite o valor que deseja buscar."
+        );
+
+        return;
+
+      }
+
+
+      clearActiveNodes();
+
+
+      let visited = [];
+
+      let foundIndex = -1;
+
+
+      for (
+        let index = 0;
+        index < simNodes.length;
+        index++
+      ) {
+
+        visited.push(
+          simNodes[index].info
+        );
+
+
+        if (
+          simNodes[index].info ===
+          value[0]
+        ) {
+
+          foundIndex = index;
+
+          break;
+
+        }
+
+      }
+
+
+      if (foundIndex === -1) {
+
+        logSimulator(
+          `aux percorreu ${visited.join(" → ") || "nenhum nó"} e chegou a NULL. ${value[0]} não foi encontrado.`
+        );
+
+        return;
+
+      }
+
+
+      renderSimulator(
+        foundIndex
+      );
+
+
+      logSimulator(
+        `aux percorreu ${visited.join(" → ")} e encontrou ${value[0]} no endereço ${simNodes[foundIndex].address}.`
+      );
+
+
+      if (
+        value[0] === "B" &&
+        simNodes
+          .map(node => node.info)
+          .join("") === "ABCD"
+      ) {
+
+        state.missions.two =
+          true;
+
+        saveState();
+
+        updateMissionUI();
+
+      }
+
+    }
+
+
+    function simRemove() {
+
+      const value =
+        document.getElementById(
+          "removeValue"
+        )
+        .value
+        .trim()
+        .toUpperCase();
+
+
+      if (!value) {
+
+        logSimulator(
+          "Digite o valor que deseja remover."
+        );
+
+        return;
+
+      }
+
+
+      const index =
+        simNodes.findIndex(
+          node =>
+            node.info === value[0]
+        );
+
+
+      if (index === -1) {
+
+        logSimulator(
+          `aux chegou a NULL. ${value[0]} não está na lista, então nada foi alterado.`
+        );
+
+        return;
+
+      }
+
+
+      const removed =
+        simNodes[index];
+
+
+      if (index === 0) {
+
+        simNodes.shift();
+
+
+        logSimulator(
+          `${value[0]} era o primeiro nó. ant permaneceu NULL, então lista recebeu aux->prox. O início mudou. Depois free(aux) liberou o nó ${removed.address}.`
+        );
+
+      } else {
+
+        const previous =
+          simNodes[index - 1];
+
+
+        const next =
+          simNodes[index + 1] || null;
+
+
+        previous.prox =
+          next
+            ? next.address
+            : null;
+
+
+        simNodes.splice(
+          index,
+          1
+        );
+
+
+        logSimulator(
+          `ant apontava para ${previous.info} e aux para ${removed.info}. ant->prox recebeu aux->prox, desviando do nó removido. Depois free(aux) liberou ${removed.address}.`
+        );
+
+      }
+
+
+      repairPointers();
+
+      renderSimulator();
+
+
+      const order =
+        simNodes
+          .map(node => node.info)
+          .join("");
+
+
+      if (
+        value[0] === "C" &&
+        order === "ABD"
+      ) {
+
+        state.missions.three =
+          true;
+
+      }
+
+
+      if (
+        value[0] === "A" &&
+        order === "BD"
+      ) {
+
+        state.missions.four =
+          true;
+
+      }
+
+
+      saveState();
+
+      updateMissionUI();
+
+    }
+
+
+    function repairPointers() {
+
+      simNodes.forEach(
+        (
+          node,
+          index
+        ) => {
+
+          node.prox =
+            simNodes[index + 1]
+              ? simNodes[index + 1].address
+              : null;
+
+        }
+      );
+
+    }
+
+
+    function resetSimulator() {
+
+      simNodes = [];
+
+      nextAddress = 1000;
+
+      renderSimulator();
+
+
+      logSimulator(
+        "Lista reiniciada: lista = NULL."
+      );
+
+    }
+
+
+    function renderSimulator(
+      activeIndex = -1
+    ) {
+
+      const container =
+        document.getElementById(
+          "simChain"
+        );
+
+
+      container.innerHTML = "";
+
+
+      if (
+        simNodes.length === 0
+      ) {
+
+        container.innerHTML = `
+          <div class="sim-null">
+            NULL
+          </div>
+        `;
+
+      } else {
+
+        simNodes.forEach(
+          (
+            node,
+            index
+          ) => {
+
+            const visual =
+              document.createElement(
+                "div"
+              );
+
+
+            visual.className =
+              "sim-node";
+
+
+            if (
+              index === activeIndex
+            ) {
+
+              visual.classList.add(
+                "active"
+              );
+
+            }
+
+
+            visual.innerHTML = `
+              <div class="sim-node-address">
+                endereço ${node.address}
+              </div>
+
+              <div class="sim-node-fields">
+
+                <div class="sim-node-field">
+                  <strong>info</strong>
+                  ${node.info}
+                </div>
+
+                <div class="sim-node-field">
+                  <strong>prox</strong>
+                  ${
+                    node.prox ??
+                    "NULL"
+                  }
+                </div>
+
+              </div>
+            `;
+
+
+            container.appendChild(
+              visual
+            );
+
+
+            const arrow =
+              document.createElement(
+                "div"
+              );
+
+
+            arrow.className =
+              "sim-arrow";
+
+            arrow.textContent =
+              "→";
+
+
+            container.appendChild(
+              arrow
+            );
+
+          }
+        );
+
+
+        const nullBox =
+          document.createElement(
+            "div"
+          );
+
+
+        nullBox.className =
+          "sim-null";
+
+        nullBox.textContent =
+          "NULL";
+
+
+        container.appendChild(
+          nullBox
+        );
+
+      }
+
+
+      document.getElementById(
+        "simInicio"
+      ).textContent =
+        simNodes.length
+          ? `inicio = ${simNodes[0].address}`
+          : "inicio = NULL";
+
+
+      document.getElementById(
+        "simCount"
+      ).textContent =
+        `nós = ${simNodes.length}`;
+
+    }
+
+
+    function clearActiveNodes() {
+
+      document
+        .querySelectorAll(
+          ".sim-node"
+        )
+        .forEach(
+          node =>
+            node.classList.remove(
+              "active"
+            )
+        );
+
+    }
+
+
+    function logSimulator(
+      message
+    ) {
+
+      document.getElementById(
+        "simLog"
+      ).textContent =
+        message;
+
+    }
+
+
+    function verifyMissions() {
+
+      const order =
+        simNodes
+          .map(node => node.info)
+          .join("");
+
+
+      if (
+        order === "ABCD"
+      ) {
+
+        state.missions.one =
+          true;
+
+        saveState();
+
+        updateMissionUI();
+
+      }
+
+    }
+
+
+    function updateMissionUI() {
+
+      const missions =
+        state.missions;
+
+
+      updateMission(
+        "mission1",
+        missions.one
+      );
+
+      updateMission(
+        "mission2",
+        missions.two
+      );
+
+      updateMission(
+        "mission3",
+        missions.three
+      );
+
+      updateMission(
+        "mission4",
+        missions.four
+      );
+
+
+      const done =
+        missions.one &&
+        missions.two &&
+        missions.three &&
+        missions.four;
+
+
+      const button =
+        document.getElementById(
+          "checkpointButton"
+        );
+
+
+      if (done) {
+
+        button.disabled = false;
+
+        button.textContent =
+          "Ir para o Checkpoint →";
+
+
+        const result =
+          document.getElementById(
+            "missionResult"
+          );
+
+
+        result.style.display =
+          "block";
+
+
+        result.innerHTML = `
+          <strong>
+            Laboratório concluído.
+          </strong>
+
+          <p>
+            Você criou a lista,
+            percorreu os nós,
+            removeu um elemento do meio
+            e depois alterou o próprio início.
+          </p>
+        `;
+
+      }
+
+    }
+
+
+    function updateMission(
+      id,
+      done
+    ) {
+
+      const element =
+        document.getElementById(id);
+
+
+      if (!element) {
+        return;
+      }
+
+
+      if (done) {
+
+        element.classList.add(
+          "done"
+        );
+
+
+        element
+          .querySelector(
+            ".mission-status"
+          )
+          .textContent =
+            "✓";
+
+      }
+
+    }
+
+
+    /* =====================================================
+       CHECKPOINT
+       ===================================================== */
+
+    const checkpointQuestions = [
+      {
+        q:
+          "Em uma lista encadeada simples, o campo prox normalmente guarda:",
+
+        options: [
+          "O valor do próximo nó.",
+          "O endereço do próximo nó.",
+          "A quantidade total de nós.",
+          "O índice do vetor."
+        ],
+
+        answer: 1,
+
+        hint:
+          "Lembre da diferença entre dado e endereço.",
+
+        lesson: 0
+      },
+
+      {
+        q:
+          "Quando cria() retorna NULL, isso representa:",
+
+        options: [
+          "Lista cheia.",
+          "Lista vazia.",
+          "Erro obrigatório.",
+          "Um nó contendo zero."
+        ],
+
+        answer: 1,
+
+        hint:
+          "Ainda não existe primeiro nó.",
+
+        lesson: 1
+      },
+
+      {
+        q:
+          "Qual é a função principal de malloc na inserção estudada?",
+
+        options: [
+          "Ordenar a lista.",
+          "Reservar espaço de memória para o novo nó.",
+          "Buscar um elemento.",
+          "Liberar memória."
+        ],
+
+        answer: 1,
+
+        hint:
+          "O novo nó ainda precisa existir fisicamente.",
+
+        lesson: 2
+      },
+
+      {
+        q:
+          "O que novo->prox = lista faz?",
+
+        options: [
+          "Apaga a lista.",
+          "Faz o novo nó apontar para o antigo primeiro nó.",
+          "Faz o último nó apontar para NULL.",
+          "Compara dois nós."
+        ],
+
+        answer: 1,
+
+        hint:
+          "Estamos preparando o novo nó para entrar na frente.",
+
+        lesson: 2
+      },
+
+      {
+        q:
+          "Após inserir D, depois C, depois B e depois A usando a função estudada, qual ordem resulta?",
+
+        options: [
+          "D → C → B → A",
+          "A → B → C → D",
+          "A → D → C → B",
+          "D → A → B → C"
+        ],
+
+        answer: 1,
+
+        hint:
+          "Cada novo nó entra no início.",
+
+        lesson: 2
+      },
+
+      {
+        q:
+          "Na função busca, qual é o papel de aux?",
+
+        options: [
+          "Percorrer os nós.",
+          "Guardar o tamanho da lista.",
+          "Criar automaticamente novos nós.",
+          "Ordenar a lista."
+        ],
+
+        answer: 0,
+
+        hint:
+          "aux começa no primeiro nó e vai avançando.",
+
+        lesson: 3
+      },
+
+      {
+        q:
+          "Na remoção, ant representa:",
+
+        options: [
+          "O nó posterior.",
+          "O nó anterior ao nó analisado por aux.",
+          "Sempre o primeiro nó.",
+          "O último endereço disponível da memória."
+        ],
+
+        answer: 1,
+
+        hint:
+          "O próprio nome ajuda: ant = anterior.",
+
+        lesson: 4
+      },
+
+      {
+        q:
+          "Se ant == NULL quando encontramos o valor a remover, isso significa normalmente que:",
+
+        options: [
+          "O valor não existe.",
+          "Encontramos o primeiro nó.",
+          "Encontramos o último nó.",
+          "A memória acabou."
+        ],
+
+        answer: 1,
+
+        hint:
+          "Nenhum avanço aconteceu antes de encontrar o valor.",
+
+        lesson: 4
+      },
+
+      {
+        q:
+          "Por que salva-se aux->prox em temp antes de free(aux) durante libera()?",
+
+        options: [
+          "Para ordenar a lista.",
+          "Para não perder o endereço do próximo nó após liberar o atual.",
+          "Para criar um novo nó.",
+          "Para tornar a lista circular."
+        ],
+
+        answer: 1,
+
+        hint:
+          "Depois de free, não devemos depender do conteúdo daquele nó.",
+
+        lesson: 5
+      }
+    ];
+
+
+    function renderCheckpoint() {
+
+      const form =
+        document.getElementById(
+          "checkpointForm"
+        );
+
+
+      form.innerHTML = "";
+
+
+      checkpointQuestions.forEach(
+        (
+          item,
+          index
+        ) => {
+
+          const block =
+            document.createElement(
+              "div"
+            );
+
+
+          block.className =
+            "quiz-question";
+
+
+          block.innerHTML = `
+            <div class="question-number">
+              CHECKPOINT ${String(
+                index + 1
+              ).padStart(2, "0")}
+            </div>
+
+            <div class="question-title">
+              ${item.q}
+            </div>
+
+            <div class="options">
+
+              ${item.options
+                .map(
+                  (
+                    option,
+                    optionIndex
+                  ) => `
+                    <label class="option">
+
+                      <input
+                        type="radio"
+                        name="check-${index}"
+                        value="${optionIndex}"
+                      />
+
+                      ${option}
+
+                    </label>
+                  `
+                )
+                .join("")}
+
+            </div>
+
+            <div class="quiz-tools">
+
+              <button
+                type="button"
+                class="small-button"
+                onclick="toggleCheckpointHint(${index})"
+              >
+                💡 Dica
+              </button>
+
+              <button
+                type="button"
+                class="small-button"
+                onclick="goToPanel(${item.lesson})"
+              >
+                📖 Consultar aula
+              </button>
+
+            </div>
+
+            <div
+              id="checkHint-${index}"
+              class="hint"
+            >
+              ${item.hint}
+            </div>
+          `;
+
+
+          form.appendChild(
+            block
+          );
+
+        }
+      );
+
+
+      const submit =
+        document.createElement(
+          "button"
+        );
+
+
+      submit.type =
+        "submit";
+
+      submit.className =
+        "btn btn-primary btn-full";
+
+      submit.textContent =
+        "Corrigir Checkpoint";
+
+
+      form.appendChild(
+        submit
+      );
+
+
+      form.onsubmit =
+        submitCheckpoint;
+
+    }
+
+
+    function toggleCheckpointHint(
+      index
+    ) {
+
+      document
+        .getElementById(
+          `checkHint-${index}`
+        )
+        .classList
+        .toggle("visible");
+
+    }
+
+
+    function startCheckpoint() {
+
+      const m =
+        state.missions;
+
+
+      if (
+        !(
+          m.one &&
+          m.two &&
+          m.three &&
+          m.four
+        )
+      ) {
+
+        return;
+
+      }
+
+
+      goToPanel(7);
+
+    }
+
+
+    function submitCheckpoint(
+      event
+    ) {
+
+      event.preventDefault();
+
+
+      let answered = 0;
+      let score = 0;
+
+
+      checkpointQuestions.forEach(
+        (
+          item,
+          index
+        ) => {
+
+          const selected =
+            document.querySelector(
+              `input[name="check-${index}"]:checked`
+            );
+
+
+          if (!selected) {
+            return;
+          }
+
+
+          answered++;
+
+
+          if (
+            Number(
+              selected.value
+            ) === item.answer
+          ) {
+
+            score++;
+
+          }
+
+        }
+      );
+
+
+      if (
+        answered <
+        checkpointQuestions.length
+      ) {
+
+        alert(
+          `Responda todas as ${checkpointQuestions.length} questões antes de corrigir.`
+        );
+
+        return;
+
+      }
+
+
+      const result =
+        document.getElementById(
+          "checkpointResult"
+        );
+
+
+      result.style.display =
+        "block";
+
+
+      if (
+        score >= 8
+      ) {
+
+        state.checkpointPassed =
+          true;
+
+        state.checkpointScore =
+          score;
+
+        saveState();
+
+
+        result.innerHTML = `
+          <div class="result-score">
+            ${score}/9
+          </div>
+
+          <h3>
+            Checkpoint aprovado.
+          </h3>
+
+          <p>
+            Agora vamos testar se você consegue
+            fazer o raciocínio sem consulta.
+          </p>
+
+          <button
+            class="btn btn-primary"
+            type="button"
+            onclick="goToPanel(8)"
+          >
+            Liberar Boss →
+          </button>
+        `;
+
+      } else {
+
+        result.innerHTML = `
+          <div class="result-score">
+            ${score}/9
+          </div>
+
+          <h3>
+            Ainda não.
+          </h3>
+
+          <p>
+            Precisamos de 8/9.
+
+            Revise principalmente as relações entre
+            <code>lista</code>,
+            <code>novo</code>,
+            <code>aux</code>,
+            <code>ant</code>
+            e
+            <code>prox</code>.
+          </p>
+
+          <button
+            class="btn btn-secondary"
+            type="button"
+            onclick="goToPanel(0)"
+          >
+            Revisar módulo
+          </button>
+        `;
+
+      }
+
+    }
+
+
+    /* =====================================================
+       BOSS
+       ===================================================== */
+
+    const bossQuestions = [
+      {
+        topic: "conceito",
+
+        q:
+          "Qual característica diferencia a lista encadeada simples da lista sequencial estudada?",
+
+        options: [
+          "Os elementos precisam ocupar índices consecutivos.",
+          "Os nós são ligados por ponteiros e não dependem de posições consecutivas na memória.",
+          "Ela não pode armazenar caracteres.",
+          "Ela não possui operações."
+        ],
+
+        answer: 1
+      },
+
+      {
+        topic: "inicio",
+
+        q:
+          "Se lista == NULL, qual interpretação é correta?",
+
+        options: [
+          "A lista está cheia.",
+          "Não existe primeiro nó.",
+          "Existe um nó contendo NULL.",
+          "A lista possui exatamente um elemento."
+        ],
+
+        answer: 1
+      },
+
+      {
+        topic: "malloc",
+
+        q:
+          "Depois de executar malloc(sizeof(no)), o ponteiro novo recebe principalmente:",
+
+        options: [
+          "O valor do nó anterior.",
+          "O endereço da área de memória reservada.",
+          "NULL obrigatoriamente.",
+          "A quantidade de nós."
+        ],
+
+        answer: 1
+      },
+
+      {
+        topic: "inserção",
+
+        q:
+          "Antes da inserção temos B → C → NULL. Ao inserir A com a função estudada, o que novo->prox deve receber?",
+
+        options: [
+          "NULL",
+          "O endereço de B.",
+          "O endereço de C.",
+          "O próprio endereço de A."
+        ],
+
+        answer: 1
+      },
+
+      {
+        topic: "inserção",
+
+        q:
+          "Após cria(), inserimos X, depois Y e depois Z. Qual será a ordem lógica?",
+
+        options: [
+          "X → Y → Z",
+          "Z → Y → X",
+          "Y → Z → X",
+          "X → Z → Y"
+        ],
+
+        answer: 1
+      },
+
+      {
+        topic: "busca",
+
+        q:
+          "Na busca, o que aux = aux->prox provoca?",
+
+        options: [
+          "Cria um novo nó.",
+          "Move aux para o próximo nó.",
+          "Remove o nó atual.",
+          "Volta ao início."
+        ],
+
+        answer: 1
+      },
+
+      {
+        topic: "busca",
+
+        q:
+          "Se aux chega a NULL durante a busca sem ter retornado antes, isso significa:",
+
+        options: [
+          "O valor foi encontrado.",
+          "O valor não foi encontrado.",
+          "A lista está cheia.",
+          "O primeiro nó deve ser removido."
+        ],
+
+        answer: 1
+      },
+
+      {
+        topic: "remoção",
+
+        q:
+          "Temos A → B → C. Queremos remover B. Após a busca, qual configuração é esperada?",
+
+        options: [
+          "ant=A e aux=B",
+          "ant=B e aux=C",
+          "ant=NULL e aux=B",
+          "ant=C e aux=NULL"
+        ],
+
+        answer: 0
+      },
+
+      {
+        topic: "remoção",
+
+        q:
+          "Para remover B de A → B → C, qual ligação precisa ser alterada?",
+
+        options: [
+          "A deve apontar para C.",
+          "C deve apontar para A.",
+          "B deve apontar para A.",
+          "A deve apontar para NULL."
+        ],
+
+        answer: 0
+      },
+
+      {
+        topic: "remoção",
+
+        q:
+          "Ao remover o primeiro nó A de A → B → C, qual instrução representa a ideia principal?",
+
+        options: [
+          "lista = aux->prox",
+          "ant->prox = lista",
+          "aux = NULL",
+          "lista = ant"
+        ],
+
+        answer: 0
+      },
+
+      {
+        topic: "free",
+
+        q:
+          "Por que free(aux) ocorre depois que as ligações são corrigidas?",
+
+        options: [
+          "Porque precisamos preservar o acesso aos demais nós antes de liberar a memória do removido.",
+          "Porque free ordena a lista.",
+          "Porque aux sempre é NULL antes.",
+          "Porque malloc precisa ser executado primeiro."
+        ],
+
+        answer: 0
+      },
+
+      {
+        topic: "libera",
+
+        q:
+          "Na função libera, qual é o papel de temp?",
+
+        options: [
+          "Guardar temporariamente o endereço do próximo nó.",
+          "Guardar o tamanho da lista.",
+          "Guardar sempre o primeiro elemento.",
+          "Criar um nó."
+        ],
+
+        answer: 0
+      },
+
+      {
+        topic: "retorno",
+
+        q:
+          "Por que usamos list2 = insere(list2, 'A') em vez de apenas insere(list2, 'A')?",
+
+        options: [
+          "Porque o primeiro nó da lista pode mudar e precisamos guardar o novo endereço.",
+          "Porque A sempre deve ser o último.",
+          "Porque insere retorna a quantidade de nós.",
+          "Porque malloc exige duas atribuições."
+        ],
+
+        answer: 0
+      },
+
+      {
+        topic: "raciocínio",
+
+        q:
+          "Considere A → B → C → D. Removemos C e depois removemos A. Qual será a lista final?",
+
+        options: [
+          "A → B → D",
+          "B → D",
+          "B → C → D",
+          "D → B"
+        ],
+
+        answer: 1
+      }
+    ];
+
+
+    function startBoss() {
+
+      if (!state.checkpointPassed) {
+        return;
+      }
+
+
+      renderBoss();
+
+      goToPanel(9);
+
+    }
+
+
+    function renderBoss() {
+
+      const form =
+        document.getElementById(
+          "bossForm"
+        );
+
+
+      form.innerHTML = "";
+
+
+      bossQuestions.forEach(
+        (
+          item,
+          index
+        ) => {
+
+          const block =
+            document.createElement(
+              "div"
+            );
+
+
+          block.className =
+            "quiz-question";
+
+
+          block.innerHTML = `
+            <div class="question-number">
+              BOSS ${String(
+                index + 1
+              ).padStart(2, "0")}
+            </div>
+
+            <div class="question-title">
+              ${item.q}
+            </div>
+
+            <div class="options">
+
+              ${item.options
+                .map(
+                  (
+                    option,
+                    optionIndex
+                  ) => `
+                    <label class="option">
+
+                      <input
+                        type="radio"
+                        name="boss-${index}"
+                        value="${optionIndex}"
+                      />
+
+                      ${option}
+
+                    </label>
+                  `
+                )
+                .join("")}
+
+            </div>
+          `;
+
+
+          form.appendChild(
+            block
+          );
+
+        }
+      );
+
+
+      const submit =
+        document.createElement(
+          "button"
+        );
+
+
+      submit.type =
+        "submit";
+
+      submit.className =
+        "btn btn-primary btn-full";
+
+      submit.textContent =
+        "Finalizar Boss";
+
+
+      form.appendChild(
+        submit
+      );
+
+
+      form.onsubmit =
+        submitBoss;
+
+    }
+
+
+    function submitBoss(
+      event
+    ) {
+
+      event.preventDefault();
+
+
+      let answered = 0;
+      let score = 0;
+
+      const missedTopics =
+        new Set();
+
+
+      bossQuestions.forEach(
+        (
+          item,
+          index
+        ) => {
+
+          const selected =
+            document.querySelector(
+              `input[name="boss-${index}"]:checked`
+            );
+
+
+          if (!selected) {
+            return;
+          }
+
+
+          answered++;
+
+
+          if (
+            Number(
+              selected.value
+            ) === item.answer
+          ) {
+
+            score++;
+
+          } else {
+
+            missedTopics.add(
+              item.topic
+            );
+
+          }
+
+        }
+      );
+
+
+      if (
+        answered <
+        bossQuestions.length
+      ) {
+
+        alert(
+          `Responda todas as ${bossQuestions.length} questões antes de finalizar.`
+        );
+
+        return;
+
+      }
+
+
+      state.bossScore =
+        score;
+
+
+      if (score >= 12) {
+
+        state.bossPassed =
+          true;
+
+        saveState();
+
+        goToPanel(10);
+
+      } else {
+
+        state.bossPassed =
+          false;
+
+        saveState();
+
+
+        document.getElementById(
+          "bossForm"
+        ).innerHTML = `
+          <div class="result-box">
+
+            <div class="result-score">
+              ${score}/14
+            </div>
+
+            <h2>
+              Ainda não.
+            </h2>
+
+            <p>
+              Precisamos de 12/14.
+            </p>
+
+            <p>
+              Áreas que merecem revisão:
+            </p>
+
+            <div class="chips">
+
+              ${Array
+                .from(
+                  missedTopics
+                )
+                .map(
+                  topic => `
+                    <span class="chip">
+                      ${topic}
+                    </span>
+                  `
+                )
+                .join("")}
+
+            </div>
+
+            <p>
+              As respostas corretas não são exibidas
+              no Boss.
+
+              Volte às aulas, reconstrua mentalmente
+              as setas e tente novamente.
+            </p>
+
+            <button
+              class="btn btn-secondary"
+              type="button"
+              onclick="restartBossReview()"
+            >
+              Revisar módulo
+            </button>
+
+          </div>
+        `;
+
+      }
+
+    }
+
+
+    function restartBossReview() {
+
+      renderBoss();
+
+      goToPanel(0);
+
+    }
+
+
+    /* =====================================================
+       DISSERTATIVA
+       ===================================================== */
+
+    const essay =
+      document.getElementById(
+        "essayAnswer"
+      );
+
+
+    essay.addEventListener(
+      "input",
+      () => {
+
+        document.getElementById(
+          "essayCounter"
+        ).textContent =
+          `${essay.value.length} caracteres`;
+
+      }
+    );
+
+
+    function normalizeText(text) {
+
+      return text
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(
+          /[\u0300-\u036f]/g,
+          ""
+        );
+
+    }
+
+
+    function hasAny(
+      text,
+      terms
+    ) {
+
+      return terms.some(
+        term =>
+          text.includes(term)
+      );
+
+    }
+
+
+    function evaluateEssay() {
+
+      const raw =
+        essay.value.trim();
+
+
+      const text =
+        normalizeText(raw);
+
+
+      const criteria = [
+        {
+          title:
+            "Explica que lista/inicio referencia o primeiro nó",
+
+          ok:
+            hasAny(
+              text,
+              [
+                "inicio",
+                "lista"
+              ]
+            ) &&
+            hasAny(
+              text,
+              [
+                "primeiro",
+                "primeiro no",
+                "comeca"
+              ]
+            )
+        },
+
+        {
+          title:
+            "Diferencia info e prox",
+
+          ok:
+            text.includes("info") &&
+            text.includes("prox") &&
+            hasAny(
+              text,
+              [
+                "dado",
+                "informacao",
+                "valor"
+              ]
+            ) &&
+            hasAny(
+              text,
+              [
+                "endereco",
+                "ponteiro",
+                "proximo"
+              ]
+            )
+        },
+
+        {
+          title:
+            "Explica NULL como ausência de próximo nó / fim",
+
+          ok:
+            text.includes("null") &&
+            hasAny(
+              text,
+              [
+                "fim",
+                "nao existe",
+                "nao aponta",
+                "ultimo"
+              ]
+            )
+        },
+
+        {
+          title:
+            "Explica inserção no início",
+
+          ok:
+            hasAny(
+              text,
+              [
+                "novo",
+                "novo no"
+              ]
+            ) &&
+            hasAny(
+              text,
+              [
+                "inicio",
+                "primeiro"
+              ]
+            ) &&
+            hasAny(
+              text,
+              [
+                "aponta",
+                "prox",
+                "antigo"
+              ]
+            )
+        },
+
+        {
+          title:
+            "Explica o papel de ant e aux na remoção",
+
+          ok:
+            text.includes("ant") &&
+            text.includes("aux") &&
+            hasAny(
+              text,
+              [
+                "anterior",
+                "percorre",
+                "atual",
+                "procur"
+              ]
+            )
+        },
+
+        {
+          title:
+            "Menciona correção das ligações e liberação do nó",
+
+          ok:
+            hasAny(
+              text,
+              [
+                "free",
+                "libera",
+                "liberar"
+              ]
+            ) &&
+            hasAny(
+              text,
+              [
+                "ligacao",
+                "aponta",
+                "prox",
+                "endereco"
+              ]
+            )
+        }
+      ];
+
+
+      const covered =
+        criteria.filter(
+          item =>
+            item.ok
+        ).length;
+
+
+      const enoughText =
+        raw.length >= 220;
+
+
+      const result =
+        document.getElementById(
+          "essayResult"
+        );
+
+
+      result.style.display =
+        "block";
+
+
+      result.innerHTML = `
+        <h3>
+          Rubrica de aprendizagem
+        </h3>
+
+        <p>
+          Esta análise local verifica conceitos
+          essenciais. Ela não substitui avaliação
+          humana da qualidade da explicação.
+        </p>
+
+        <div class="rubric">
+
+          ${criteria
+            .map(
+              item => `
+                <div
+                  class="rubric-item ${
+                    item.ok
+                      ? "ok"
+                      : "missing"
+                  }"
+                >
+                  ${
+                    item.ok
+                      ? "✓"
+                      : "○"
+                  }
+
+                  ${item.title}
+                </div>
+              `
+            )
+            .join("")}
+
+        </div>
+
+        ${
+          !enoughText
+            ? `
+              <p>
+                Desenvolva um pouco mais.
+                Queremos uma explicação completa,
+                não apenas palavras-chave.
+              </p>
+            `
+            : ""
+        }
+
+        ${
+          covered >= 5 &&
+          enoughText
+
+            ? `
+              <p>
+                <strong>
+                  Critério atingido.
+                </strong>
+
+                Você cobriu
+                ${covered}/6
+                fundamentos importantes.
+              </p>
+
+              <button
+                class="btn btn-success"
+                type="button"
+                onclick="completeModule()"
+              >
+                Concluir Módulo 03 →
+              </button>
+            `
+
+            : `
+              <p>
+                Você cobriu
+                <strong>
+                  ${covered}/6
+                </strong>
+                pontos.
+
+                Precisamos de pelo menos 5/6
+                e uma explicação mais desenvolvida.
+              </p>
+            `
+        }
+      `;
+
+    }
+
+
+    /* =====================================================
+       CONCLUSÃO
+       ===================================================== */
+
+    function completeModule() {
+
+      state.completed =
+        true;
+
+      state.completedAt =
+        new Date().toISOString();
+
+      saveState();
+
+
+      document.getElementById(
+        "finalResult"
+      ).innerHTML = `
+        <div class="result-score">
+          ${state.bossScore}/14
+        </div>
+
+        <strong>
+          Boss concluído.
+        </strong>
+
+        <p>
+          Lista Encadeada Simples registrada
+          como concluída neste navegador.
+        </p>
+      `;
+
+
+      goToPanel(11);
+
+    }
+
+  </script>
+
+</body>
+
+</html>

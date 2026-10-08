@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 
 <head>
+
   <meta charset="UTF-8" />
 
   <meta
@@ -11,26 +12,31 @@
 
   <meta
     name="theme-color"
-    content="#123744"
+    content="#F0EEE8"
   />
 
   <meta
     name="description"
-    content="QuizADS — uma iniciativa educacional da KorDevs para aprender tecnologia entendendo os conceitos."
+    content="QuizADS — aprenda os fundamentos de Análise e Desenvolvimento de Sistemas com conteúdo guiado, prática e desafios progressivos."
   />
 
   <title>
-    QuizADS | Aprenda tecnologia entendendo o porquê
+    QuizADS | Aprenda, pratique e entenda
   </title>
 
   <link
     rel="stylesheet"
     href="./assets/css/quizads.css"
   />
+
 </head>
 
 
 <body>
+
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
 
   <header class="site-header">
 
@@ -39,6 +45,7 @@
       <a
         href="./"
         class="brand"
+        aria-label="QuizADS"
       >
 
         <img
@@ -49,6 +56,7 @@
           alt="KorDevs"
         />
 
+
         <div class="brand-info">
 
           <span class="brand-name">
@@ -56,12 +64,32 @@
           </span>
 
           <span class="brand-product">
-            uma iniciativa KorDevs
+            aprendizado em tecnologia
           </span>
 
         </div>
 
       </a>
+
+
+      <nav
+        class="home-nav"
+        aria-label="Navegação principal"
+      >
+
+        <a href="#trilhas">
+          Trilhas
+        </a>
+
+        <a href="#metodologia">
+          Como funciona
+        </a>
+
+        <a href="#sobre">
+          Sobre
+        </a>
+
+      </nav>
 
 
       <div class="header-actions">
@@ -73,18 +101,8 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          ☕ Apoiar
+          Apoiar o projeto
         </a>
-
-        <button
-          data-theme-toggle
-          data-theme-icon
-          class="icon-button"
-          type="button"
-          aria-label="Alternar tema"
-        >
-          🌙
-        </button>
 
       </div>
 
@@ -95,48 +113,73 @@
 
   <main>
 
-    <!-- HERO -->
+    <!-- ===================================================
+         HERO
+         =================================================== -->
 
-    <section class="hero">
+    <section class="home-hero">
 
-      <div class="container hero-grid">
+      <div class="container home-hero-grid">
 
-        <div>
 
-          <div class="kicker">
-            KORDEVS / EDUCAÇÃO
+        <div class="home-hero-copy">
+
+          <div class="home-eyebrow">
+            QuizADS · uma iniciativa KorDevs
           </div>
 
-          <h1>
-            Aprenda tecnologia
-            <span class="accent">
-              entendendo o porquê.
+
+          <h1 class="home-title">
+
+            <span>
+              APRENDA.
             </span>
+
+            <span>
+              PRATIQUE.
+            </span>
+
+            <span class="orange">
+              ENTENDA.
+            </span>
+
           </h1>
 
-          <p class="lead">
-            O QuizADS transforma conteúdos de
-            Análise e Desenvolvimento de Sistemas
-            em aulas guiadas, exemplos visuais,
-            prática e desafios progressivos.
-            Sem presumir que você já domina
-            programação.
+
+          <p class="home-description">
+            Uma plataforma de estudos para quem
+            precisa compreender de verdade os
+            fundamentos de ADS.
+
+            Conteúdo guiado, exemplos visuais,
+            simuladores e desafios progressivos.
           </p>
 
-          <div class="hero-actions">
+
+          <div class="home-actions">
 
             <a
+              data-structure-continue
               class="btn btn-primary"
               href="./trilhas/estrutura-de-dados/modulo-01/"
             >
-              Começar agora →
+              <span
+                data-structure-continue-label
+              >
+                Começar a estudar
+              </span>
+
+              <span aria-hidden="true">
+                →
+              </span>
             </a>
+
 
             <a
               class="btn btn-secondary"
-              href="#metodologia"
+              href="#trilhas"
             >
-              Como funciona
+              Ver trilhas
             </a>
 
           </div>
@@ -144,12 +187,111 @@
         </div>
 
 
-        <div class="brand-panel">
+        <!-- VISUAL EDITORIAL -->
 
-          <img
-            src="./assets/brand/KorDevs_Dark.png"
-            alt="KorDevs"
-          />
+        <div class="hero-stage">
+
+          <div
+            class="hero-stage-grid"
+            aria-hidden="true"
+          ></div>
+
+
+          <div class="hero-stage-code">
+
+            <div class="code-dim">
+              // estrutura de dados
+            </div>
+
+            <div>
+              typedef struct no {
+            </div>
+
+            <div>
+              &nbsp;&nbsp;char info;
+            </div>
+
+            <div>
+              &nbsp;&nbsp;struct no
+              <span class="code-orange">
+                *prox
+              </span>;
+            </div>
+
+            <div>
+              } no;
+            </div>
+
+            <br />
+
+            <div class="code-dim">
+              // compreender antes de decorar.
+            </div>
+
+          </div>
+
+
+          <article class="hero-track-card">
+
+            <div class="hero-track-meta">
+              Trilha 01 · em andamento
+            </div>
+
+
+            <h2>
+              Estrutura
+              de Dados
+            </h2>
+
+
+            <p>
+              Do conceito à prática:
+              listas, pilha, fila, árvores,
+              AVL, Árvore B e Hash.
+            </p>
+
+
+            <div class="hero-track-footer">
+
+              <div
+                class="hero-track-progress"
+              >
+
+                <div
+                  class="hero-track-progress-label"
+                  data-structure-progress-label
+                >
+                  0 / 8 módulos concluídos
+                </div>
+
+
+                <div
+                  class="hero-track-progress-line"
+                >
+
+                  <div
+                    class="hero-track-progress-fill"
+                    data-structure-progress
+                    style="width:0%;"
+                  ></div>
+
+                </div>
+
+              </div>
+
+
+              <a
+                data-structure-continue
+                class="hero-arrow"
+                href="./trilhas/estrutura-de-dados/modulo-01/"
+                aria-label="Continuar Estrutura de Dados"
+              >
+                →
+              </a>
+
+            </div>
+
+          </article>
 
         </div>
 
@@ -158,38 +300,111 @@
     </section>
 
 
-    <!-- METODOLOGIA -->
+    <!-- ===================================================
+         NÚMEROS
+         =================================================== -->
+
+    <section class="container">
+
+      <div class="proof-strip">
+
+        <div class="proof-item">
+
+          <span class="proof-number">
+            01
+          </span>
+
+          <span class="proof-label">
+            trilha publicada
+          </span>
+
+        </div>
+
+
+        <div class="proof-item">
+
+          <span class="proof-number">
+            03
+          </span>
+
+          <span class="proof-label">
+            módulos online
+          </span>
+
+        </div>
+
+
+        <div class="proof-item">
+
+          <span class="proof-number">
+            100%
+          </span>
+
+          <span class="proof-label">
+            acesso gratuito
+          </span>
+
+        </div>
+
+
+        <div class="proof-item">
+
+          <span class="proof-number">
+            0
+          </span>
+
+          <span class="proof-label">
+            conhecimento prévio exigido
+          </span>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         METODOLOGIA
+         =================================================== -->
 
     <section
       id="metodologia"
-      class="section"
+      class="home-section"
     >
 
       <div class="container">
 
-        <header class="section-header">
+        <header class="section-heading">
 
-          <div class="kicker">
-            EFICIÊNCIA DE FLUXO
+          <div>
+
+            <div class="kicker">
+              Metodologia
+            </div>
+
+            <h2>
+              Primeiro você entende.
+              Depois prova que aprendeu.
+            </h2>
+
           </div>
 
-          <h2>
-            Você não precisa decorar primeiro.
-          </h2>
 
-          <p class="lead">
-            O conteúdo é apresentado em etapas.
-            Durante o aprendizado, consultar a aula
-            e pedir uma dica faz parte do processo.
-            A avaliação vem depois.
+          <p>
+            Durante as aulas, consultar conceitos e
+            pedir dicas faz parte do aprendizado.
+
+            No Boss, a ajuda desaparece e o
+            conhecimento precisa aparecer.
           </p>
 
         </header>
 
 
-        <div class="grid grid-4">
+        <div class="method-grid">
 
-          <article class="card method-card">
+          <article class="method-item">
 
             <span class="method-number">
               01
@@ -200,14 +415,14 @@
             </h3>
 
             <p>
-              O conceito começa em linguagem
-              comum antes de aparecer no código.
+              Começamos pelo conceito em linguagem
+              clara antes de mostrar o código.
             </p>
 
           </article>
 
 
-          <article class="card method-card">
+          <article class="method-item">
 
             <span class="method-number">
               02
@@ -218,15 +433,14 @@
             </h3>
 
             <p>
-              Diagramas e exemplos tornam
-              ponteiros, listas e árvores menos
-              abstratos.
+              Diagramas e simuladores transformam
+              conceitos abstratos em algo concreto.
             </p>
 
           </article>
 
 
-          <article class="card method-card">
+          <article class="method-item">
 
             <span class="method-number">
               03
@@ -237,14 +451,14 @@
             </h3>
 
             <p>
-              Checkpoints permitem errar,
-              consultar e tentar novamente.
+              Checkpoints permitem consultar,
+              errar, corrigir e tentar novamente.
             </p>
 
           </article>
 
 
-          <article class="card method-card">
+          <article class="method-item">
 
             <span class="method-number">
               04
@@ -255,8 +469,9 @@
             </h3>
 
             <p>
-              O Boss acontece sem dicas.
-              É a hora de testar o que ficou.
+              O Boss e a pergunta dissertativa
+              verificam se o raciocínio realmente
+              ficou claro.
             </p>
 
           </article>
@@ -268,118 +483,292 @@
     </section>
 
 
-    <!-- TRILHAS -->
+    <!-- ===================================================
+         TRILHAS
+         =================================================== -->
 
     <section
       id="trilhas"
-      class="section"
+      class="home-section"
     >
 
       <div class="container">
 
-        <header class="section-header">
+        <header class="section-heading">
 
-          <div class="kicker">
-            TRILHAS
+          <div>
+
+            <div class="kicker">
+              Trilhas
+            </div>
+
+            <h2>
+              Escolha sua jornada
+              de aprendizado.
+            </h2>
+
           </div>
 
-          <h2>
-            Comece por Estrutura de Dados.
-          </h2>
 
-          <p class="lead">
-            Novos conteúdos de ADS serão
-            acrescentados gradualmente ao projeto.
+          <p>
+            Começamos por Estrutura de Dados.
+            Novas áreas de ADS serão adicionadas
+            gradualmente ao QuizADS.
           </p>
 
         </header>
 
 
-        <div class="grid grid-2">
+        <div class="track-grid-modern">
 
-          <article class="card track-card">
 
-            <div class="track-head">
+          <!-- 01 -->
 
-              <div class="kicker">
-                TRILHA 01
+          <a
+            data-structure-continue
+            class="track-card-modern active"
+            href="./trilhas/estrutura-de-dados/modulo-01/"
+          >
+
+            <span class="track-index">
+              01
+            </span>
+
+
+            <h3>
+              Estrutura de Dados
+            </h3>
+
+
+            <p>
+              Listas, pilha, fila, árvores,
+              BST, AVL, Árvore B e Hash.
+            </p>
+
+
+            <div class="track-status">
+
+              <div class="track-status-label">
+
+                <span
+                  data-structure-available
+                >
+                  3 / 8 módulos disponíveis
+                </span>
+
+                <span>
+                  →
+                </span>
+
               </div>
 
-              <h3>
-                Estrutura de Dados
-              </h3>
+
+              <div class="track-line">
+
+                <div
+                  class="track-line-fill"
+                  data-structure-progress
+                  style="width:0%;"
+                ></div>
+
+              </div>
 
             </div>
 
+          </a>
 
-            <div class="track-body">
 
-              <p>
-                Dos fundamentos de TAD e ponteiros
-                até listas, pilha, fila, árvores,
-                AVL, Árvore B e Hash.
-              </p>
+          <!-- 02 -->
 
-              <div class="chips">
+          <article
+            class="track-card-modern future"
+          >
 
-                <span class="chip">
-                  8 módulos
-                </span>
+            <span class="track-index">
+              02
+            </span>
 
-                <span class="chip">
-                  progressivo
-                </span>
 
-                <span class="chip">
-                  quizzes
-                </span>
+            <h3>
+              Lógica de Programação
+            </h3>
 
-                <span class="chip">
-                  Boss
+
+            <p>
+              Raciocínio lógico, variáveis,
+              decisões, repetições e funções.
+            </p>
+
+
+            <div class="track-status">
+
+              <div class="track-status-label">
+
+                <span>
+                  Em planejamento
                 </span>
 
               </div>
 
-              <a
-                id="structureTrackButton"
-                class="btn btn-primary btn-full"
-                href="./trilhas/estrutura-de-dados/modulo-01/"
-              >
-                Iniciar trilha →
-              </a>
+
+              <div class="track-line"></div>
 
             </div>
 
           </article>
 
 
-          <article class="card track-card">
+          <!-- 03 -->
 
-            <div class="track-head">
+          <article
+            class="track-card-modern future"
+          >
 
-              <div class="kicker">
-                EM BREVE
+            <span class="track-index">
+              03
+            </span>
+
+
+            <h3>
+              Algoritmos
+            </h3>
+
+
+            <p>
+              Estratégias, leitura de problemas,
+              eficiência e construção de soluções.
+            </p>
+
+
+            <div class="track-status">
+
+              <div class="track-status-label">
+
+                <span>
+                  Em planejamento
+                </span>
+
               </div>
 
-              <h3>
-                Lógica de Programação
-              </h3>
+
+              <div class="track-line"></div>
 
             </div>
 
-            <div class="track-body">
+          </article>
 
-              <p>
-                Variáveis, decisões, repetições,
-                funções e raciocínio algorítmico.
-              </p>
 
-              <button
-                class="btn btn-secondary btn-full"
-                disabled
-              >
-                Em desenvolvimento
-              </button>
+          <!-- 04 -->
+
+          <article
+            class="track-card-modern future"
+          >
+
+            <span class="track-index">
+              04
+            </span>
+
+
+            <h3>
+              Banco de Dados
+            </h3>
+
+
+            <p>
+              Modelagem, relacionamentos,
+              SQL e fundamentos de dados.
+            </p>
+
+
+            <div class="track-status">
+
+              <div class="track-status-label">
+
+                <span>
+                  Em planejamento
+                </span>
+
+              </div>
+
+              <div class="track-line"></div>
+
+            </div>
+
+          </article>
+
+
+          <!-- 05 -->
+
+          <article
+            class="track-card-modern future"
+          >
+
+            <span class="track-index">
+              05
+            </span>
+
+
+            <h3>
+              Programação Orientada a Objetos
+            </h3>
+
+
+            <p>
+              Classes, objetos, métodos,
+              encapsulamento e herança.
+            </p>
+
+
+            <div class="track-status">
+
+              <div class="track-status-label">
+
+                <span>
+                  Em planejamento
+                </span>
+
+              </div>
+
+              <div class="track-line"></div>
+
+            </div>
+
+          </article>
+
+
+          <!-- 06 -->
+
+          <article
+            class="track-card-modern future"
+          >
+
+            <span class="track-index">
+              06
+            </span>
+
+
+            <h3>
+              Engenharia de Software
+            </h3>
+
+
+            <p>
+              Processos, documentação,
+              arquitetura e boas práticas.
+            </p>
+
+
+            <div class="track-status">
+
+              <div class="track-status-label">
+
+                <span>
+                  Em planejamento
+                </span>
+
+              </div>
+
+              <div class="track-line"></div>
 
             </div>
 
@@ -392,32 +781,84 @@
     </section>
 
 
-    <!-- APOIO -->
+    <!-- ===================================================
+         SOBRE
+         =================================================== -->
 
-    <section class="section">
+    <section
+      id="sobre"
+      class="home-section"
+    >
 
       <div class="container">
 
-        <article
-          class="card support-card"
-        >
+        <header class="section-heading">
+
+          <div>
+
+            <div class="kicker">
+              Por que o QuizADS existe
+            </div>
+
+
+            <h2>
+              Nem todo mundo aprende
+              bem do mesmo jeito.
+            </h2>
+
+          </div>
+
+
+          <p>
+            O QuizADS nasceu para transformar
+            conteúdos técnicos em experiências
+            de aprendizado mais claras,
+            progressivas e práticas.
+
+            A proposta é compreender antes de
+            memorizar.
+          </p>
+
+        </header>
+
+      </div>
+
+    </section>
+
+
+    <!-- ===================================================
+         APOIO
+         =================================================== -->
+
+    <section class="container">
+
+      <div class="support-editorial">
+
+        <div>
 
           <div class="kicker">
-            PROJETO ABERTO
+            Projeto aberto
           </div>
+
 
           <h2>
             O QuizADS te ajudou?
           </h2>
 
+
           <p>
-            O projeto é gratuito e o código é
-            disponibilizado sob licença MIT.
-            Se o conteúdo fizer diferença nos seus
-            estudos, você pode pagar um café e
-            ajudar a KorDevs a produzir novos
-            módulos.
+            O acesso é gratuito.
+
+            Se o projeto fizer diferença nos seus
+            estudos, você pode apoiar a KorDevs
+            com um café de R$ 5,00 e ajudar na
+            criação das próximas trilhas.
           </p>
+
+        </div>
+
+
+        <div>
 
           <a
             data-support-link
@@ -426,10 +867,10 @@
             target="_blank"
             rel="noopener noreferrer"
           >
-            ☕ Pagar um café — R$ 5,00
+            Pagar um café · R$ 5
           </a>
 
-        </article>
+        </div>
 
       </div>
 
@@ -437,6 +878,10 @@
 
   </main>
 
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
 
   <footer class="site-footer">
 
@@ -448,28 +893,33 @@
           QuizADS · KorDevs
         </div>
 
+
         <div>
           ©
           <span data-current-year></span>
           KorDevs Tecnologia e Automação.
         </div>
 
-        <div>
-          Conteúdo autoral com direitos reservados.
-          Código-fonte disponibilizado sob
-          licença MIT.
-        </div>
 
         <div>
-          Referências acadêmicas e conteúdos
-          de terceiros permanecem de propriedade
-          de seus respectivos autores.
+          Conteúdo autoral com direitos reservados.
+          Código-fonte disponibilizado sob licença MIT.
+        </div>
+
+
+        <div>
+          Referências acadêmicas e conteúdos de terceiros
+          permanecem de propriedade de seus respectivos
+          autores.
         </div>
 
       </div>
 
 
-      <div class="footer-links">
+      <nav
+        class="footer-links"
+        aria-label="Links do rodapé"
+      >
 
         <a
           href="https://github.com/kor-devs/QuizADS"
@@ -492,56 +942,16 @@
           Apoiar
         </a>
 
-      </div>
+      </nav>
 
     </div>
 
   </footer>
 
 
-  <script src="./assets/js/quizads.js"></script>
-
-  <script>
-
-    const moduleProgress =
-      JSON.parse(
-        localStorage.getItem(
-          "quizads_ed_m01_v1"
-        ) || "{}"
-      );
-
-
-    if (
-      moduleProgress.started &&
-      !moduleProgress.completed
-    ) {
-
-      const button =
-        document.getElementById(
-          "structureTrackButton"
-        );
-
-      button.textContent =
-        "Continuar estudando →";
-
-    }
-
-
-    if (
-      moduleProgress.completed
-    ) {
-
-      const button =
-        document.getElementById(
-          "structureTrackButton"
-        );
-
-      button.textContent =
-        "Revisar trilha →";
-
-    }
-
-  </script>
+  <script
+    src="./assets/js/quizads.js"
+  ></script>
 
 </body>
 

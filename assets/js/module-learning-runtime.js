@@ -114,8 +114,8 @@
     { id: 1, name: "Fundamentos", topic: "TAD e ponteiros", path: "../modulo-01/", key: "quizads_ed_m01_v1", online: true },
     { id: 2, name: "Lista Sequencial", topic: "vetor e operações", path: "../modulo-02/", key: "quizads_ed_m02_v1", online: true },
     { id: 3, name: "Lista Encadeada", topic: "nós e memória dinâmica", path: "../modulo-03/", key: "quizads_ed_m03_v1", online: true },
-    { id: 4, name: "Variações de Lista", topic: "circular e dupla", online: false },
-    { id: 5, name: "Pilha e Fila", topic: "LIFO e FIFO", online: false },
+    { id: 4, name: "Variações de Lista", topic: "circular e dupla", path: "../modulo-04/", key: "quizads_ed_m04_v1", online: true },
+    { id: 5, name: "Pilha e Fila", topic: "LIFO e FIFO", path: "../modulo-05/", key: "quizads_ed_m05_v1", online: true },
     { id: 6, name: "Árvores", topic: "conceitos e percursos", online: false },
     { id: 7, name: "BST e AVL", topic: "busca e balanceamento", online: false },
     { id: 8, name: "Árvore B e Hash", topic: "estrutura e dispersão", online: false }
@@ -132,9 +132,11 @@
   function canAccessModule(module) {
     if (!module.online) return false;
     if (module.id === 1) return true;
-    if (module.id === 2) return readModuleState("quizads_ed_m01_v1").completed === true;
-    if (module.id === 3) return readModuleState("quizads_ed_m02_v1").completed === true;
-    return false;
+
+    const previousKey =
+      `quizads_ed_m${String(module.id - 1).padStart(2, "0")}_v1`;
+
+    return readModuleState(previousKey).completed === true;
   }
 
   function buildSidebar() {
@@ -365,21 +367,28 @@
   }
 
   function renderAdjustment(adjustment, competencyId) {
+    const definition = competencyDefinition(competencyId);
+    const competencyName = definition?.name || definition?.shortName || "Competência";
     const previous = `${adjustment.previousLevel} · ${displayLevel(adjustment.previousLevel)}`;
     const next = `${adjustment.nextLevel} · ${displayLevel(adjustment.nextLevel)}`;
+
     if (adjustment.action === "up") {
-      return `<div class="adaptive-adjustment-card up"><strong>Competência evoluiu</strong><span>${previous} → ${next}</span><p>Os próximos desafios exigirão mais autonomia.</p></div>`;
+      return `<div class="adaptive-adjustment-card up"><strong>${escapeHtml(competencyName)} · competência evoluiu</strong><span>${previous} → ${next}</span><p>Este nível pertence a esta competência. Os próximos desafios dela exigirão mais autonomia.</p></div>`;
     }
+
     if (adjustment.action === "down") {
-      return `<div class="adaptive-adjustment-card down"><strong>Vamos aumentar o apoio</strong><span>${previous} → ${next}</span><p>Uma nova abordagem foi preparada para esta competência.</p>${currentLessonHtml(competencyId, adjustment.nextLevel)}</div>`;
+      return `<div class="adaptive-adjustment-card down"><strong>${escapeHtml(competencyName)} · vamos aumentar o apoio</strong><span>${previous} → ${next}</span><p>Este nível pertence a esta competência. Uma nova abordagem foi preparada para ela.</p>${currentLessonHtml(competencyId, adjustment.nextLevel)}</div>`;
     }
+
     if (adjustment.action === "stay-max") {
-      return `<div class="adaptive-adjustment-card up"><strong>Nível máximo mantido</strong><span>${next}</span></div>`;
+      return `<div class="adaptive-adjustment-card up"><strong>${escapeHtml(competencyName)} · nível máximo mantido</strong><span>${next}</span></div>`;
     }
+
     if (adjustment.action === "stay-min") {
-      return `<div class="adaptive-adjustment-card down"><strong>Suporte máximo mantido</strong><span>${next}</span>${currentLessonHtml(competencyId, adjustment.nextLevel)}</div>`;
+      return `<div class="adaptive-adjustment-card down"><strong>${escapeHtml(competencyName)} · suporte máximo mantido</strong><span>${next}</span>${currentLessonHtml(competencyId, adjustment.nextLevel)}</div>`;
     }
-    return `<div class="adaptive-adjustment-card"><strong>Nível mantido</strong><span>${next}</span></div>`;
+
+    return `<div class="adaptive-adjustment-card"><strong>${escapeHtml(competencyName)} · nível mantido</strong><span>${next}</span></div>`;
   }
 
   function renderCheckpoint() {

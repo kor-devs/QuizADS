@@ -285,7 +285,7 @@
         <p>${escapeHtml(question.explanation)}</p>
         <div class="adaptive-feedback-metrics">
           <span>Domínio atual <strong>${result.mastery}%</strong></span>
-          ${result.adjustment ? renderAdjustment(result.adjustment) : ""}
+          ${result.adjustment ? renderAdjustment(result.adjustment, competencyId) : ""}
         </div>
         <button type="button" class="btn btn-secondary adaptive-next-button" id="adaptiveNextButton">
           ${checkpointSession.index + 1 >= CHECKPOINT_COUNT ? "Ver resultado do Checkpoint" : "Próxima questão"}
@@ -296,23 +296,25 @@
     document.getElementById("adaptiveNextButton")?.addEventListener("click", nextCheckpointQuestion);
   }
 
-  function renderAdjustment(adjustment) {
+  function renderAdjustment(adjustment, competencyId) {
+    const definition = competencyDefinition(competencyId);
+    const competencyName = definition?.name || definition?.shortName || "Competência";
     const previous = `${adjustment.previousLevel} · ${displayLevel(adjustment.previousLevel)}`;
     const next = `${adjustment.nextLevel} · ${displayLevel(adjustment.nextLevel)}`;
 
     if (adjustment.action === "up") {
-      return `<span class="adaptive-transition up">Evolução: ${previous} → ${next}</span>`;
+      return `<span class="adaptive-transition up">${escapeHtml(competencyName)} · evolução: ${previous} → ${next}</span>`;
     }
     if (adjustment.action === "down") {
-      return `<span class="adaptive-transition down">Mais apoio: ${previous} → ${next}</span>`;
+      return `<span class="adaptive-transition down">${escapeHtml(competencyName)} · mais apoio: ${previous} → ${next}</span>`;
     }
     if (adjustment.action === "stay-max") {
-      return `<span class="adaptive-transition up">Nível máximo mantido: ${next}</span>`;
+      return `<span class="adaptive-transition up">${escapeHtml(competencyName)} · nível máximo mantido: ${next}</span>`;
     }
     if (adjustment.action === "stay-min") {
-      return `<span class="adaptive-transition down">Suporte máximo mantido: ${next}</span>`;
+      return `<span class="adaptive-transition down">${escapeHtml(competencyName)} · suporte máximo mantido: ${next}</span>`;
     }
-    return `<span class="adaptive-transition">Nível mantido em ${next}</span>`;
+    return `<span class="adaptive-transition">${escapeHtml(competencyName)} · nível mantido em ${next}</span>`;
   }
 
   function nextCheckpointQuestion() {

@@ -2593,14 +2593,18 @@ novo->prox = lista;</pre>
         id: 4,
         name: "Variações de Lista",
         topic: "circular e dupla",
-        online: false
+        path: "../modulo-04/",
+        key: "quizads_ed_m04_v1",
+        online: true
       },
 
       {
         id: 5,
         name: "Pilha e Fila",
         topic: "LIFO e FIFO",
-        online: false
+        path: "../modulo-05/",
+        key: "quizads_ed_m05_v1",
+        online: true
       },
 
       {
@@ -2660,42 +2664,24 @@ novo->prox = lista;</pre>
         return false;
       }
 
-
       if (module.id === 1) {
         return true;
       }
 
+      const previousKey =
+        `quizads_ed_m${String(
+          module.id - 1
+        ).padStart(2, "0")}_v1`;
 
-      if (module.id === 2) {
-
-        return (
-          state.completed === true
-        );
-
-      }
-
-
-      if (module.id === 3) {
-
-        const module2 =
-          readModuleState(
-            "quizads_ed_m02_v1"
-          );
-
-
-        return (
-          module2.completed === true
-        );
-
-      }
-
-
-      return false;
+      return (
+        readModuleState(
+          previousKey
+        ).completed === true
+      );
 
     }
 
-
-    function renderModuleRail() {
+  function renderModuleRail() {
 
       const container =
         document.getElementById(

@@ -28,6 +28,10 @@
     href="../../../assets/css/quizads.css"
   />
 
+  <link rel="stylesheet" href="../../../assets/css/quizads-premium.css" />
+  <link rel="stylesheet" href="../../../assets/css/learning-engine.css" />
+  <link rel="stylesheet" href="../../../assets/css/module-learning-premium.css" />
+
   <style>
     /* =====================================================
        COMPONENTES ESPECÍFICOS DO MÓDULO 02
@@ -427,7 +431,7 @@
 </head>
 
 
-<body>
+<body class="premium-module">
 
   <!-- =====================================================
        HEADER
@@ -2589,7 +2593,11 @@ retira(lista, posicao)</div>
 
     } else {
 
-      startModule();
+      document.addEventListener(
+        "DOMContentLoaded",
+        startModule,
+        { once: true }
+      );
 
     }
 
@@ -4637,7 +4645,25 @@ retira(lista, posicao)</div>
 
     }
 
+
+    /* =====================================================
+       BRIDGE PARA O LEARNING ENGINE COMPARTILHADO
+       ===================================================== */
+
+    window.QUIZADS_MODULE_BRIDGE = {
+      state,
+      saveState,
+      goToPanel,
+      updateProgress
+    };
+
   </script>
+
+
+  <script src="../../../assets/js/learning-storage.js"></script>
+  <script src="../../../assets/js/learning-engine.js"></script>
+  <script src="./learning-data.js"></script>
+  <script src="../../../assets/js/module-learning-runtime.js"></script>
 
 </body>
 </html>

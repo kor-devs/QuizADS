@@ -12,7 +12,7 @@
 
   <meta
     name="theme-color"
-    content="#F0EEE8"
+    content="#092731"
   />
 
   <meta
@@ -27,6 +27,16 @@
   <link
     rel="stylesheet"
     href="../../../assets/css/quizads.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="../../../assets/css/quizads-premium.css"
+  />
+
+  <link
+    rel="stylesheet"
+    href="../../../assets/css/learning-engine.css"
   />
 
 </head>
@@ -64,7 +74,7 @@
           </span>
 
           <span class="brand-product">
-            estrutura de dados
+            learning system · estrutura de dados
           </span>
 
         </div>
@@ -2112,6 +2122,10 @@ novo->prox = lista;</pre>
     src="../../../assets/js/quizads.js"
   ></script>
 
+  <script src="../../../assets/js/learning-storage.js"></script>
+  <script src="../../../assets/js/learning-engine.js"></script>
+  <script src="./learning-data.js"></script>
+
 
   <!-- =====================================================
        MODULE JS
@@ -2318,7 +2332,6 @@ novo->prox = lista;</pre>
 
       document.body.classList.toggle(
         "assessment-mode",
-        index === 4 ||
         index === 6
       );
 
@@ -3779,14 +3792,11 @@ novo->prox = lista;</pre>
       state.completed =
         true;
 
-
       state.completedAt =
         new Date().toISOString();
 
-
       state.maxPanel =
         8;
-
 
       saveState();
 
@@ -3794,12 +3804,12 @@ novo->prox = lista;</pre>
 
       renderOutline();
 
-      renderFinalScore();
-
       goToPanel(
-        currentPanel,
+        8,
         false
       );
+
+      renderFinalScore();
     }
 
 
@@ -3817,6 +3827,8 @@ novo->prox = lista;</pre>
     );
 
   </script>
+
+  <script src="./m01-learning-runtime.js"></script>
 
 </body>
 

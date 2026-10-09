@@ -1,0 +1,338 @@
+/* =========================================================
+   QuizADS · Premium compatibility layer · M02/M03
+   Mantém conteúdo antigo, mas o coloca no Learning Workspace.
+   ========================================================= */
+
+.premium-module {
+  background: #F7F9F8;
+}
+
+.premium-module .module-main.course-shell {
+  padding-top: 28px;
+}
+
+.premium-module #moduleContent.course-content {
+  width: auto;
+  max-width: none;
+  margin: 0;
+}
+
+.premium-module .legacy-premium-hero {
+  max-width: none;
+  margin: 0;
+}
+
+.premium-module .legacy-premium-hero > .kicker.module-overline {
+  color: #ff8050;
+}
+
+.premium-module .legacy-premium-hero .module-title {
+  max-width: 780px;
+  margin: 0 0 18px;
+  color: #fff;
+  font-size: clamp(38px, 5.4vw, 64px);
+  font-weight: 760;
+  letter-spacing: -.055em;
+  line-height: .98;
+}
+
+.premium-module .legacy-premium-hero .module-title .accent {
+  color: #fff;
+}
+
+.premium-module .legacy-premium-hero .module-summary,
+.premium-module .legacy-premium-hero .module-hero-description {
+  color: rgba(242,244,243,.74);
+}
+
+.premium-module .legacy-premium-hero .progress-card {
+  max-width: 700px;
+  margin-top: 30px;
+  padding: 18px 0 0;
+  border: 0;
+  border-top: 1px solid rgba(255,255,255,.11);
+  background: transparent;
+}
+
+.premium-module .legacy-premium-hero .progress-head {
+  margin-bottom: 9px;
+  color: rgba(242,244,243,.58);
+  font-family: var(--font-main);
+  font-size: 11px;
+}
+
+.premium-module .legacy-premium-hero .progress-head #progressPercent {
+  color: #fff;
+  font-family: var(--font-code);
+  font-weight: 600;
+}
+
+.premium-module .legacy-premium-hero .progress-bar {
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.12);
+}
+
+.premium-module .legacy-premium-hero .progress-fill {
+  border-radius: 999px;
+  background: var(--kor-accent);
+  box-shadow: 0 0 18px rgba(255,69,0,.28);
+}
+
+.premium-module .course-content > .course-breadcrumb {
+  margin-bottom: 18px;
+  color: var(--kor-muted);
+  font-family: var(--font-main);
+  font-size: 11px;
+  font-weight: 550;
+}
+
+.premium-module .course-content > .course-breadcrumb a {
+  color: var(--kor-primary);
+  text-decoration: none;
+}
+
+.premium-module .course-lesson {
+  width: min(100%, 820px);
+  margin-inline: 0;
+  padding-top: 54px;
+}
+
+.premium-module .course-section {
+  margin: 0;
+  padding: 40px 0;
+  border: 0;
+  border-top: 1px solid rgba(18,55,68,.10);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.premium-module .course-section:first-child {
+  border-top: 0;
+}
+
+.premium-module .course-section > .lesson-sequence,
+.premium-module .course-section > .kicker {
+  margin-bottom: 10px;
+  color: var(--kor-accent);
+  font-family: var(--font-code);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.premium-module .course-section > h2 {
+  max-width: 720px;
+  margin: 0 0 16px;
+  color: var(--kor-primary-dark);
+  font-size: clamp(30px, 4vw, 46px);
+  font-weight: 760;
+  letter-spacing: -.045em;
+  line-height: 1.05;
+}
+
+.premium-module .course-section > p {
+  max-width: 72ch;
+  color: #2f393d;
+  font-size: 16px;
+  line-height: 1.82;
+}
+
+.premium-module .concept-card,
+.premium-module .comparison-card,
+.premium-module .flow-step {
+  border-color: rgba(18,55,68,.11);
+  background: #fff;
+  box-shadow: 0 5px 20px rgba(9,39,49,.025);
+}
+
+.premium-module .simulator {
+  border: 1px solid rgba(18,55,68,.12);
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 14px 36px rgba(9,39,49,.055);
+}
+
+.premium-module .simulator-header {
+  padding: 24px 26px;
+  background:
+    radial-gradient(circle at 86% 28%, rgba(255,69,0,.85) 0 4px, transparent 5px),
+    linear-gradient(135deg, #092731 0%, #123744 100%);
+}
+
+.premium-module .simulator-header h3 {
+  color: #fff;
+  font-size: 26px;
+  letter-spacing: -.035em;
+}
+
+.premium-module .simulator-body {
+  padding: 26px;
+}
+
+.premium-module .sim-status-item {
+  border: 1px solid rgba(18,55,68,.08);
+  background: #F7F9F8;
+}
+
+.premium-module .sim-control-group {
+  padding: 16px 0;
+  border-top: 1px solid rgba(18,55,68,.09);
+}
+
+.premium-module .sim-control-group:first-child {
+  border-top: 0;
+}
+
+.premium-module .sim-input {
+  min-height: 42px;
+  border-color: rgba(18,55,68,.15);
+  border-radius: 9px;
+  background: #fff;
+}
+
+.premium-module .missions {
+  gap: 10px;
+}
+
+.premium-module .mission {
+  border-color: rgba(18,55,68,.11);
+  background: #fff;
+  box-shadow: 0 5px 18px rgba(9,39,49,.025);
+}
+
+.premium-module .mission.done {
+  border-color: rgba(22,163,74,.25);
+  background: rgba(22,163,74,.035);
+}
+
+.premium-module .result-box {
+  border-color: rgba(18,55,68,.12);
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 12px 34px rgba(9,39,49,.045);
+}
+
+.premium-module .boss-intro {
+  border-radius: 20px;
+}
+
+.premium-module .course-outline-note {
+  display: block;
+  margin-top: 3px;
+  color: rgba(18,55,68,.43);
+  font-size: 9px;
+  font-weight: 450;
+}
+
+.premium-module .course-outline-item:disabled {
+  opacity: .38;
+  cursor: default;
+}
+
+.premium-module .course-outline-item {
+  width: 100%;
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.premium-module .mobile-course-line {
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(18,55,68,.08);
+}
+
+.premium-module .mobile-course-line > div {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--kor-accent);
+}
+
+/* Consulta adaptativa no próprio Checkpoint */
+.adaptive-consult-box {
+  margin-top: 18px;
+  padding: 20px 22px;
+  border-left: 3px solid var(--kor-accent);
+  border-radius: 0 12px 12px 0;
+  background: rgba(255,69,0,.045);
+}
+
+.adaptive-consult-box h4 {
+  margin: 6px 0 10px;
+  color: var(--kor-primary-dark);
+  font-size: 17px;
+}
+
+.adaptive-consult-box p,
+.adaptive-consult-box div {
+  color: #39464b;
+  line-height: 1.65;
+}
+
+.adaptive-adjustment-card {
+  display: grid;
+  gap: 6px;
+  margin-top: 16px;
+  padding: 16px 18px;
+  border: 1px solid rgba(18,55,68,.11);
+  border-radius: 12px;
+  background: #F7F9F8;
+}
+
+.adaptive-adjustment-card > span {
+  color: var(--kor-primary-dark);
+  font-family: var(--font-code);
+  font-size: 11px;
+}
+
+.adaptive-adjustment-card > p {
+  margin: 0;
+  color: var(--kor-muted);
+}
+
+.adaptive-adjustment-card.up {
+  border-color: rgba(22,163,74,.22);
+  background: rgba(22,163,74,.035);
+}
+
+.adaptive-adjustment-card.down {
+  border-color: rgba(255,69,0,.22);
+  background: rgba(255,69,0,.035);
+}
+
+.adaptive-adjustment-card .adaptive-consult-box {
+  margin-top: 8px;
+  background: rgba(255,255,255,.75);
+}
+
+@media (max-width: 900px) {
+  .premium-module .module-main.course-shell {
+    width: min(100% - 24px, 820px);
+  }
+
+  .premium-module .course-lesson {
+    width: 100%;
+  }
+
+  .premium-module .simulator-body {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 640px) {
+  .premium-module .legacy-premium-hero .module-title {
+    font-size: clamp(36px, 11vw, 50px);
+  }
+
+  .premium-module .simulator-header,
+  .premium-module .simulator-body {
+    padding-inline: 18px;
+  }
+}

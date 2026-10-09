@@ -3018,3 +3018,97 @@ code {
 .result-box:empty {
   display: none;
 }
+/* =========================================================
+   Suporte contextual · páginas internas
+   ========================================================= */
+
+.problem-support-button {
+  position: relative;
+
+  min-height: 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 0 14px;
+
+  border: 1px solid rgba(18, 55, 68, 0.18);
+  border-radius: 8px;
+
+  color: var(--kor-primary, #123744);
+  background: transparent;
+
+  font-family: Inter, "Segoe UI", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.problem-support-button:hover,
+.problem-support-button:focus-visible {
+  border-color: #FF4500;
+
+  color: #FFFFFF;
+  background: #FF4500;
+
+  transform: translateY(-1px);
+
+  outline: none;
+}
+
+.problem-support-button::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 10px);
+  right: 0;
+  width: max-content;
+  max-width: 250px;
+  padding: 8px 10px;
+  border-radius: 7px;
+  color: #F2F4F3;
+  background: #092731;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 140ms ease, transform 140ms ease;
+}
+
+.problem-support-button:hover::after,
+.problem-support-button:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 620px) {
+  .problem-support-button {
+    min-height: 36px;
+
+    padding: 0 11px;
+
+    gap: 6px;
+
+    font-size: 11px;
+  }
+
+  .problem-support-button::after {
+    display: none;
+  }
+}

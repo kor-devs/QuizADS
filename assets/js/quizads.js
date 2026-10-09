@@ -9,6 +9,11 @@ window.QUIZADS = {
   supportValue:
     "R$ 5,00",
 
+  // Preencha apenas com números, incluindo DDI 55 e DDD.
+  // Exemplo: 5511999999999
+  problemSupportWhatsapp:
+    "5519997566806",
+
   totalStructureModules: 8,
 
   availableStructureModules: 3
@@ -234,6 +239,142 @@ function initializeHomeProgress() {
 }
 
 
+
+
+/* =========================================================
+   SUPORTE DE PROBLEMAS · WHATSAPP
+   Injeta um botão discreto em todas as páginas internas.
+   A Home premium fica sem esse botão por decisão de produto.
+   ========================================================= */
+
+function getProblemSupportContext() {
+  const activePanel =
+    document.querySelector(".lesson-panel.active");
+
+  const contextElement =
+    activePanel?.querySelector(
+      ".assessment-type, .lesson-sequence, .lesson-heading h2, .assessment-head h2"
+    ) ||
+    document.getElementById("progressLabel");
+
+  const context =
+    contextElement?.textContent
+      ?.replace(/\s+/g, " ")
+      .trim();
+
+  return context || "Página interna do QuizADS";
+}
+
+
+function buildProblemSupportUrl() {
+  const phone =
+    String(
+      window.QUIZADS.problemSupportWhatsapp || ""
+    ).replace(/\D/g, "");
+
+  if (phone.length < 10) {
+    return null;
+  }
+
+  const competency =
+    document.querySelector(
+      ".lesson-panel.active .adaptive-question-meta strong"
+    )?.textContent?.replace(/\s+/g, " ").trim();
+
+  const level =
+    document.querySelector(
+      ".lesson-panel.active .adaptive-level-chip"
+    )?.textContent?.replace(/\s+/g, " ").trim();
+
+  const message = [
+    "*ENCONTREI UM PROBLEMA*",
+    "",
+    "Olá, estou com um problema no QuizADS e preciso de ajuda.",
+    "",
+    `Página: ${document.title}`,
+    `Contexto: ${getProblemSupportContext()}`,
+    competency ? `Competência: ${competency}` : null,
+    level ? `Nível: ${level}` : null,
+    `URL: ${window.location.href}`
+  ]
+    .filter((item) => item !== null && item !== undefined)
+    .join("\n");
+
+  return (
+    `https://wa.me/${phone}` +
+    `?text=${encodeURIComponent(message)}`
+  );
+}
+
+
+function initializeProblemSupport() {
+  if (
+    document.body.classList.contains(
+      "premium-home"
+    )
+  ) {
+    return;
+  }
+
+  const headerActions =
+    document.querySelector(
+      ".site-header .header-actions"
+    );
+
+  if (
+    !headerActions ||
+    headerActions.querySelector(
+      "[data-problem-support]"
+    )
+  ) {
+    return;
+  }
+
+  const button =
+    document.createElement("button");
+
+  button.type = "button";
+  button.className =
+    "problem-support-button";
+  button.dataset.problemSupport = "";
+  button.setAttribute(
+    "aria-label",
+    "Encontrou um problema? Fale com o suporte"
+  );
+  button.setAttribute(
+    "data-tooltip",
+    "Encontrou um problema? Fale com o suporte"
+  );
+  button.innerHTML = `
+    <span aria-hidden="true">☎</span>
+    <span>Suporte</span>
+  `;
+
+  button.addEventListener(
+    "click",
+    () => {
+      const url =
+        buildProblemSupportUrl();
+
+      if (!url) {
+        alert(
+          "Configure problemSupportWhatsapp em assets/js/quizads.js antes de publicar o botão de suporte."
+        );
+        return;
+      }
+
+      window.open(
+        url,
+        "_blank",
+        "noopener,noreferrer"
+      );
+    }
+  );
+
+  headerActions.prepend(button);
+}
+
+
 /* =========================================================
    START
    ========================================================= */
@@ -250,5 +391,7 @@ document.addEventListener(
     initializeCurrentYear();
 
     initializeHomeProgress();
+
+    initializeProblemSupport();
   }
 );

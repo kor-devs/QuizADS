@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#F0EEE8" />
+  <meta name="description" content="QuizADS — laboratório do Learning Engine V1 no Módulo 01." />
+  <title>Learning Engine · Módulo 01 | QuizADS</title>
+
+  <link rel="stylesheet" href="../../../assets/css/quizads.css" />
+  <link rel="stylesheet" href="../../../assets/css/learning-engine.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../../../" class="brand" aria-label="Voltar para o QuizADS">
+        <img
+          data-kordevs-logo
+          data-root="../../../"
+          class="brand-logo"
+          src="../../../assets/brand/KorDevs_White.png"
+          alt="KorDevs"
+        />
+        <div class="brand-info">
+          <span class="brand-name">QuizADS</span>
+          <span class="brand-product">Learning Engine · piloto</span>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <a class="header-support" href="./">Voltar ao Módulo 01</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="learning-lab">
+    <header class="learning-lab-head">
+      <div>
+        <div class="learning-lab-kicker">Piloto isolado · não altera a conclusão do M01</div>
+        <h1 class="learning-lab-title">Teste o Learning Engine antes de levarmos isso para a trilha inteira.</h1>
+        <p class="learning-lab-subtitle">
+          O estado adaptativo usa uma chave separada do Módulo 01 atual. Você pode errar, acertar,
+          usar dicas e resetar quantas vezes quiser sem perder o progresso original.
+        </p>
+      </div>
+
+      <div class="learning-lab-actions">
+        <button id="exportButton" type="button" class="btn btn-secondary">Ver estado</button>
+        <button id="resetButton" type="button" class="btn btn-secondary">Resetar piloto</button>
+      </div>
+    </header>
+
+    <div class="learning-grid">
+      <aside class="learning-sidebar" aria-label="Competências do módulo">
+        <div class="learning-sidebar-title">Competências</div>
+        <div id="competencyList" class="competency-list"></div>
+      </aside>
+
+      <section class="learning-main">
+        <div id="statusLine" class="learning-status-line"></div>
+
+        <article id="lessonArea" class="learning-lesson"></article>
+
+        <article id="questionArea" class="learning-question"></article>
+
+        <section id="resultArea" class="learning-result" hidden></section>
+
+        <section class="learning-summary">
+          <div class="learning-sidebar-title">Resumo do piloto</div>
+          <div id="summaryGrid" class="learning-summary-grid"></div>
+        </section>
+      </section>
+    </div>
+  </main>
+
+  <dialog id="stateDialog" style="max-width:min(900px,calc(100% - 32px));width:100%;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);padding:0;">
+    <div style="padding:20px;">
+      <div style="display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:16px;">
+        <strong>Estado persistido do Learning Engine</strong>
+        <button id="closeStateDialog" type="button" class="small-button">Fechar</button>
+      </div>
+      <pre id="stateDump" style="max-height:65vh;overflow:auto;padding:16px;border-radius:7px;background:var(--code-bg);color:var(--code-text);font-family:var(--font-code);font-size:11px;"></pre>
+    </div>
+  </dialog>
+
+  <script src="../../../assets/js/quizads.js"></script>
+  <script src="../../../assets/js/learning-storage.js"></script>
+  <script src="../../../assets/js/learning-engine.js"></script>
+  <script src="./learning-data.js"></script>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const data = window.QUIZADS_M01_LEARNING;
+      const engine = window.QuizADSLearningEngine;
+      const storage = window.QuizADSLearningStorage;
+
+      let state = engine.createModuleState(
+        data.definition,
+        storage.load(data.definition.trackId, data.definition.moduleId)
+      );
+
+      let currentQuestion = null;
+      let questionMeta = null;
+      let hintUsed = false;
+      let consultedContent = false;
+      let attemptNumber = 1;
+
+      function persist() {
+        storage.save(state);
+      }
+
+      function competencyDefinition(id) {
+        return data.definition.competencies.find((item) => item.id === id);
+      }
+
+      function activeCompetencyId() {
+        return state.session.activeCompetencyId || data.definition.competencies[0].id;
+      }
+
+      function activeCompetencyState() {
+        return state.competencies[activeCompetencyId()];
+      }
+
+      function setActiveCompetency(id) {
+        state.session.activeCompetencyId = id;
+        persist();
+        currentQuestion = null;
+        renderAll();
+      }
+
+      function renderCompetencies() {
+        const list = document.getElementById("competencyList");
+        list.innerHTML = "";
+
+        data.definition.competencies.forEach((definition) => {
+          const stored = state.competencies[definition.id];
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "competency-button";
+
+          if (definition.id === activeCompetencyId()) {
+            button.classList.add("active");
+          }
+
+          button.innerHTML = `
+            <div class="competency-button-top">
+              <span class="competency-name">${definition.shortName}</span>
+              <span class="competency-level">${stored.level} · ${engine.getDisplayLevelName(stored.level)}</span>
+            </div>
+            <div class="competency-meter" aria-label="Domínio estimado ${stored.mastery}%">
+              <span style="width:${stored.mastery}%"></span>
+            </div>
+          `;
+
+          button.addEventListener("click", () => setActiveCompetency(definition.id));
+          list.appendChild(button);
+        });
+      }
+
+      function renderStatus() {
+        const definition = competencyDefinition(activeCompetencyId());
+        const stored = activeCompetencyState();
+        const blockDone = stored.block.evidence.length;
+        const blockSize = data.definition.blockSize;
+
+        document.getElementById("statusLine").innerHTML = `
+          <span class="level-chip" data-level="${stored.level}">
+            ${stored.level} · ${engine.getDisplayLevelName(stored.level)}
+          </span>
+          <span>${definition.name}</span>
+          <span>Domínio ${stored.mastery}%</span>
+          <span>Bloco ${Math.min(blockDone + 1, blockSize)} / ${blockSize}</span>
+          ${stored.recoveryRequired ? "<span>recuperação ativa</span>" : ""}
+        `;
+      }
+
+      function renderLesson() {
+        const id = activeCompetencyId();
+        const stored = activeCompetencyState();
+        const lesson = data.lessons[id][stored.level];
+        const definition = competencyDefinition(id);
+
+        document.getElementById("lessonArea").innerHTML = `
+          <div class="learning-question-label">Explicação atual</div>
+          <h2>${lesson.title}</h2>
+          <p>${definition.description}</p>
+          ${lesson.body}
+        `;
+      }
+
+      function createQuestion() {
+        const id = activeCompetencyId();
+        const stored = activeCompetencyState();
+        const templates = data.questions[id] || [];
+
+        currentQuestion = engine.chooseQuestion(stored, templates);
+        hintUsed = false;
+        consultedContent = false;
+        attemptNumber = 1;
+
+        if (!currentQuestion) {
+          questionMeta = null;
+          return;
+        }
+
+        questionMeta = {
+          questionId: currentQuestion.id,
+          level: stored.level
+        };
+      }
+
+      function renderQuestion() {
+        if (!currentQuestion) {
+          createQuestion();
+        }
+
+        const area = document.getElementById("questionArea");
+
+        if (!currentQuestion) {
+          area.innerHTML = `<p class="learning-empty">Ainda não existem questões para esta competência.</p>`;
+          return;
+        }
+
+        area.innerHTML = `
+          <div class="learning-question-label">Prática adaptativa</div>
+          <h2>${currentQuestion.prompt}</h2>
+
+          <form id="learningQuestionForm">
+            <div class="learning-options">
+              ${currentQuestion.options.map((option, index) => `
+                <label class="learning-option" data-option-index="${index}">
+                  <input type="radio" name="learningOption" value="${index}" />
+                  <span class="learning-option-text">${option}</span>
+                </label>
+              `).join("")}
+            </div>
+
+            <div id="learningFeedback" class="learning-feedback"></div>
+
+            <div class="learning-tools">
+              <button type="button" id="hintButton" class="small-button">Ver dica</button>
+              <button type="button" id="consultButton" class="small-button">Marcar consulta ao conteúdo</button>
+              <button type="submit" class="btn btn-primary">Responder</button>
+            </div>
+
+            <div id="learningHint" class="learning-hint">${currentQuestion.hint}</div>
+          </form>
+        `;
+
+        document.getElementById("hintButton").addEventListener("click", () => {
+          hintUsed = true;
+          document.getElementById("learningHint").classList.add("visible");
+        });
+
+        document.getElementById("consultButton").addEventListener("click", (event) => {
+          consultedContent = true;
+          event.currentTarget.textContent = "Consulta registrada";
+          event.currentTarget.disabled = true;
+          document.getElementById("lessonArea").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        document.getElementById("learningQuestionForm").addEventListener("submit", submitQuestion);
+      }
+
+      function submitQuestion(event) {
+        event.preventDefault();
+        const selected = document.querySelector('input[name="learningOption"]:checked');
+
+        if (!selected) {
+          alert("Escolha uma alternativa antes de responder.");
+          return;
+        }
+
+        const selectedIndex = Number(selected.value);
+        const correct = selectedIndex === currentQuestion.correctIndex;
+
+        const result = engine.recordEvidence(
+          state,
+          activeCompetencyId(),
+          {
+            questionId: questionMeta.questionId,
+            level: questionMeta.level,
+            correct,
+            hintUsed,
+            consultedContent,
+            attemptNumber,
+            source: "adaptive-practice"
+          },
+          { blockSize: data.definition.blockSize }
+        );
+
+        persist();
+
+        markAnsweredOptions(selectedIndex, correct);
+
+        const feedback = document.getElementById("learningFeedback");
+        feedback.className = `learning-feedback visible ${correct ? "correct" : "incorrect"}`;
+        feedback.innerHTML = `
+          <div class="learning-feedback-head">
+            <strong>${correct ? "Resposta correta." : "Resposta incorreta."}</strong>
+            <span>${correct ? "Você identificou a relação esperada." : "Veja abaixo o ponto que muda o raciocínio."}</span>
+          </div>
+          <p>${currentQuestion.explanation}</p>
+          <p class="learning-feedback-mastery">Domínio estimado: <strong>${result.mastery}%</strong>.</p>
+          ${result.adjustment ? renderAdjustment(result.adjustment) : ""}
+          <div class="learning-feedback-actions">
+            <button type="button" id="nextQuestionButton" class="btn btn-primary">
+              ${nextActionLabel(result.adjustment)}
+            </button>
+          </div>
+        `;
+
+        document.querySelectorAll('#learningQuestionForm input, #learningQuestionForm button:not(#nextQuestionButton)').forEach((element) => {
+          element.disabled = true;
+        });
+
+        const tools = document.querySelector("#learningQuestionForm .learning-tools");
+        if (tools) {
+          tools.hidden = true;
+        }
+
+        document.getElementById("nextQuestionButton").addEventListener("click", () => {
+          currentQuestion = null;
+          questionMeta = null;
+          renderAll();
+          document.getElementById("questionArea").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        // Mantemos a interface no contexto da questão que acabou de ser respondida.
+        // A mudança de nível aparece no feedback como transição e só passa a reger
+        // a tela inteira ao clicar em "Próxima pergunta"/"Iniciar recuperação".
+      }
+
+      function markAnsweredOptions(selectedIndex, correct) {
+        const labels = Array.from(document.querySelectorAll(".learning-option"));
+
+        labels.forEach((label, index) => {
+          label.classList.add("answered");
+
+          if (index === currentQuestion.correctIndex) {
+            label.classList.add("is-correct");
+            const marker = document.createElement("span");
+            marker.className = "learning-option-result correct";
+            marker.textContent = index === selectedIndex ? "Sua resposta · correta" : "Resposta correta";
+            label.appendChild(marker);
+          }
+
+          if (index === selectedIndex && !correct) {
+            label.classList.add("is-incorrect");
+            const marker = document.createElement("span");
+            marker.className = "learning-option-result incorrect";
+            marker.textContent = "Sua resposta";
+            label.appendChild(marker);
+          }
+        });
+      }
+
+      function nextActionLabel(adjustment) {
+        if (!adjustment) {
+          return "Próxima pergunta";
+        }
+
+        const nextLevelName = engine.getDisplayLevelName(adjustment.nextLevel);
+
+        if (adjustment.action === "down") {
+          return `Iniciar recuperação · ${nextLevelName}`;
+        }
+
+        if (adjustment.action === "up") {
+          return `Continuar no nível ${nextLevelName}`;
+        }
+
+        return "Continuar praticando";
+      }
+
+      function renderAdjustment(adjustment) {
+        const previousName = engine.getDisplayLevelName(adjustment.previousLevel);
+        const nextName = engine.getDisplayLevelName(adjustment.nextLevel);
+        let message = "O nível foi mantido para reunir mais evidências.";
+
+        if (adjustment.action === "up") {
+          message = `Você demonstrou consistência nesta competência. A próxima experiência sobe de ${adjustment.previousLevel} · ${previousName} para ${adjustment.nextLevel} · ${nextName}.`;
+        } else if (adjustment.action === "down") {
+          message = `Esta competência precisa de mais apoio. A próxima experiência passa de ${adjustment.previousLevel} · ${previousName} para ${adjustment.nextLevel} · ${nextName}, com uma abordagem mais guiada.`;
+        } else if (adjustment.action === "stay-max") {
+          message = "Você já está no nível AVANÇADO. O sistema mantém o desafio máximo e continua coletando evidências.";
+        } else if (adjustment.action === "stay-min") {
+          message = "Você já está no nível DESBRAVADOR. O sistema mantém o suporte máximo e continua praticando por outra abordagem.";
+        }
+
+        return `
+          <div class="learning-adjustment">
+            <strong>Fim do bloco · ${adjustment.score}% de evidência ponderada</strong>
+            <p>${message}</p>
+          </div>
+        `;
+      }
+
+      function renderSummary() {
+        const summary = engine.getModuleSummary(state, data.definition);
+        const totalAttempts = summary.competencies.reduce((sum, item) => sum + item.attempts, 0);
+        const recoveryCount = summary.competencies.filter((item) => item.recoveryRequired).length;
+
+        document.getElementById("summaryGrid").innerHTML = `
+          <div class="learning-summary-item">
+            <span>Domínio médio</span>
+            <strong>${summary.averageMastery}%</strong>
+          </div>
+          <div class="learning-summary-item">
+            <span>Evidências registradas</span>
+            <strong>${totalAttempts}</strong>
+          </div>
+          <div class="learning-summary-item">
+            <span>Recuperações ativas</span>
+            <strong>${recoveryCount}</strong>
+          </div>
+        `;
+      }
+
+      function renderAll() {
+        renderCompetencies();
+        renderStatus();
+        renderLesson();
+        renderQuestion();
+        renderSummary();
+      }
+
+      document.getElementById("resetButton").addEventListener("click", () => {
+        const confirmed = confirm("Resetar somente o estado do piloto adaptativo do M01? O progresso original do módulo não será alterado.");
+        if (!confirmed) return;
+
+        storage.reset(data.definition.trackId, data.definition.moduleId);
+        state = engine.createModuleState(data.definition, null);
+        currentQuestion = null;
+        persist();
+        renderAll();
+      });
+
+      const dialog = document.getElementById("stateDialog");
+      document.getElementById("exportButton").addEventListener("click", () => {
+        document.getElementById("stateDump").textContent = storage.exportState(
+          data.definition.trackId,
+          data.definition.moduleId
+        ) || "Sem estado persistido.";
+        dialog.showModal();
+      });
+
+      document.getElementById("closeStateDialog").addEventListener("click", () => dialog.close());
+
+      persist();
+      renderAll();
+    })();
+  </script>
+</body>
+</html>

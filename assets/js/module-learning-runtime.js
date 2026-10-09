@@ -88,6 +88,24 @@
       });
   }
 
+  function chooseAssessmentQuestion(competencyId, preferredLevel, usedQuestionIds) {
+    const stored = competencyState(competencyId);
+    const bank = data.questions[competencyId] || [];
+    if (!bank.length) return null;
+
+    const available = bank.filter((template) => !usedQuestionIds.has(template.id));
+    const candidates = available.length ? available : bank;
+    const nearestDistance = Math.min(...candidates.map((template) => Math.abs(template.level - preferredLevel)));
+    const nearest = candidates.filter((template) => Math.abs(template.level - preferredLevel) === nearestDistance);
+    const unseen = nearest.filter((template) => !stored.seenQuestionIds.includes(template.id));
+    const pool = unseen.length ? unseen : nearest;
+    const template = pool[Math.floor(Math.random() * pool.length)];
+    if (!template) return null;
+
+    usedQuestionIds.add(template.id);
+    return typeof template.generate === "function" ? template.generate() : { ...template };
+  }
+
   /* =======================================================
      PREMIUM SHELL
      ======================================================= */
@@ -614,12 +632,14 @@
 
   function buildBossSession() {
     const blueprint = bossBlueprint();
+    const usedQuestionIds = new Set();
     const questions = blueprint.map((competencyId) => {
       const stored = competencyState(competencyId);
+      const question = chooseAssessmentQuestion(competencyId, stored.level, usedQuestionIds);
       return {
         competencyId,
-        level: stored.level,
-        question: engine.chooseQuestion(stored, data.questions[competencyId] || [])
+        level: question?.level || stored.level,
+        question
       };
     }).filter((item) => item.question);
     return { id: `boss-${Date.now()}`, questions, startedAt: new Date().toISOString() };

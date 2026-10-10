@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#F0EEE8" />
+  <title>QuizADS | Módulo 06 · Árvores</title>
+  <link rel="stylesheet" href="../../../assets/css/quizads.css" />
+  <link rel="stylesheet" href="../../../assets/css/quizads-premium.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="../../../" class="brand" aria-label="QuizADS">
+        <img data-kordevs-logo data-root="../../../" class="brand-logo" src="../../../assets/brand/KorDevs_White.png" alt="KorDevs" />
+        <div class="brand-info"><span class="brand-name">QuizADS</span><span class="brand-product">estrutura de dados</span></div>
+      </a>
+    </div>
+  </header>
+
+  <main class="container" style="padding-block:48px 72px; min-height:60vh;">
+    <div id="routeState" class="lesson"></div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div><div class="footer-title">QuizADS · KorDevs</div><div>© <span data-current-year></span> KorDevs Tecnologia e Automação.</div></div>
+      <div class="footer-links"><a href="../../../">QuizADS</a></div>
+    </div>
+  </footer>
+
+  <script src="../../../assets/js/quizads.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const targetId = 6;
+      const root = document.getElementById("routeState");
+      const access = window.QuizADSTrack?.resolveAccess(targetId);
+      const blocker = access?.blocker;
+
+      if (blocker) {
+        root.innerHTML = `
+          <article class="boss-intro">
+            <div class="boss-lock">🔒 MÓDULO BLOQUEADO</div>
+            <h1 class="module-title">Primeiro conclua ${blocker.name}.</h1>
+            <p>Esta trilha é cumulativa. Continue pelo primeiro módulo ainda não concluído.</p>
+            <a class="btn btn-primary" href="../modulo-${String(blocker.id).padStart(2, "0")}/">Voltar ao Módulo ${String(blocker.id).padStart(2, "0")} →</a>
+          </article>`;
+        return;
+      }
+
+      root.innerHTML = `
+        <article class="boss-intro">
+          <div class="boss-lock">MÓDULO 06</div>
+          <h1 class="module-title">Árvores</h1>
+          <p>Conteúdo em preparação. Os módulos publicados atualmente vão até o Módulo 05.</p>
+          <a class="btn btn-primary" href="../modulo-05/">Voltar ao Módulo 05 →</a>
+        </article>`;
+    });
+  </script>
+</body>
+</html>

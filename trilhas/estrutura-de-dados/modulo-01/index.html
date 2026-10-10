@@ -2656,32 +2656,17 @@ novo->prox = lista;</pre>
     }
 
 
-    function canAccessModule(
-      module
-    ) {
-
-      if (!module.online) {
-        return false;
+    function canAccessModule(module) {
+      if (!module.online) return false;
+      if (window.QuizADSTrack) {
+        return window.QuizADSTrack.resolveAccess(module.id).allowed;
       }
-
-      if (module.id === 1) {
-        return true;
-      }
-
-      const previousKey =
-        `quizads_ed_m${String(
-          module.id - 1
-        ).padStart(2, "0")}_v1`;
-
-      return (
-        readModuleState(
-          previousKey
-        ).completed === true
-      );
-
+      if (module.id === 1) return true;
+      const previousKey = `quizads_ed_m${String(module.id - 1).padStart(2, "0")}_v1`;
+      return readModuleState(previousKey).completed === true;
     }
 
-  function renderModuleRail() {
+    function renderModuleRail() {
 
       const container =
         document.getElementById(

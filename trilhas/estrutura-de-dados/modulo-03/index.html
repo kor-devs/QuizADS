@@ -3039,29 +3039,18 @@ NULL</div>
       );
 
 
-    if (!previousModule.completed) {
+    const moduleAccess = window.QuizADSTrack
+      ? window.QuizADSTrack.grantAccess(3)
+      : { allowed: previousModule.completed === true, blocker: null };
 
-      document.getElementById(
-        "moduleContent"
-      ).style.display =
-        "none";
-
-
-      document.getElementById(
-        "lockedContent"
-      ).style.display =
-        "block";
-
+    if (!moduleAccess.allowed) {
+      document.getElementById("moduleContent").style.display = "none";
+      const locked = document.getElementById("lockedContent");
+      if (locked) locked.style.display = "block";
+      window.QuizADSTrack?.renderLegacyBlocked("lockedContent", 3, moduleAccess);
     } else {
-
-      document.addEventListener(
-        "DOMContentLoaded",
-        initializeModule,
-        { once: true }
-      );
-
+      initializeModule();
     }
-
 
     function initializeModule() {
 

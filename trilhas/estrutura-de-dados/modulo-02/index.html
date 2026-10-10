@@ -2576,31 +2576,18 @@ retira(lista, posicao)</div>
        BLOQUEIO POR PROGRESSÃO
        ===================================================== */
 
-    if (
-      !previousModule.completed
-    ) {
+    const moduleAccess = window.QuizADSTrack
+      ? window.QuizADSTrack.grantAccess(2)
+      : { allowed: previousModule.completed === true, blocker: null };
 
-      document.getElementById(
-        "moduleContent"
-      ).style.display =
-        "none";
-
-
-      document.getElementById(
-        "lockedContent"
-      ).style.display =
-        "block";
-
+    if (!moduleAccess.allowed) {
+      document.getElementById("moduleContent").style.display = "none";
+      const locked = document.getElementById("lockedContent");
+      if (locked) locked.style.display = "block";
+      window.QuizADSTrack?.renderLegacyBlocked("lockedContent", 2, moduleAccess);
     } else {
-
-      document.addEventListener(
-        "DOMContentLoaded",
-        startModule,
-        { once: true }
-      );
-
+      startModule();
     }
-
 
     /* =====================================================
        INICIALIZAÇÃO

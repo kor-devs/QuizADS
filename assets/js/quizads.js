@@ -16,8 +16,141 @@ window.QUIZADS = {
 
   totalStructureModules: 8,
 
-  availableStructureModules: 3
+  availableStructureModules: 5
 };
+
+/* =========================================================
+   PROGRESSÃO COMPARTILHADA — ESTRUTURA DE DADOS
+   ========================================================= */
+
+(function initializeStructureTrackProgress() {
+  const modules = [
+    { id: 1, name: "Fundamentos", key: "quizads_ed_m01_v1", slug: "modulo-01", published: true },
+    { id: 2, name: "Lista Sequencial", key: "quizads_ed_m02_v1", slug: "modulo-02", published: true },
+    { id: 3, name: "Lista Encadeada", key: "quizads_ed_m03_v1", slug: "modulo-03", published: true },
+    { id: 4, name: "Variações de Lista", key: "quizads_ed_m04_v1", slug: "modulo-04", published: true },
+    { id: 5, name: "Pilha e Fila", key: "quizads_ed_m05_v1", slug: "modulo-05", published: true },
+    { id: 6, name: "Árvores", key: "quizads_ed_m06_v1", slug: "modulo-06", published: false },
+    { id: 7, name: "BST e AVL", key: "quizads_ed_m07_v1", slug: "modulo-07", published: false },
+    { id: 8, name: "Árvore B e Hash", key: "quizads_ed_m08_v1", slug: "modulo-08", published: false }
+  ];
+
+  function readState(id) {
+    const module = modules.find((item) => item.id === Number(id));
+    if (!module) return {};
+    try {
+      return JSON.parse(localStorage.getItem(module.key) || "{}");
+    } catch {
+      return {};
+    }
+  }
+
+  function writeState(id, state) {
+    const module = modules.find((item) => item.id === Number(id));
+    if (!module) return;
+    localStorage.setItem(module.key, JSON.stringify(state || {}));
+  }
+
+  function hasMeaningfulProgress(state) {
+    if (!state || typeof state !== "object") return false;
+    return state.accessGranted === true ||
+      state.started === true ||
+      state.completed === true ||
+      Number(state.currentPanel) > 0 ||
+      state.checkpointPassed === true ||
+      state.bossPassed === true ||
+      state.checkpointScore != null ||
+      state.bossScore != null ||
+      Boolean(state.completedAt);
+  }
+
+  function firstIncompleteBefore(targetId) {
+    const target = Number(targetId);
+    for (const module of modules) {
+      if (module.id >= target) break;
+      if (readState(module.id).completed !== true) return module;
+    }
+    return null;
+  }
+
+  function resolveAccess(targetId) {
+    const target = Number(targetId);
+    const module = modules.find((item) => item.id === target);
+    if (!module) return { allowed: false, blocker: null, reason: "unknown-module" };
+    if (target === 1) return { allowed: true, blocker: null, reason: "first-module" };
+
+    const ownState = readState(target);
+
+    // Continuidade: um módulo que já foi legitimamente iniciado não pode
+    // travar novamente por uma inconsistência posterior no estado anterior.
+    if (hasMeaningfulProgress(ownState)) {
+      return { allowed: true, blocker: null, reason: "existing-progress" };
+    }
+
+    const blocker = firstIncompleteBefore(target);
+    if (blocker) return { allowed: false, blocker, reason: "prerequisite" };
+    return { allowed: true, blocker: null, reason: "prerequisites-complete" };
+  }
+
+  function grantAccess(targetId) {
+    const result = resolveAccess(targetId);
+    if (!result.allowed) return result;
+    const state = readState(targetId);
+    if (state.accessGranted !== true) {
+      state.accessGranted = true;
+      writeState(targetId, state);
+    }
+    return result;
+  }
+
+  function firstPendingPublished() {
+    return modules.find((module) =>
+      module.published && readState(module.id).completed !== true
+    ) || null;
+  }
+
+  function lastPublished() {
+    return [...modules].reverse().find((module) => module.published) || modules[0];
+  }
+
+  function moduleHrefFromModule(id) {
+    return `../modulo-${String(id).padStart(2, "0")}/`;
+  }
+
+  function renderLegacyBlocked(containerId, targetId, accessResult) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const result = accessResult || resolveAccess(targetId);
+    const blocker = result.blocker || firstIncompleteBefore(targetId);
+    if (!blocker) return;
+
+    container.style.display = "block";
+    container.hidden = false;
+    container.innerHTML = `
+      <div class="lesson">
+        <article class="boss-intro">
+          <div class="boss-lock">🔒 MÓDULO BLOQUEADO</div>
+          <h1 class="module-title">Primeiro conclua ${blocker.name}.</h1>
+          <p>Esta trilha é cumulativa. Continue pelo primeiro módulo ainda não concluído para preservar os pré-requisitos.</p>
+          <a class="btn btn-primary" href="${moduleHrefFromModule(blocker.id)}">Voltar ao Módulo ${String(blocker.id).padStart(2, "0")} →</a>
+        </article>
+      </div>`;
+  }
+
+  window.QuizADSTrack = {
+    modules,
+    readState,
+    writeState,
+    hasMeaningfulProgress,
+    firstIncompleteBefore,
+    resolveAccess,
+    grantAccess,
+    firstPendingPublished,
+    lastPublished,
+    moduleHrefFromModule,
+    renderLegacyBlocked
+  };
+})();
 
 
 /* =========================================================
@@ -103,60 +236,34 @@ function getStoredModule(key) {
 
 
 function getStructureProgress() {
-  const modules = [
-    getStoredModule(
-      "quizads_ed_m01_v1"
-    ),
+  const modules = window.QuizADSTrack
+    ? window.QuizADSTrack.modules.map((module) =>
+        window.QuizADSTrack.readState(module.id)
+      )
+    : [
+        getStoredModule("quizads_ed_m01_v1"),
+        getStoredModule("quizads_ed_m02_v1"),
+        getStoredModule("quizads_ed_m03_v1")
+      ];
 
-    getStoredModule(
-      "quizads_ed_m02_v1"
-    ),
+  const completed = modules.filter(
+    (module) => module.completed === true
+  ).length;
 
-    getStoredModule(
-      "quizads_ed_m03_v1"
-    )
-  ];
-
-  const completed =
-    modules.filter(
-      (module) =>
-        module.completed === true
-    ).length;
-
-  return {
-    modules,
-    completed
-  };
+  return { modules, completed };
 }
 
-
-function getContinueUrl(modules) {
-  if (
-    !modules[0]?.completed
-  ) {
+function getContinueUrl() {
+  if (!window.QuizADSTrack) {
     return "./trilhas/estrutura-de-dados/modulo-01/";
   }
 
-  if (
-    !modules[1]?.completed
-  ) {
-    return "./trilhas/estrutura-de-dados/modulo-02/";
-  }
+  const next =
+    window.QuizADSTrack.firstPendingPublished() ||
+    window.QuizADSTrack.lastPublished();
 
-  if (
-    !modules[2]?.completed
-  ) {
-    return "./trilhas/estrutura-de-dados/modulo-03/";
-  }
-
-  /*
-    Módulo 04 ainda não existe.
-    Até ele ser publicado, mantemos revisão do M03.
-  */
-
-  return "./trilhas/estrutura-de-dados/modulo-03/";
+  return `./trilhas/estrutura-de-dados/${next.slug}/`;
 }
-
 
 function initializeHomeProgress() {
   const {
@@ -207,7 +314,7 @@ function initializeHomeProgress() {
 
 
   const continueUrl =
-    getContinueUrl(modules);
+    getContinueUrl();
 
 
   document
@@ -220,12 +327,14 @@ function initializeHomeProgress() {
     });
 
 
+  const pendingPublished = window.QuizADSTrack?.firstPendingPublished();
+
   const continueLabel =
     completed === 0
       ? "Começar a estudar"
-      : completed >= 3
-        ? "Revisar último módulo"
-        : "Continuar estudando";
+      : pendingPublished
+        ? "Continuar estudando"
+        : "Revisar último módulo";
 
 
   document

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#F0EEE8" />
+  <link rel="stylesheet" href="../assets/css/quizads.css" />
+  <link rel="stylesheet" href="../assets/css/quizads-premium.css" />
+  <style>
+    body.legal-page { min-height: 100vh; background: linear-gradient(180deg, #F0EEE8 0 86px, #F7F9F8 86px 100%); }
+    .legal-header .header-inner { min-height: 78px; }
+    .legal-header-actions { display:flex; align-items:center; gap:10px; }
+    .legal-back { min-height:40px; padding:0 16px; display:inline-flex; align-items:center; justify-content:center; border:1px solid rgba(18,55,68,.14); border-radius:999px; color:#092731; background:rgba(255,255,255,.46); font-size:12px; font-weight:650; text-decoration:none; transition:180ms ease; }
+    .legal-back:hover { border-color:#123744; background:#fff; transform:translateY(-1px); }
+    .legal-main { padding:clamp(52px,8vw,96px) 0 88px; }
+    .legal-shell { width:min(100%,980px); margin:0 auto; }
+    .legal-hero { position:relative; overflow:hidden; margin-bottom:22px; padding:clamp(34px,6vw,62px); border-radius:28px; color:#fff; background:radial-gradient(circle at 82% 24%, rgba(255,69,0,.95) 0 5px, transparent 6px),radial-gradient(circle at 90% 68%, rgba(255,69,0,.7) 0 3px, transparent 4px),linear-gradient(135deg,#092731 0%,#123744 100%); box-shadow:0 22px 54px rgba(9,39,49,.14); }
+    .legal-hero::before { content:""; position:absolute; inset:0; opacity:.7; pointer-events:none; background-image:linear-gradient(rgba(242,244,243,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(242,244,243,.045) 1px,transparent 1px); background-size:34px 34px; mask-image:linear-gradient(90deg,transparent,#000 52%,#000); }
+    .legal-hero > * { position:relative; z-index:1; }
+    .legal-kicker { margin-bottom:18px; color:#ff8a60; font-family:"IBM Plex Mono",Consolas,monospace; font-size:10px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; }
+    .legal-hero h1 { max-width:760px; margin:0 0 18px; color:#fff; font-size:clamp(38px,6vw,64px); font-weight:760; letter-spacing:-.055em; line-height:1; }
+    .legal-hero p { max-width:720px; margin:0; color:rgba(242,244,243,.74); font-size:16px; line-height:1.7; }
+    .legal-meta { display:flex; flex-wrap:wrap; gap:10px 18px; margin-top:26px; color:rgba(242,244,243,.55); font-family:"IBM Plex Mono",Consolas,monospace; font-size:10px; }
+    .legal-content { padding:clamp(28px,5vw,56px); border:1px solid rgba(18,55,68,.10); border-radius:24px; background:rgba(255,255,255,.92); box-shadow:0 14px 40px rgba(9,39,49,.055); }
+    .legal-summary { margin-bottom:34px; padding:22px 24px 22px 28px; border-left:3px solid #ff4500; border-radius:12px; background:linear-gradient(90deg,rgba(255,69,0,.07),rgba(255,69,0,.015)); }
+    .legal-summary strong { display:block; margin-bottom:7px; color:#092731; font-size:15px; }
+    .legal-summary p { margin:0; color:#405057; line-height:1.75; }
+    .legal-section { padding:34px 0; border-top:1px solid rgba(18,55,68,.10); }
+    .legal-section:first-of-type { border-top:0; padding-top:0; }
+    .legal-section h2 { margin:0 0 14px; color:#092731; font-size:clamp(24px,3vw,32px); font-weight:740; letter-spacing:-.035em; line-height:1.1; }
+    .legal-section h3 { margin:24px 0 10px; color:#123744; font-size:17px; font-weight:700; }
+    .legal-section p,.legal-section li { color:#344349; font-size:15px; line-height:1.82; }
+    .legal-section p { margin:0 0 14px; }
+    .legal-section ul { margin:14px 0 0; padding-left:22px; }
+    .legal-section li + li { margin-top:8px; }
+    .legal-section a { color:#123744; font-weight:650; text-decoration-color:rgba(255,69,0,.55); text-underline-offset:3px; }
+    .legal-note { margin-top:18px; padding:16px 18px; border-radius:12px; background:#F7F9F8; color:#526169; font-size:13px; line-height:1.7; }
+    .legal-footer-nav { display:flex; flex-wrap:wrap; gap:14px 22px; }
+    @media (max-width:700px) { .legal-header .brand-product{display:none}.legal-main{padding-top:28px}.legal-shell{width:min(100% - 24px,980px)}.legal-hero,.legal-content{border-radius:18px}.legal-hero{padding:30px 24px}.legal-content{padding:28px 22px}.legal-back{padding:0 12px} }
+  </style>
+  <meta name="description" content="Política de Privacidade do QuizADS: dados coletados, autenticação com Google, progresso de aprendizagem, armazenamento e direitos do usuário." />
+  <title>Política de Privacidade | QuizADS</title>
+</head>
+<body class="legal-page">
+<header class="site-header legal-header">
+    <div class="container header-inner">
+      <a href="../" class="brand" aria-label="Voltar ao QuizADS">
+        <img data-kordevs-logo data-root="../" class="brand-logo" src="../assets/brand/KorDevs_White.png" alt="KorDevs" />
+        <div class="brand-info"><span class="brand-name">QuizADS</span><span class="brand-product">learning system by KorDevs</span></div>
+      </a>
+      <div class="legal-header-actions"><a class="legal-back" href="../">← Voltar ao QuizADS</a></div>
+    </div>
+  </header>
+  <main class="legal-main"><div class="container"><div class="legal-shell">
+    <section class="legal-hero"><div class="legal-kicker">QuizADS · Transparência e dados</div><h1>Política de Privacidade</h1><p>Esta política explica quais dados o QuizADS pode tratar, por que eles são necessários, como são protegidos e quais escolhas você tem ao usar a plataforma.</p><div class="legal-meta"><span>Última atualização: 12 de outubro de 2026</span><span>Responsável: KorDevs Tecnologia e Automação</span></div></section>
+    <article class="legal-content">
+      <div class="legal-summary"><strong>Resumo em linguagem simples</strong><p>O login é opcional. Você pode estudar sem conta. Se escolher entrar com Google, usamos dados básicos de perfil apenas para identificar sua conta, salvar seu progresso e permitir continuidade em outros dispositivos. Não vendemos seus dados e não os usamos para publicidade comportamental.</p></div>
+      <section class="legal-section"><h2>1. Quem é responsável pelo QuizADS</h2><p>O QuizADS é um projeto educacional desenvolvido e mantido pela <strong>KorDevs Tecnologia e Automação</strong>.</p><p>Para dúvidas sobre privacidade, dados pessoais ou solicitações relacionadas à sua conta, entre em contato pelo e-mail <a href="mailto:kor.devs.br@gmail.com">kor.devs.br@gmail.com</a>.</p></section>
+      <section class="legal-section"><h2>2. Quais dados podemos tratar</h2><h3>2.1. Uso sem login</h3><p>O QuizADS pode armazenar localmente, no próprio navegador, informações necessárias para manter a continuidade do estudo, como módulo atual, etapas concluídas, níveis, evidências de aprendizagem e demais estados de progresso.</p><p>Esse armazenamento local utiliza recursos do navegador, como <code>localStorage</code>, e permanece vinculado ao navegador e ao dispositivo utilizados.</p><h3>2.2. Login opcional com Google</h3><p>Quando você escolhe entrar com sua conta Google, o QuizADS pode receber do Google dados básicos associados à autenticação, incluindo:</p><ul><li>nome;</li><li>endereço de e-mail;</li><li>foto de perfil, quando disponibilizada;</li><li>identificador técnico da conta necessário para autenticação.</li></ul><p>O QuizADS não solicita acesso ao conteúdo do Gmail, Google Drive, agenda, contatos ou outros serviços Google além dos dados básicos necessários para autenticação, salvo se uma funcionalidade futura pedir autorização adicional de forma clara e separada.</p><h3>2.3. Progresso de aprendizagem</h3><p>Quando a sincronização de conta estiver ativa, podemos associar à sua conta informações educacionais, como:</p><ul><li>trilhas e módulos iniciados ou concluídos;</li><li>posição atual dentro de um módulo;</li><li>níveis e competências de aprendizagem;</li><li>resultados de checkpoints e desafios;</li><li>estado de recuperação e evidências de progresso;</li><li>datas técnicas de atualização necessárias para sincronização.</li></ul></section>
+      <section class="legal-section"><h2>3. Para que usamos esses dados</h2><p>Os dados tratados pelo QuizADS são utilizados para:</p><ul><li>autenticar o usuário quando o login opcional é escolhido;</li><li>manter e restaurar o progresso de aprendizagem;</li><li>permitir continuidade entre diferentes dispositivos;</li><li>adaptar a experiência de estudo conforme competências e evidências registradas;</li><li>proteger contas, sessões e integridade técnica da plataforma;</li><li>diagnosticar falhas e melhorar a confiabilidade do serviço.</li></ul></section>
+      <section class="legal-section"><h2>4. Onde os dados são armazenados</h2><p>O QuizADS utiliza infraestrutura controlada pela KorDevs para serviços de autenticação e persistência, incluindo uma implantação self-hosted baseada em Supabase e PostgreSQL em servidor virtual privado.</p><p>Usuários sem login podem ter seu progresso mantido somente no navegador. Usuários autenticados podem ter o progresso sincronizado com o banco de dados para permitir acesso em outros dispositivos.</p><div class="legal-note">A arquitetura técnica pode evoluir ao longo do tempo. Mudanças relevantes que afetem o tratamento de dados serão refletidas nesta política.</div></section>
+      <section class="legal-section"><h2>5. Compartilhamento de dados</h2><p>A KorDevs não vende dados pessoais do QuizADS.</p><p>Dados podem ser processados por provedores estritamente necessários à operação técnica da plataforma, como serviços de autenticação, hospedagem, infraestrutura e conectividade. Nesses casos, o uso é limitado à finalidade necessária para prestar o serviço.</p><p>Também podemos fornecer informações quando houver obrigação legal ou determinação válida de autoridade competente.</p></section>
+      <section class="legal-section"><h2>6. Dados do Google</h2><p>As informações recebidas do Google por meio do login são utilizadas exclusivamente para autenticação, identificação da conta e associação segura do progresso do usuário.</p><p>Não utilizamos dados obtidos por meio do Google para publicidade direcionada, criação de perfis comerciais, venda de dados ou envio de comunicações de terceiros.</p></section>
+      <section class="legal-section"><h2>7. Segurança</h2><p>Adotamos medidas técnicas e organizacionais proporcionais ao estágio e à natureza do projeto, incluindo controle de acesso, conexão HTTPS, autenticação, separação de credenciais sensíveis e políticas de acesso ao banco de dados.</p><p>Nenhum sistema conectado à internet pode oferecer risco zero. Por isso, revisamos a arquitetura e os controles de segurança conforme o projeto evolui.</p></section>
+      <section class="legal-section"><h2>8. Retenção e exclusão</h2><p>Mantemos os dados associados à conta enquanto forem necessários para fornecer a continuidade de estudo ou enquanto a conta permanecer ativa, salvo obrigação legal aplicável.</p><p>Você pode solicitar a exclusão dos dados vinculados à sua conta pelo e-mail <a href="mailto:kor.devs.br@gmail.com">kor.devs.br@gmail.com</a>. Após validação da solicitação, os dados elegíveis serão removidos ou anonimizados dentro de prazo razoável.</p><p>Dados mantidos apenas no navegador podem ser removidos pelo próprio usuário ao limpar os dados do site no navegador.</p></section>
+      <section class="legal-section"><h2>9. Direitos do usuário</h2><p>Conforme a legislação aplicável, inclusive a Lei Geral de Proteção de Dados Pessoais (LGPD), você pode solicitar, quando cabível:</p><ul><li>confirmação da existência de tratamento;</li><li>acesso aos dados;</li><li>correção de dados incompletos ou desatualizados;</li><li>eliminação ou anonimização quando aplicável;</li><li>informações sobre compartilhamento;</li><li>revogação de consentimento quando essa for a base aplicável.</li></ul></section>
+      <section class="legal-section"><h2>10. Crianças e adolescentes</h2><p>O QuizADS é uma plataforma educacional de tecnologia e não é desenhado especificamente para coletar dados de crianças. Quando aplicável, o uso por menores deve observar autorização e acompanhamento de responsáveis conforme a legislação.</p></section>
+      <section class="legal-section"><h2>11. Alterações nesta política</h2><p>Esta política pode ser atualizada para refletir mudanças legais, técnicas ou funcionais. A data da versão vigente será sempre indicada no início da página.</p></section>
+      <section class="legal-section"><h2>12. Contato</h2><p>Dúvidas, solicitações ou questões relacionadas à privacidade podem ser encaminhadas para <a href="mailto:kor.devs.br@gmail.com">kor.devs.br@gmail.com</a>.</p></section>
+    </article>
+  </div></div></main>
+<footer class="site-footer home-premium-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="footer-title">QuizADS · KorDevs</div>
+        <div>© <span data-current-year></span> KorDevs Tecnologia e Automação.</div>
+        <div>Conteúdo autoral com direitos reservados. Código-fonte disponibilizado sob licença MIT.</div>
+        <div>Referências acadêmicas e conteúdos de terceiros permanecem de propriedade de seus respectivos autores.</div>
+      </div>
+      <nav class="footer-links legal-footer-nav" aria-label="Links legais">
+        <a href="../">QuizADS</a><a href="../privacy/">Privacidade</a><a href="../terms/">Termos</a><a href="https://github.com/kor-devs/QuizADS" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="../assets/js/quizads.js"></script>
+</body>
+</html>

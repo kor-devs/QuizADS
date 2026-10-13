@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#F0EEE8" />
+  <link rel="stylesheet" href="../assets/css/quizads.css" />
+  <link rel="stylesheet" href="../assets/css/quizads-premium.css" />
+  <style>
+    body.legal-page { min-height: 100vh; background: linear-gradient(180deg, #F0EEE8 0 86px, #F7F9F8 86px 100%); }
+    .legal-header .header-inner { min-height: 78px; }
+    .legal-header-actions { display:flex; align-items:center; gap:10px; }
+    .legal-back { min-height:40px; padding:0 16px; display:inline-flex; align-items:center; justify-content:center; border:1px solid rgba(18,55,68,.14); border-radius:999px; color:#092731; background:rgba(255,255,255,.46); font-size:12px; font-weight:650; text-decoration:none; transition:180ms ease; }
+    .legal-back:hover { border-color:#123744; background:#fff; transform:translateY(-1px); }
+    .legal-main { padding:clamp(52px,8vw,96px) 0 88px; }
+    .legal-shell { width:min(100%,980px); margin:0 auto; }
+    .legal-hero { position:relative; overflow:hidden; margin-bottom:22px; padding:clamp(34px,6vw,62px); border-radius:28px; color:#fff; background:radial-gradient(circle at 82% 24%, rgba(255,69,0,.95) 0 5px, transparent 6px),radial-gradient(circle at 90% 68%, rgba(255,69,0,.7) 0 3px, transparent 4px),linear-gradient(135deg,#092731 0%,#123744 100%); box-shadow:0 22px 54px rgba(9,39,49,.14); }
+    .legal-hero::before { content:""; position:absolute; inset:0; opacity:.7; pointer-events:none; background-image:linear-gradient(rgba(242,244,243,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(242,244,243,.045) 1px,transparent 1px); background-size:34px 34px; mask-image:linear-gradient(90deg,transparent,#000 52%,#000); }
+    .legal-hero > * { position:relative; z-index:1; }
+    .legal-kicker { margin-bottom:18px; color:#ff8a60; font-family:"IBM Plex Mono",Consolas,monospace; font-size:10px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; }
+    .legal-hero h1 { max-width:760px; margin:0 0 18px; color:#fff; font-size:clamp(38px,6vw,64px); font-weight:760; letter-spacing:-.055em; line-height:1; }
+    .legal-hero p { max-width:720px; margin:0; color:rgba(242,244,243,.74); font-size:16px; line-height:1.7; }
+    .legal-meta { display:flex; flex-wrap:wrap; gap:10px 18px; margin-top:26px; color:rgba(242,244,243,.55); font-family:"IBM Plex Mono",Consolas,monospace; font-size:10px; }
+    .legal-content { padding:clamp(28px,5vw,56px); border:1px solid rgba(18,55,68,.10); border-radius:24px; background:rgba(255,255,255,.92); box-shadow:0 14px 40px rgba(9,39,49,.055); }
+    .legal-summary { margin-bottom:34px; padding:22px 24px 22px 28px; border-left:3px solid #ff4500; border-radius:12px; background:linear-gradient(90deg,rgba(255,69,0,.07),rgba(255,69,0,.015)); }
+    .legal-summary strong { display:block; margin-bottom:7px; color:#092731; font-size:15px; }
+    .legal-summary p { margin:0; color:#405057; line-height:1.75; }
+    .legal-section { padding:34px 0; border-top:1px solid rgba(18,55,68,.10); }
+    .legal-section:first-of-type { border-top:0; padding-top:0; }
+    .legal-section h2 { margin:0 0 14px; color:#092731; font-size:clamp(24px,3vw,32px); font-weight:740; letter-spacing:-.035em; line-height:1.1; }
+    .legal-section h3 { margin:24px 0 10px; color:#123744; font-size:17px; font-weight:700; }
+    .legal-section p,.legal-section li { color:#344349; font-size:15px; line-height:1.82; }
+    .legal-section p { margin:0 0 14px; }
+    .legal-section ul { margin:14px 0 0; padding-left:22px; }
+    .legal-section li + li { margin-top:8px; }
+    .legal-section a { color:#123744; font-weight:650; text-decoration-color:rgba(255,69,0,.55); text-underline-offset:3px; }
+    .legal-note { margin-top:18px; padding:16px 18px; border-radius:12px; background:#F7F9F8; color:#526169; font-size:13px; line-height:1.7; }
+    .legal-footer-nav { display:flex; flex-wrap:wrap; gap:14px 22px; }
+    @media (max-width:700px) { .legal-header .brand-product{display:none}.legal-main{padding-top:28px}.legal-shell{width:min(100% - 24px,980px)}.legal-hero,.legal-content{border-radius:18px}.legal-hero{padding:30px 24px}.legal-content{padding:28px 22px}.legal-back{padding:0 12px} }
+  </style>
+  <meta name="description" content="Termos de Uso do QuizADS: regras de acesso, login opcional, conteúdo educacional, disponibilidade, propriedade intelectual e responsabilidades." />
+  <title>Termos de Uso | QuizADS</title>
+</head>
+<body class="legal-page">
+<header class="site-header legal-header">
+    <div class="container header-inner">
+      <a href="../" class="brand" aria-label="Voltar ao QuizADS">
+        <img data-kordevs-logo data-root="../" class="brand-logo" src="../assets/brand/KorDevs_White.png" alt="KorDevs" />
+        <div class="brand-info"><span class="brand-name">QuizADS</span><span class="brand-product">learning system by KorDevs</span></div>
+      </a>
+      <div class="legal-header-actions"><a class="legal-back" href="../">← Voltar ao QuizADS</a></div>
+    </div>
+  </header>
+  <main class="legal-main"><div class="container"><div class="legal-shell">
+    <section class="legal-hero"><div class="legal-kicker">QuizADS · Regras de uso</div><h1>Termos de Uso</h1><p>Estes termos definem as regras básicas para uso do QuizADS, incluindo acesso ao conteúdo, login opcional, progresso educacional e responsabilidades de uso da plataforma.</p><div class="legal-meta"><span>Última atualização: 12 de outubro de 2026</span><span>Responsável: KorDevs Tecnologia e Automação</span></div></section>
+    <article class="legal-content">
+      <div class="legal-summary"><strong>Resumo em linguagem simples</strong><p>O QuizADS é uma plataforma educacional de acesso gratuito. Você pode estudar sem login. Entrar com Google é opcional e serve para manter seu progresso e permitir continuidade entre dispositivos. Use o conteúdo de forma legítima e não tente prejudicar a plataforma.</p></div>
+      <section class="legal-section"><h2>1. Sobre o QuizADS</h2><p>O QuizADS é uma plataforma educacional desenvolvida pela <strong>KorDevs Tecnologia e Automação</strong> para apoiar o aprendizado de tecnologia por meio de conteúdo guiado, prática adaptativa, laboratórios, checkpoints e desafios.</p><p>Ao acessar ou utilizar o QuizADS, você concorda com estes Termos de Uso e com a <a href="../privacy/">Política de Privacidade</a>.</p></section>
+      <section class="legal-section"><h2>2. Acesso e login opcional</h2><p>O acesso ao conteúdo principal do QuizADS pode ocorrer sem criação de conta.</p><p>O login com Google é opcional e pode ser oferecido para permitir recursos como persistência de progresso, sincronização entre dispositivos e identificação segura do usuário.</p><p>Você é responsável por manter sob seu controle a conta Google utilizada para autenticação e por comunicar qualquer uso indevido que possa afetar sua conta no QuizADS.</p></section>
+      <section class="legal-section"><h2>3. Progresso e dados de aprendizagem</h2><p>O QuizADS pode registrar estados de progresso, níveis, competências, resultados e demais evidências necessárias para organizar a experiência de aprendizagem.</p><p>Sem login, essas informações podem permanecer apenas no navegador. Com login, elas podem ser sincronizadas com a infraestrutura do QuizADS conforme descrito na <a href="../privacy/">Política de Privacidade</a>.</p></section>
+      <section class="legal-section"><h2>4. Finalidade educacional</h2><p>O conteúdo do QuizADS tem finalidade educacional e de apoio ao estudo. A plataforma busca apresentar conceitos, exercícios e feedback de forma clara e progressiva, mas não substitui professor, instituição de ensino, documentação oficial, avaliação acadêmica ou orientação profissional especializada.</p><p>Notas, aprovação em provas, certificações ou desempenho acadêmico não são garantidos pelo uso da plataforma.</p></section>
+      <section class="legal-section"><h2>5. Uso permitido</h2><p>Ao utilizar o QuizADS, você concorda em não:</p><ul><li>tentar obter acesso não autorizado a contas, banco de dados, servidores ou áreas restritas;</li><li>explorar vulnerabilidades de forma maliciosa ou causar indisponibilidade intencional;</li><li>automatizar abuso de requisições, tentativas de login ou coleta indevida de conteúdo;</li><li>usar a plataforma para atividades ilícitas ou que violem direitos de terceiros;</li><li>remover avisos de autoria, licença ou atribuição aplicáveis ao conteúdo e ao código.</li></ul></section>
+      <section class="legal-section"><h2>6. Conteúdo, autoria e licenças</h2><p>Textos, organização pedagógica, identidade visual e materiais autorais do QuizADS permanecem protegidos pelos direitos aplicáveis.</p><p>Quando partes do código-fonte forem disponibilizadas sob licença MIT, essa licença se aplica ao código coberto pelos respectivos arquivos e avisos, não implicando transferência automática de direitos sobre marcas, logotipos, conteúdo educacional, materiais de terceiros ou demais ativos não abrangidos pela licença.</p><p>Referências acadêmicas, livros, bibliografias, marcas e conteúdos de terceiros permanecem de propriedade de seus respectivos titulares.</p></section>
+      <section class="legal-section"><h2>7. Disponibilidade do serviço</h2><p>A KorDevs busca manter o QuizADS disponível e funcional, mas o serviço pode sofrer interrupções temporárias por manutenção, atualização, falhas de infraestrutura, alterações técnicas ou eventos fora de nosso controle.</p><p>Funcionalidades podem ser adicionadas, ajustadas, substituídas ou removidas conforme a evolução do projeto.</p></section>
+      <section class="legal-section"><h2>8. Recursos em desenvolvimento</h2><p>Algumas funcionalidades podem ser disponibilizadas de forma experimental, incremental ou em evolução. Isso inclui mecanismos adaptativos, sincronização de progresso, novas trilhas e recursos de conta.</p><p>Quando um recurso ainda estiver em desenvolvimento, sua interface ou comportamento pode mudar sem aviso individual.</p></section>
+      <section class="legal-section"><h2>9. Suspensão ou encerramento de acesso</h2><p>Podemos restringir ou encerrar acesso a recursos autenticados quando houver abuso, tentativa de fraude, violação destes termos, risco à segurança ou obrigação legal.</p><p>O usuário também pode deixar de utilizar a plataforma a qualquer momento e solicitar a exclusão de dados vinculados à sua conta conforme a Política de Privacidade.</p></section>
+      <section class="legal-section"><h2>10. Limitação de responsabilidade</h2><p>Na medida permitida pela legislação aplicável, a KorDevs não se responsabiliza por perdas decorrentes de decisões tomadas exclusivamente com base no conteúdo educacional, indisponibilidades temporárias, falhas de serviços de terceiros ou perda de progresso local causada por limpeza de navegador, troca de dispositivo ou uso sem sincronização.</p><p>Esta cláusula não exclui responsabilidades que não possam ser legalmente afastadas.</p></section>
+      <section class="legal-section"><h2>11. Privacidade</h2><p>O tratamento de dados pessoais relacionado ao QuizADS é descrito na <a href="../privacy/">Política de Privacidade</a>, que integra estes termos para fins de transparência.</p></section>
+      <section class="legal-section"><h2>12. Alterações destes termos</h2><p>Estes termos podem ser atualizados para refletir mudanças na plataforma, legislação, infraestrutura ou modelo de uso. A data da versão vigente será indicada no início desta página.</p></section>
+      <section class="legal-section"><h2>13. Contato</h2><p>Dúvidas sobre estes Termos de Uso podem ser encaminhadas para <a href="mailto:kor.devs.br@gmail.com">kor.devs.br@gmail.com</a>.</p></section>
+    </article>
+  </div></div></main>
+<footer class="site-footer home-premium-footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="footer-title">QuizADS · KorDevs</div>
+        <div>© <span data-current-year></span> KorDevs Tecnologia e Automação.</div>
+        <div>Conteúdo autoral com direitos reservados. Código-fonte disponibilizado sob licença MIT.</div>
+        <div>Referências acadêmicas e conteúdos de terceiros permanecem de propriedade de seus respectivos autores.</div>
+      </div>
+      <nav class="footer-links legal-footer-nav" aria-label="Links legais">
+        <a href="../">QuizADS</a><a href="../privacy/">Privacidade</a><a href="../terms/">Termos</a><a href="https://github.com/kor-devs/QuizADS" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="../assets/js/quizads.js"></script>
+</body>
+</html>

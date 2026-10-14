@@ -187,10 +187,50 @@
   async function hydrateAll() {
     const ownerId = await userId();
     if (!ownerId) return { skipped: true, reason: "anonymous" };
-    const results = [];
-    for (const key of MODULE_KEYS) results.push(await hydrateSnapshot(key, "module", ownerId));
-    for (const key of LEARNING_KEYS) results.push(await hydrateSnapshot(key, "learning", ownerId));
+    const [modulePayloads, learningPayloads] = await Promise.all([
+      readRemotePayloads("module", ownerId),
+      readRemotePayloads("learning", ownerId)
+    ]);
+
+    const results = [
+      ...hydrateSnapshots(MODULE_KEYS, "module", modulePayloads),
+      ...hydrateSnapshots(LEARNING_KEYS, "learning", learningPayloads)
+    ];
+
     return { hydrated: results.filter((item) => item.hydrated).length };
+  }
+
+  async function readRemotePayloads(kind, ownerId) {
+    const table = kind === "learning" ? "competency_state" : "module_progress";
+    const query = window.QuizADSAuth.client
+      .from(table)
+      .select("module_id,payload")
+      .eq("user_id", ownerId)
+      .eq("track_id", "estrutura-de-dados");
+
+    if (kind === "learning") query.eq("competency_id", "__module__");
+
+    const { data, error } = await query;
+    if (error) throw error;
+
+    return new Map((data || []).map((row) => [row.module_id, row.payload]));
+  }
+
+  function hydrateSnapshots(storageKeys, kind, remotePayloads) {
+    return storageKeys.map((storageKey) => {
+      const moduleId = storageKey.match(/m(\d{2})/)?.[0] || storageKey;
+      const payload = safeParse(localStorage.getItem(storageKey));
+      const remotePayload = remotePayloads.get(moduleId) || null;
+
+      if (!payload && !remotePayload) return { skipped: true, reason: "empty" };
+
+      const merged = kind === "learning"
+        ? mergeLearningState(payload, remotePayload)
+        : mergeModuleProgress(payload, remotePayload);
+
+      localStorage.setItem(storageKey, JSON.stringify(merged));
+      return { hydrated: true, merged };
+    });
   }
 
   async function upsertSnapshot(storageKey, payload, kind, knownOwnerId) {
@@ -275,7 +315,7 @@
 
   function ready() {
     if (!initialSyncPromise) {
-      initialSyncPromise = hydrateAll().catch((error) => {
+      initialSyncPromise = hydrateAfterAuthChange().catch((error) => {
         console.warn("QuizADS: sincronização inicial indisponível; usando progresso local.", error);
         return { skipped: true, reason: "sync-error" };
       });

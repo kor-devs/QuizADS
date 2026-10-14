@@ -332,8 +332,11 @@
       if (label) label.textContent = `${value}%`;
     });
 
-    const progress = document.querySelector("[data-module-progress]");
-    progress?.setAttribute("aria-valuenow", String(value));
+    document.querySelectorAll("[data-module-progress]").forEach((progress) => {
+      progress.setAttribute("aria-valuenow", String(value));
+      progress.setAttribute("aria-busy", "false");
+      progress.closest(".module-progress-row")?.classList.remove("is-restoring");
+    });
 
     const contextLabel = document.getElementById("moduleProgressContext");
     if (contextLabel && context) contextLabel.textContent = context;
@@ -545,7 +548,7 @@
                 id="mobileModuleProgressLabel"
                 class="mobile-course-bar-progress"
               >
-                0%
+                …
               </span>
 
             </div>
@@ -668,7 +671,7 @@
 
 
             <div
-              class="module-progress-row"
+              class="module-progress-row is-restoring"
             >
 
               <div>
@@ -680,13 +683,7 @@
                   <span
                     id="moduleProgressContext"
                   >
-                    ${
-                      Array.isArray(
-                        data.lessons
-                      )
-                        ? `Aula 1 de ${data.lessons.length}`
-                        : "Progresso"
-                    }
+                    Restaurando seu progresso
                   </span>
 
                   <span>
@@ -704,6 +701,7 @@
                   aria-valuemin="0"
                   aria-valuemax="100"
                   aria-valuenow="0"
+                  aria-busy="true"
                 >
 
                   <span
@@ -721,7 +719,7 @@
                 id="moduleProgressLabel"
                 class="module-progress-percent"
               >
-                0%
+                …
               </div>
 
             </div>

@@ -239,6 +239,14 @@
 
         if (!currentUser) {
 
+          button.setAttribute(
+            "aria-label",
+            "Entrar ou criar conta para salvar seu progresso"
+          );
+
+          button.title =
+            "Entrar ou criar conta";
+
           button.innerHTML = `
             <span
               class="auth-trigger-icon"
@@ -248,7 +256,7 @@
             </span>
 
             <span>
-              Salvar progresso
+              Entrar para salvar
             </span>
           `;
 
@@ -262,6 +270,15 @@
 
         const avatar =
           getAvatar(currentUser);
+
+        button.setAttribute(
+          "aria-label",
+          "Conta e progresso"
+        );
+
+        button.removeAttribute(
+          "title"
+        );
 
         const name =
           escapeHtml(

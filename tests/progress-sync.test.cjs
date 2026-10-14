@@ -14,6 +14,16 @@ assert.match(
   /quizads:progress-hydrated/,
   "a login that happens after the course is rendered must notify the runtime after remote hydration"
 );
+assert.match(
+  syncSource,
+  /Promise\.all\(/,
+  "initial hydration must fetch progress payloads concurrently"
+);
+assert.match(
+  syncSource,
+  /select\("module_id,payload"\)/,
+  "initial hydration must request all module payloads in a batch instead of one request per module"
+);
 
 const local = {
   completed: true,

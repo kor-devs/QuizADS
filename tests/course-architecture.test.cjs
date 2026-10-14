@@ -78,4 +78,14 @@ assert.match(runtime, /QuizADSProgressSync\?\.ready/, "course runtime must wait 
 assert.match(runtime, /quizads:progress-hydrated/, "course runtime must refresh after a late authenticated hydration");
 assert.match(runtime, /evaluation\?\.missingCriteria/, "legacy empty conclusion evidence must not crash the course renderer");
 
+const shell = fs.readFileSync("assets/js/course-shell.js", "utf8");
+assert.match(shell, /Restaurando seu progresso/, "module hero must not show a false 0% while authenticated progress is being restored");
+assert.match(shell, /aria-busy/, "restoring state must be exposed to assistive technology");
+
+const home = fs.readFileSync("assets/js/quizads.js", "utf8");
+assert.match(home, /QuizADSProgressSync\?\.ready/, "home must wait for remote progress before choosing its primary study CTA");
+
+const auth = fs.readFileSync("assets/js/quizads-auth.js", "utf8");
+assert.match(auth, /Entrar para salvar/, "anonymous header action must clearly communicate login before persistence");
+
 console.log("PASS: shared M01-M05 runtime contract, generative activity banks, conclusion gate and M05 publication.");

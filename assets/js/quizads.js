@@ -284,7 +284,43 @@ function getContinueUrl() {
   return `./trilhas/estrutura-de-dados/${next.slug}/`;
 }
 
-function initializeHomeProgress() {
+function setHomeProgressLoading() {
+  document
+    .querySelectorAll(
+      "[data-structure-continue-label]"
+    )
+    .forEach((element) => {
+      element.textContent =
+        "Restaurando seu percurso…";
+    });
+
+  document
+    .querySelectorAll(
+      "[data-structure-continue]"
+    )
+    .forEach((element) => {
+      element.setAttribute("aria-busy", "true");
+    });
+}
+
+
+async function initializeHomeProgress() {
+  const auth =
+    window.QuizADSAuth;
+
+  if (auth?.ready) {
+    await auth.ready();
+  }
+
+  if (
+    auth?.isAuthenticated?.() &&
+    window.QuizADSProgressSync?.ready
+  ) {
+    setHomeProgressLoading();
+
+    await window.QuizADSProgressSync.ready();
+  }
+
   const {
     modules,
     completed
@@ -343,6 +379,7 @@ function initializeHomeProgress() {
     .forEach((link) => {
       link.href =
         continueUrl;
+      link.setAttribute("aria-busy", "false");
     });
 
 
@@ -636,5 +673,15 @@ document.addEventListener(
     initializeProblemSupport();
 
     initializeMobileMenu();
+  }
+);
+
+
+document.addEventListener(
+  "quizads:progress-hydrated",
+  () => {
+    if (document.readyState !== "loading") {
+      initializeHomeProgress();
+    }
   }
 );

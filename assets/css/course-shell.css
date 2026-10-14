@@ -740,6 +740,14 @@
     800;
 }
 
+.module-progress-row.is-restoring .module-progress-track {
+  background: rgba(255, 255, 255, .18);
+}
+
+.module-progress-row.is-restoring .module-progress-percent {
+  color: rgba(255, 255, 255, .62);
+}
+
 
 #lessonPanels {
   margin-top:

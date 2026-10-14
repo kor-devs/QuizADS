@@ -283,6 +283,12 @@
     return initialSyncPromise;
   }
 
+  async function hydrateAfterAuthChange() {
+    const result = await hydrateAll();
+    document.dispatchEvent(new CustomEvent("quizads:progress-hydrated", { detail: result }));
+    return result;
+  }
+
   window.QuizADSProgressSync = {
     mergeModuleProgress,
     mergeLearningState,
@@ -293,7 +299,7 @@
   };
 
   if (typeof document !== "undefined") {
-    document.addEventListener("quizads:auth-changed", () => { initialSyncPromise = hydrateAll().catch(console.warn); });
+    document.addEventListener("quizads:auth-changed", () => { initialSyncPromise = hydrateAfterAuthChange().catch(console.warn); });
     let syncTimer = null;
     document.addEventListener("quizads:progress-saved", () => {
       clearTimeout(syncTimer);

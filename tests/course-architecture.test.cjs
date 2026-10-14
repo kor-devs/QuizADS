@@ -76,5 +76,6 @@ assert.match(runtime, /conclusionEvidence/);
 assert.match(runtime, /reached===0\?0/, "the initial lesson must not be reported as completed progress");
 assert.match(runtime, /QuizADSProgressSync\?\.ready/, "course runtime must wait for remote hydration when available");
 assert.match(runtime, /quizads:progress-hydrated/, "course runtime must refresh after a late authenticated hydration");
+assert.match(runtime, /evaluation\?\.missingCriteria/, "legacy empty conclusion evidence must not crash the course renderer");
 
 console.log("PASS: shared M01-M05 runtime contract, generative activity banks, conclusion gate and M05 publication.");

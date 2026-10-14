@@ -743,7 +743,48 @@
 
 #lessonPanels {
   margin-top:
-    42px;
+    18px;
+}
+
+/* Conteúdo começa próximo ao hero; o espaçamento interno continua confortável. */
+#lessonPanels > .lesson-panel {
+  padding-top: clamp(24px, 2.4vw, 34px);
+}
+
+.assessment-review-list {
+  display: grid;
+  gap: 14px;
+}
+
+.assessment-review-item {
+  padding: clamp(18px, 2vw, 24px);
+  border: 1px solid var(--line, #dce5e6);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.assessment-review-item h3 {
+  margin: 0 0 10px;
+  color: var(--ink, #092731);
+  font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+}
+
+.assessment-review-item p {
+  margin: 8px 0;
+}
+
+/* O atributo hidden precisa vencer o display:grid do shell em páginas bloqueadas. */
+#workspace[hidden] {
+  display: none !important;
+}
+
+#lockedContent {
+  width: min(900px, calc(100% - 32px));
+  margin: 34px auto 56px;
+}
+
+#lockedContent .locked-card {
+  margin: 0;
 }
 
 

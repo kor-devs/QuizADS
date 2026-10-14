@@ -6,6 +6,7 @@
   const LEARNING_KEYS = [1, 2, 3, 4, 5].map((number) => `quizads_learning_estrutura-de-dados_m${String(number).padStart(2, "0")}_v1`);
   const RETRY_KEY = "quizads_sync_retry_v1";
   const CLIENT_KEY = "quizads_sync_client_v1";
+  let initialSyncPromise = null;
 
   function parseTime(value) {
     const time = Date.parse(value || "");
@@ -155,27 +156,59 @@
     if (error) throw error;
   }
 
-  async function upsertSnapshot(storageKey, payload, kind, knownOwnerId) {
-    const ownerId = knownOwnerId || await userId();
-    if (!ownerId) return { skipped: true, reason: "anonymous" };
+  async function readRemotePayload(storageKey, kind, ownerId) {
     const table = kind === "learning" ? "competency_state" : "module_progress";
     const moduleId = storageKey.match(/m(\d{2})/)?.[0] || storageKey;
-    const keyFilter = window.QuizADSAuth.client
+    const query = window.QuizADSAuth.client
       .from(table)
       .select("payload")
       .eq("user_id", ownerId)
       .eq("track_id", "estrutura-de-dados")
       .eq("module_id", moduleId);
-    if (kind === "learning") keyFilter.eq("competency_id", "__module__");
-    const { data: remoteRow, error: readError } = await keyFilter.maybeSingle();
-    if (readError) {
-      queueRetry({ storageKey, kind });
-      throw readError;
-    }
-    if (!payload && !remoteRow?.payload) return { skipped: true, reason: "empty" };
+    if (kind === "learning") query.eq("competency_id", "__module__");
+    const { data, error } = await query.maybeSingle();
+    if (error) throw error;
+    return data?.payload || null;
+  }
+
+  async function hydrateSnapshot(storageKey, kind, knownOwnerId) {
+    const ownerId = knownOwnerId || await userId();
+    if (!ownerId) return { skipped: true, reason: "anonymous" };
+    const payload = safeParse(localStorage.getItem(storageKey));
+    const remotePayload = await readRemotePayload(storageKey, kind, ownerId);
+    if (!payload && !remotePayload) return { skipped: true, reason: "empty" };
     const merged = kind === "learning"
-      ? mergeLearningState(payload, remoteRow?.payload)
-      : mergeModuleProgress(payload, remoteRow?.payload);
+      ? mergeLearningState(payload, remotePayload)
+      : mergeModuleProgress(payload, remotePayload);
+    localStorage.setItem(storageKey, JSON.stringify(merged));
+    return { hydrated: true, merged };
+  }
+
+  async function hydrateAll() {
+    const ownerId = await userId();
+    if (!ownerId) return { skipped: true, reason: "anonymous" };
+    const results = [];
+    for (const key of MODULE_KEYS) results.push(await hydrateSnapshot(key, "module", ownerId));
+    for (const key of LEARNING_KEYS) results.push(await hydrateSnapshot(key, "learning", ownerId));
+    return { hydrated: results.filter((item) => item.hydrated).length };
+  }
+
+  async function upsertSnapshot(storageKey, payload, kind, knownOwnerId) {
+    const ownerId = knownOwnerId || await userId();
+    if (!ownerId) return { skipped: true, reason: "anonymous" };
+    const moduleId = storageKey.match(/m(\d{2})/)?.[0] || storageKey;
+    const table = kind === "learning" ? "competency_state" : "module_progress";
+    let remotePayload = null;
+    try {
+      remotePayload = await readRemotePayload(storageKey, kind, ownerId);
+    } catch (error) {
+      queueRetry({ storageKey, kind });
+      throw error;
+    }
+    if (!payload && !remotePayload) return { skipped: true, reason: "empty" };
+    const merged = kind === "learning"
+      ? mergeLearningState(payload, remotePayload)
+      : mergeModuleProgress(payload, remotePayload);
     localStorage.setItem(storageKey, JSON.stringify(merged));
     const row = {
       user_id: ownerId,
@@ -240,24 +273,36 @@
     return { synced: results.length };
   }
 
+  function ready() {
+    if (!initialSyncPromise) {
+      initialSyncPromise = hydrateAll().catch((error) => {
+        console.warn("QuizADS: sincronização inicial indisponível; usando progresso local.", error);
+        return { skipped: true, reason: "sync-error" };
+      });
+    }
+    return initialSyncPromise;
+  }
+
   window.QuizADSProgressSync = {
     mergeModuleProgress,
     mergeLearningState,
+    hydrateAll,
+    ready,
     syncAll,
     syncModule: upsertSnapshot
   };
 
   if (typeof document !== "undefined") {
-    document.addEventListener("quizads:auth-changed", () => { syncAll().catch(console.warn); });
+    document.addEventListener("quizads:auth-changed", () => { initialSyncPromise = hydrateAll().catch(console.warn); });
     let syncTimer = null;
     document.addEventListener("quizads:progress-saved", () => {
       clearTimeout(syncTimer);
       syncTimer = setTimeout(() => { syncAll().catch(console.warn); }, 800);
     });
     if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", () => { syncAll().catch(console.warn); }, { once: true });
+      document.addEventListener("DOMContentLoaded", () => { ready(); }, { once: true });
     } else {
-      syncAll().catch(console.warn);
+      ready();
     }
   }
 })();

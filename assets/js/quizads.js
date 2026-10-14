@@ -24,6 +24,18 @@ window.QUIZADS = {
    ========================================================= */
 
 (function initializeStructureTrackProgress() {
+  const reviewStorageKey = "quizads_review_unlock_v1";
+
+  function isReviewMode() {
+    const review = new URLSearchParams(window.location.search).get("review");
+    if (review === "all") {
+      sessionStorage.setItem(reviewStorageKey, "all");
+    }
+    if (review === "off") {
+      sessionStorage.removeItem(reviewStorageKey);
+    }
+    return sessionStorage.getItem(reviewStorageKey) === "all";
+  }
   const modules = [
     { id: 1, name: "Fundamentos", key: "quizads_ed_m01_v1", slug: "modulo-01", published: true },
     { id: 2, name: "Lista Sequencial", key: "quizads_ed_m02_v1", slug: "modulo-02", published: true },
@@ -77,6 +89,9 @@ window.QUIZADS = {
     const target = Number(targetId);
     const module = modules.find((item) => item.id === target);
     if (!module) return { allowed: false, blocker: null, reason: "unknown-module" };
+    if (isReviewMode() && module.published) {
+      return { allowed: true, blocker: null, reason: "review-mode" };
+    }
     if (target === 1) return { allowed: true, blocker: null, reason: "first-module" };
 
     const ownState = readState(target);
@@ -95,6 +110,9 @@ window.QUIZADS = {
   function grantAccess(targetId) {
     const result = resolveAccess(targetId);
     if (!result.allowed) return result;
+    // A revisão libera apenas esta sessão. Não grava acesso permanente
+    // nem altera o progresso pedagógico real do aluno.
+    if (result.reason === "review-mode") return result;
     const state = readState(targetId);
     if (state.accessGranted !== true) {
       state.accessGranted = true;
@@ -148,7 +166,8 @@ window.QUIZADS = {
     firstPendingPublished,
     lastPublished,
     moduleHrefFromModule,
-    renderLegacyBlocked
+    renderLegacyBlocked,
+    isReviewMode
   };
 })();
 
@@ -483,6 +502,119 @@ function initializeProblemSupport() {
   headerActions.prepend(button);
 }
 
+/* =========================================================
+   MENU RESPONSIVO · HOME
+   ========================================================= */
+
+function initializeMobileMenu() {
+
+  const toggle =
+    document.querySelector(
+      "[data-mobile-menu-toggle]"
+    );
+
+  const menu =
+    document.querySelector(
+      "[data-mobile-menu]"
+    );
+
+
+  if (
+    !toggle ||
+    !menu
+  ) {
+    return;
+  }
+
+
+  function closeMenu() {
+
+    menu.hidden =
+      true;
+
+    toggle.setAttribute(
+      "aria-expanded",
+      "false"
+    );
+
+    document.body.classList.remove(
+      "mobile-menu-open"
+    );
+
+  }
+
+
+  function openMenu() {
+
+    menu.hidden =
+      false;
+
+    toggle.setAttribute(
+      "aria-expanded",
+      "true"
+    );
+
+    document.body.classList.add(
+      "mobile-menu-open"
+    );
+
+  }
+
+
+  toggle.addEventListener(
+    "click",
+    () => {
+
+      const expanded =
+        toggle.getAttribute(
+          "aria-expanded"
+        ) === "true";
+
+
+      if (expanded) {
+
+        closeMenu();
+
+      } else {
+
+        openMenu();
+
+      }
+
+    }
+  );
+
+
+  menu
+    .querySelectorAll("a")
+    .forEach((link) => {
+
+      link.addEventListener(
+        "click",
+        closeMenu
+      );
+
+    });
+
+
+  const desktopQuery =
+    window.matchMedia(
+      "(min-width: 1121px)"
+    );
+
+
+  desktopQuery.addEventListener(
+    "change",
+    (event) => {
+
+      if (event.matches) {
+        closeMenu();
+      }
+
+    }
+  );
+
+}
 
 /* =========================================================
    START
@@ -502,5 +634,7 @@ document.addEventListener(
     initializeHomeProgress();
 
     initializeProblemSupport();
+
+    initializeMobileMenu();
   }
 );

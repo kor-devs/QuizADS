@@ -50,6 +50,7 @@
       lastAdjustment: null,
       lastStudiedAt: null,
       seenQuestionIds: [],
+      seenSignatures: [],
       evidence: [],
       block: {
         level: clampLevel(initialLevel),
@@ -94,6 +95,9 @@
         current.evidence = Array.isArray(current.evidence) ? current.evidence : [];
         current.seenQuestionIds = Array.isArray(current.seenQuestionIds)
           ? current.seenQuestionIds
+          : [];
+        current.seenSignatures = Array.isArray(current.seenSignatures)
+          ? current.seenSignatures
           : [];
         current.block = current.block || {
           level: current.level,
@@ -235,6 +239,9 @@
 
     const evidence = {
       questionId: rawEvidence.questionId || null,
+      signature: rawEvidence.signature || null,
+      templateId: rawEvidence.templateId || rawEvidence.questionId || null,
+      cognitiveLayer: rawEvidence.cognitiveLayer || null,
       level: clampLevel(rawEvidence.level || competencyState.level),
       correct: rawEvidence.correct === true,
       hintUsed: rawEvidence.hintUsed === true,
@@ -244,6 +251,8 @@
       createdAt: new Date().toISOString()
     };
 
+    evidence.weight = evidenceWeight(evidence);
+
     competencyState.attempts += 1;
     competencyState.correct += evidence.correct ? 1 : 0;
     competencyState.hintsUsed += evidence.hintUsed ? 1 : 0;
@@ -252,6 +261,11 @@
 
     if (evidence.questionId && !competencyState.seenQuestionIds.includes(evidence.questionId)) {
       competencyState.seenQuestionIds.push(evidence.questionId);
+    }
+
+    if (evidence.signature && !competencyState.seenSignatures.includes(evidence.signature)) {
+      competencyState.seenSignatures.push(evidence.signature);
+      competencyState.seenSignatures = competencyState.seenSignatures.slice(-120);
     }
 
     competencyState.evidence.push(evidence);
@@ -318,6 +332,14 @@
   }
 
   function chooseQuestion(competencyState, questionTemplates) {
+    if (window.QuizADSActivityEngine) {
+      return window.QuizADSActivityEngine.choose(
+        competencyState,
+        questionTemplates,
+        { requestedLevel: competencyState.level }
+      );
+    }
+
     const level = competencyState.level;
     const exact = questionTemplates.filter((item) => item.level === level);
     const candidates = exact.length

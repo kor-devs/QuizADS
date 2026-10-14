@@ -233,7 +233,8 @@
       competencyId,
       {
         questionId: question.id,
-        level: checkpointSession.currentLevel,
+        signature: question.signature,
+        level: question.usedLevel || checkpointSession.currentLevel,
         correct,
         hintUsed: checkpointSession.hintUsed,
         consultedContent: checkpointSession.consultedContent,
@@ -248,7 +249,8 @@
     checkpointSession.answers.push({
       competencyId,
       questionId: question.id,
-      level: checkpointSession.currentLevel,
+      signature: question.signature,
+      level: question.usedLevel || checkpointSession.currentLevel,
       correct,
       hintUsed: checkpointSession.hintUsed,
       consultedContent: checkpointSession.consultedContent
@@ -756,7 +758,8 @@
         answer.competencyId,
         {
           questionId: answer.question.id,
-          level: answer.level,
+          signature: answer.question.signature,
+          level: answer.question.usedLevel || answer.level,
           correct: answer.correct,
           hintUsed: false,
           consultedContent: false,
@@ -820,7 +823,7 @@
 
         <div class="adaptive-result-actions">
           ${passed
-            ? `<button type="button" class="btn btn-primary" id="continueAfterAdaptiveBoss">Continuar para a pergunta-chave</button>`
+            ? `<button type="button" class="btn btn-primary" id="continueAfterAdaptiveBoss">Continuar para a Conclusão</button>`
             : `<button type="button" class="btn btn-secondary" id="reviewAfterAdaptiveBoss">Revisar módulo</button>
                <button type="button" class="btn btn-primary" id="retryAdaptiveBoss">Tentar novo Boss</button>`}
         </div>

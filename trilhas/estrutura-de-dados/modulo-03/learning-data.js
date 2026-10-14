@@ -64,7 +64,7 @@
       { number: 7, panel: 6, name: "Laboratório", note: "manipule as ligações" },
       { number: 8, panel: 7, name: "Checkpoint", note: "consulta permitida" },
       { number: 9, panel: 8, name: "Boss", note: "sem consulta" },
-      { number: 10, panel: 10, name: "Pergunta-chave", note: "explicação livre" }
+      { number: 10, panel: 10, name: "Conclusão", note: "síntese final" }
     ]
   };
 
@@ -144,5 +144,31 @@
     ]
   };
 
+  const courseLessons = [
+    { kicker: "Aula 01", title: "Nó, info, prox, início e NULL", summary: "A ordem de uma lista encadeada é definida pelas referências, não por posições contíguas.", body: `<pre><code>typedef struct no {\n    char info;\n    struct no *prox;\n} no;</code></pre><p>Cada nó guarda uma informação e a referência para o próximo nó. <code>inicio</code> aponta para o primeiro; o último nó possui <code>prox == NULL</code>.</p><div class="structure-line">inicio → [A | •] → [B | •] → [C | NULL]</div><p>Os nós podem ocupar regiões diferentes da memória. O encadeamento, e não o endereço numérico, define o percurso.</p>` },
+    { kicker: "Aula 02", title: "Alocação e inserção no início", summary: "Ligue o novo nó ao início antigo antes de atualizar o início da lista.", body: `<p>Uma inserção começa reservando memória para o novo nó. Depois preenchemos <code>info</code>, preservamos o início antigo em <code>prox</code> e atualizamos <code>inicio</code>.</p><pre><code>no *novo = (no*) malloc(sizeof(no));\nnovo-&gt;info = valor;\nnovo-&gt;prox = inicio;\ninicio = novo;</code></pre><div class="callout">A ordem é essencial: primeiro o novo aponta para a lista antiga; depois ele se torna o início.</div>` },
+    { kicker: "Aula 03", title: "Percurso e busca com aux", summary: "aux percorre a cadeia sem alterar o ponteiro de início.", body: `<p>Para observar a lista sem mudar sua entrada, use um ponteiro auxiliar. Ele avança por <code>prox</code> até encontrar o valor ou chegar a <code>NULL</code>.</p><pre><code>no *aux = inicio;\nwhile (aux != NULL &amp;&amp; aux-&gt;info != valor)\n    aux = aux-&gt;prox;</code></pre><p>Modificar <code>aux</code> não altera <code>inicio</code>; busca é observação, não mutação da estrutura.</p>` },
+    { kicker: "Aula 04", title: "Remoção com ant e aux", summary: "Religue a cadeia antes de liberar o nó encontrado.", body: `<p>Durante uma remoção, <code>aux</code> referencia o nó atual e <code>ant</code> guarda o anterior. Se o alvo é o primeiro, <code>ant == NULL</code> e o próprio início precisa avançar.</p><pre><code>if (ant == NULL)\n    inicio = aux-&gt;prox;\nelse\n    ant-&gt;prox = aux-&gt;prox;\nfree(aux);</code></pre><div class="callout">Primeiro restaure a ligação entre os nós restantes; só depois libere o nó removido.</div>` },
+    { kicker: "Aula 05", title: "Liberação sem perder o caminho", summary: "Salve o próximo, libere o atual e só então avance.", body: `<p>Depois de <code>free(aux)</code>, não é seguro ler seus campos. Por isso a liberação completa salva a referência seguinte antes de liberar o nó atual.</p><pre><code>while (aux != NULL) {\n    no *temp = aux-&gt;prox;\n    free(aux);\n    aux = temp;\n}</code></pre><p>Essa sequência evita perder o caminho até <code>NULL</code> e evita usar uma referência de memória já liberada.</p>` }
+  ];
   window.QUIZADS_MODULE_LEARNING = { definition, ui, lessons, questions };
+  window.QUIZADS_COURSE_MODULE = {
+    meta: { number: 3, name: "Lista Encadeada", moduleKey: "quizads_ed_m03_v1", previousKey: "quizads_ed_m02_v1", previousName: "Módulo 02 · Lista Sequencial", previousPath: "../modulo-02/" },
+    ui: { heroTitle: "Lista Encadeada", heroDescription: "Construa o modelo mental de nós e referências para inserir, buscar, remover e liberar memória com segurança." },
+    definition,
+    lessons: courseLessons,
+    lab: { kind: "linked-list", title: "Ligações entre nós", short: "Nó, prox e NULL", summary: "Monte uma cadeia, busque valores e remova nós preservando a conectividade." },
+    adaptiveLessons: lessons,
+    checkpoint: { count: 8, pass: 6 },
+    boss: { count: 10, pass: 8 },
+    conclusion: {
+      id: "m03-linked-evidence", type: "explicit-rubric", title: "Explique uma inserção ou remoção encadeada", prompt: "Escolha inserir no início ou remover um nó. Escreva a sequência de referências alteradas e justifique por que a cadeia continua válida até NULL.", minimumCharacters: 120, minimumCriteria: 3,
+      rubric: [
+        { id: "node", label: "Usa os campos ou referências da lista", any: ["inicio", "início", "prox", "nó", "no"] },
+        { id: "order", label: "Explica uma ordem segura de atualização", any: ["antes", "depois", "primeiro", "ligar", "religar"] },
+        { id: "validity", label: "Justifica a continuidade ou liberação segura", any: ["null", "cadeia", "free", "liberar", "próximo", "proximo"] }
+      ], approvedMessage: "Você demonstrou como preservar as referências em uma operação encadeada."
+    },
+    questions: Object.fromEntries(Object.entries(questions).map(([competencyId, templates]) => [competencyId, templates.map((template) => ({ ...template, competencyId, cognitiveLayer: template.level <= 40 ? "entender-explicar" : template.level >= 80 ? "raciocinar-prever" : "ler-codigo", supports: template.level <= 40 ? ["visual", "passo-a-passo"] : [] }))]))
+  };
 })();

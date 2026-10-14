@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./assets/css/quizads-auth.css"/>
   <meta name="google-site-verification" content="iJemdUp6PqAMxHxQ107gvAOihvGY83HTqZPRdeZSUco" />
   <meta name="theme-color" content="#F0EEE8" />
   <meta name="description" content="QuizADS — aprenda tecnologia entendendo como ela funciona. Trilhas práticas, aprendizagem adaptativa e desafios progressivos." />
@@ -31,12 +32,105 @@
       </nav>
 
       <div class="header-actions home-premium-actions">
-        <a data-support-link class="home-support-link" href="#" target="_blank" rel="noopener noreferrer">Apoiar</a>
-        <a data-structure-continue class="home-header-continue" href="./trilhas/estrutura-de-dados/modulo-01/">
-          <span data-structure-continue-label>Começar a estudar</span>
-          <span aria-hidden="true">↗</span>
+
+        <a
+          data-support-link
+          class="home-support-link"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Apoiar
         </a>
+
+        <a
+          data-structure-continue
+          class="home-header-continue"
+          href="./trilhas/estrutura-de-dados/modulo-01/"
+        >
+          <span data-structure-continue-label>
+            Começar a estudar
+          </span>
+
+          <span aria-hidden="true">
+            ↗
+          </span>
+        </a>
+
+
+        <div
+          class="auth-slot auth-slot-desktop"
+          data-auth-slot
+        ></div>
+
+
+        <button
+          type="button"
+          class="home-menu-toggle"
+          data-mobile-menu-toggle
+          aria-label="Abrir menu"
+          aria-expanded="false"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
       </div>
+    </div>
+    <div
+      class="home-mobile-menu"
+      data-mobile-menu
+      hidden
+    >
+
+      <div class="container home-mobile-menu-inner">
+
+        <nav
+          class="home-mobile-nav"
+          aria-label="Navegação móvel"
+        >
+
+          <a href="#experiencia">
+            Experiência
+          </a>
+
+          <a href="#metodologia">
+            Como funciona
+          </a>
+
+          <a href="#trilhas">
+            Trilhas
+          </a>
+
+          <a href="#sobre">
+            Sobre
+          </a>
+
+        </nav>
+
+
+        <div class="home-mobile-utilities">
+
+          <a
+            data-support-link
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Apoiar
+          </a>
+
+
+          <div
+            class="auth-slot auth-slot-mobile"
+            data-auth-slot
+          ></div>
+
+        </div>
+
+      </div>
+
     </div>
   </header>
 
@@ -331,6 +425,20 @@
     </div>
   </footer>
 
-  <script src="./assets/js/quizads.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
+  <script
+    src="./assets/js/supabase-config.js"
+  ></script>
+
+  <script
+    src="./assets/js/quizads-auth.js"
+  ></script>
+
+  <script
+    src="./assets/js/quizads.js"
+  ></script>
 </body>
 </html>

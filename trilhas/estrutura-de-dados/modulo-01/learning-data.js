@@ -946,9 +946,30 @@
     ]
   };
 
-  window.QUIZADS_M01_LEARNING = {
+  const courseLessons = [
+    { kicker: "Aula 01", title: "Dados, organização e operações", summary: "Uma estrutura de dados organiza informações e define como trabalhamos com elas.", body: `<p>Uma agenda, uma fila de atendimento e uma lista de músicas guardam dados, mas também precisam definir o que é possível fazer com eles.</p><div class="concept-grid"><div class="concept-box"><strong>Dados</strong><span>informações que serão mantidas.</span></div><div class="concept-box"><strong>Organização</strong><span>como essas informações ficam relacionadas.</span></div><div class="concept-box"><strong>Operações</strong><span>inserir, buscar, alterar ou remover.</span></div><div class="concept-box"><strong>Estado</strong><span>o resultado atual depois das operações.</span></div></div><div class="callout">Estrutura de dados não é apenas uma coleção de valores: é uma forma de representar e transformar um estado.</div>` },
+    { kicker: "Aula 02", title: "TAD: o contrato antes da implementação", summary: "Dados e operações podem ser entendidos sem expor todos os detalhes internos.", body: `<p>Um <strong>Tipo Abstrato de Dados</strong> descreve os dados e as operações observáveis sobre eles. Quem usa uma estrutura precisa entender seu contrato; não precisa conhecer cada detalhe da implementação.</p><pre><code>TAD = dados + operações\n\nConta: saldo\nOperações: depositar, sacar, consultar</code></pre><p>Essa separação entre interface e implementação permite comparar representações sem perder o comportamento que a estrutura promete.</p>` },
+    { kicker: "Aula 03", title: "Memória, endereço e ponteiro", summary: "Um ponteiro guarda onde encontrar um dado; ele não é o dado.", body: `<p>Memória pode ser imaginada como regiões com endereços. O valor e seu endereço são coisas diferentes: um ponteiro armazena uma referência para a região em que o valor está.</p><pre><code>int valor = 10;\nint *p = &amp;valor;\n\n/* p guarda o endereço de valor */\n/* *p acessa o valor naquele endereço */</code></pre><div class="callout">O operador <code>&amp;</code> obtém um endereço. O operador <code>*</code> acessa o valor apontado, desde que a referência seja válida.</div>` },
+    { kicker: "Aula 04", title: "Nós, ligações e NULL", summary: "info guarda o conteúdo, prox constrói o caminho e NULL indica o fim.", body: `<p>Uma lista encadeada será formada por nós. Cada nó pode guardar um dado em <code>info</code> e a referência do próximo nó em <code>prox</code>.</p><pre><code>typedef struct no {\n    char info;\n    struct no *prox;\n} no;</code></pre><div class="structure-line">inicio → [A | •] → [B | •] → [C | NULL]</div><p><code>inicio</code> referencia o primeiro nó. O último usa <code>NULL</code> porque não há próximo nó; seguir <code>prox</code> é o que determina a ordem real.</p>` },
+    { kicker: "Aula 05", title: "Ler código como mudança de estado", summary: "Leia cada atribuição de ponteiro como uma alteração concreta nas referências.", body: `<p>Para interpretar código com ponteiros, registre o estado antes e depois de cada atribuição. Não memorize símbolos isolados.</p><pre><code>novo-&gt;prox = inicio;\ninicio = novo;</code></pre><p>A primeira linha preserva no novo nó a referência que antes era o início. A segunda torna o novo nó o primeiro. Se a ordem fosse invertida, a ligação com a lista antiga poderia ser perdida.</p><div class="callout">Pergunte sempre: qual referência estava neste campo, qual passa a estar e qual caminho a estrutura terá depois?</div>` }
+  ];
+  window.QUIZADS_M01_LEARNING = { definition, lessons, questions };
+  window.QUIZADS_COURSE_MODULE = {
+    meta: { number: 1, name: "Fundamentos", moduleKey: "quizads_ed_m01_v1" },
+    ui: { heroTitle: "Antes das estruturas, entenda o que o código está dizendo.", heroDescription: "Construa a base para compreender listas, pilhas, filas e árvores sem depender de decorar comandos em C." },
     definition,
-    lessons,
-    questions
+    lessons: courseLessons,
+    adaptiveLessons: lessons,
+    checkpoint: { count: 8, pass: 6 },
+    boss: { count: 10, pass: 8 },
+    conclusion: {
+      id: "m01-fundamentos-evidence", type: "explicit-rubric", title: "Explique uma estrutura e uma referência", prompt: "Em sua resposta, descreva um TAD, diferencie valor de endereço e explique o que muda quando uma atribuição atualiza um ponteiro.", minimumCharacters: 120, minimumCriteria: 3,
+      rubric: [
+        { id: "tad", label: "Explica dados e operações de um TAD", any: ["tad", "tipo abstrato", "dados e opera", "dados + opera"] },
+        { id: "address", label: "Diferencia valor e endereço", any: ["endereço", "endereco", "valor"] },
+        { id: "pointer", label: "Relaciona ponteiro a uma referência", any: ["ponteiro", "aponta", "referência", "referencia"] }
+      ], approvedMessage: "Você conectou abstração, memória e referências de forma verificável."
+    },
+    questions: Object.fromEntries(Object.entries(questions).map(([competencyId, templates]) => [competencyId, templates.map((template) => ({ ...template, competencyId, cognitiveLayer: template.level <= 40 ? "entender-explicar" : template.level >= 80 ? "raciocinar-prever" : "ler-codigo", supports: template.level <= 40 ? ["visual", "passo-a-passo"] : [] }))]))
   };
 })();

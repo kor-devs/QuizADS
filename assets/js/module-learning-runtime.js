@@ -251,7 +251,7 @@
   }
 
   function transformLessonMarkup() {
-    document.body.classList.add("premium-module");
+    document.body.classList.add("premium-module", "course-page");
     const main = document.querySelector("main.module-main");
     const content = document.getElementById("moduleContent");
     if (!main || !content || content.style.display === "none") return;
@@ -797,10 +797,33 @@
     };
   }
 
-  document.addEventListener("DOMContentLoaded", () => {
+  function initializeModuleLearningRuntime() {
+
     transformLessonMarkup();
+
     installNavigationBridge();
+
     initializeAdaptiveAssessments();
-    afterPanelChange(Number(state.currentPanel || 0));
-  }, { once: true });
+
+    afterPanelChange(
+      Number(
+        state.currentPanel || 0
+      )
+    );
+
+  }
+
+
+    if (
+      document.readyState !== "complete" &&
+      document.readyState !== "interactive"
+    ) {
+      document.addEventListener(
+        "DOMContentLoaded",
+        initializeModuleLearningRuntime,
+        { once: true }
+      );
+    } else {
+      initializeModuleLearningRuntime();
+    }
 })();

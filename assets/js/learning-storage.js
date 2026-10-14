@@ -57,6 +57,12 @@
     const key = buildKey(state.trackId, state.moduleId);
     localStorage.setItem(key, JSON.stringify(state));
 
+    if (typeof document !== "undefined") {
+      document.dispatchEvent(new CustomEvent("quizads:progress-saved", {
+        detail: { key, kind: "learning" }
+      }));
+    }
+
     return state;
   }
 

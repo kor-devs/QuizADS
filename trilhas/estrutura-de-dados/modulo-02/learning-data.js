@@ -68,7 +68,7 @@
       { number: 5, panel: 4, name: "Laboratório", note: "inserir, buscar e remover" },
       { number: 6, panel: 5, name: "Checkpoint", note: "consulta permitida" },
       { number: 7, panel: 6, name: "Boss", note: "sem consulta" },
-      { number: 8, panel: 8, name: "Pergunta-chave", note: "explicação livre" }
+      { number: 8, panel: 8, name: "Conclusão", note: "síntese final" }
     ]
   };
 
@@ -148,5 +148,31 @@
     ]
   };
 
+  const courseLessons = [
+    { kicker: "Aula 01", title: "Vetor, capacidade e índices", summary: "Uma lista sequencial usa posições contíguas e índices de 0 a TAM - 1.", body: `<p>Na implementação sequencial, os elementos ficam em um vetor. <code>TAM</code> representa a capacidade física; seus índices válidos vão de <code>0</code> a <code>TAM - 1</code>.</p><pre><code>#define TAM 5\ntypedef struct {\n    char info[TAM];\n    int ultimo;\n} lista;</code></pre><div class="callout">Capacidade não é quantidade: uma lista pode ter TAM = 5 e apenas duas posições ocupadas.</div>` },
+    { kicker: "Aula 02", title: "O estado é dado por ultimo", summary: "ultimo informa a última posição ocupada; -1 representa a lista vazia.", body: `<p><code>ultimo</code> delimita a parte logicamente ocupada do vetor. Em uma lista vazia, vale <code>-1</code>; se vale <code>2</code>, as posições 0, 1 e 2 estão ocupadas.</p><div class="structure-line">TAM = 5\níndice:  0   1   2   3   4\nvalor:  [A] [B] [C] [ ] [ ]\nultimo = 2</div><p>Lista cheia significa <code>ultimo == TAM - 1</code>. Não use a capacidade inteira como se todas as casas já tivessem valor.</p>` },
+    { kicker: "Aula 03", title: "Inserção na próxima posição livre", summary: "A inserção válida incrementa ultimo e ocupa uma posição ainda disponível.", body: `<p>Antes de inserir, verifique se ainda existe espaço. A inserção sequencial grava na próxima posição livre e atualiza <code>ultimo</code>.</p><pre><code>if (lista-&gt;ultimo == TAM - 1)\n    /* lista cheia */;\nelse\n    lista-&gt;info[++lista-&gt;ultimo] = valor;</code></pre><p>O incremento ocorre antes da gravação: se <code>ultimo</code> era 1, o novo valor entra na posição 2.</p>` },
+    { kicker: "Aula 04", title: "Busca no domínio ocupado", summary: "A busca lógica percorre de 0 até ultimo, não toda a capacidade física.", body: `<p>Buscar e imprimir uma lista sequencial exige percorrer somente posições que fazem parte do estado atual.</p><pre><code>for (int i = 0; i &lt;= lista-&gt;ultimo; i++) {\n    /* examinar lista-&gt;info[i] */\n}</code></pre><div class="callout">Percorrer até <code>TAM - 1</code> incluiria posições que podem existir fisicamente, mas ainda não pertencem à lista lógica.</div>` },
+    { kicker: "Aula 05", title: "Remoção por substituição", summary: "O último item ocupa a posição removida; a ordem não é preservada.", body: `<p>Esta trilha segue a convenção do ebook: para remover uma posição, o último elemento ocupa a vaga e <code>ultimo</code> diminui. Não há deslocamento de todos os itens seguintes.</p><pre><code>removido = lista-&gt;info[pos];\nlista-&gt;info[pos] = lista-&gt;info[lista-&gt;ultimo--];</code></pre><div class="structure-line">[A, B, C, D], remover posição 1\n→ [A, D, C]  (B saiu; D ocupou a vaga)</div><div class="callout">A operação é válida, mas não promete preservar a ordem original.</div>` }
+  ];
   window.QUIZADS_MODULE_LEARNING = { definition, ui, lessons, questions };
+  window.QUIZADS_COURSE_MODULE = {
+    meta: { number: 2, name: "Lista Sequencial", moduleKey: "quizads_ed_m02_v1", previousKey: "quizads_ed_m01_v1", previousName: "Módulo 01 · Fundamentos", previousPath: "../modulo-01/" },
+    ui: { heroTitle: "Lista Sequencial", heroDescription: "Leia capacidade, posições e operações de uma lista em vetor sem confundir índice, quantidade e ordem." },
+    definition,
+    lessons: courseLessons,
+    lab: { kind: "sequential-list", title: "Estado de uma lista sequencial", short: "Vetor e remoção", summary: "Insira valores e observe a remoção curricular: o último valor ocupa a posição removida." },
+    adaptiveLessons: lessons,
+    checkpoint: { count: 8, pass: 6 },
+    boss: { count: 10, pass: 8 },
+    conclusion: {
+      id: "m02-sequential-evidence", type: "explicit-rubric", title: "Resolva um estado de lista sequencial", prompt: "Crie uma lista com pelo menos três valores, remova uma posição usando a regra estudada e explique o estado final, incluindo ultimo e por que a ordem pode mudar.", minimumCharacters: 120, minimumCriteria: 3,
+      rubric: [
+        { id: "state", label: "Mostra valores antes ou depois da remoção", any: ["[", "posição", "posicao", "lista"] },
+        { id: "last", label: "Explica ultimo ou a posição final", any: ["ultimo", "último", "índice", "indice"] },
+        { id: "replacement", label: "Explica substituição pelo último item", any: ["substitui", "último", "ultimo", "ocupa a vaga"] }
+      ], approvedMessage: "Você aplicou a remoção curricular e explicou corretamente o estado resultante."
+    },
+    questions: Object.fromEntries(Object.entries(questions).map(([competencyId, templates]) => [competencyId, templates.map((template) => ({ ...template, competencyId, cognitiveLayer: template.level <= 40 ? "entender-explicar" : template.level >= 80 ? "raciocinar-prever" : "ler-codigo", supports: template.level <= 40 ? ["visual", "passo-a-passo"] : [] }))]))
+  };
 })();
